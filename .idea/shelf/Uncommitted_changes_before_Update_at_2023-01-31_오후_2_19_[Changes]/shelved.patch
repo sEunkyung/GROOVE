@@ -1,0 +1,19 @@
+Index: app/src/main/res/layout/fragment_playlist.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_playlist.xml b/app/src/main/res/layout/fragment_taglist.xml
+rename from app/src/main/res/layout/fragment_playlist.xml
+rename to app/src/main/res/layout/fragment_taglist.xml
+--- a/app/src/main/res/layout/fragment_playlist.xml	
++++ b/app/src/main/res/layout/fragment_taglist.xml	
+@@ -5,7 +5,7 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:background="#FFFFFF"
+-    tools:context=".fragment.PlayList">
++    tools:context=".fragment.TagPlayList">
+ 
+     <androidx.appcompat.widget.AppCompatImageButton
+         android:id="@+id/btn_pre3"

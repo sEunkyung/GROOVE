@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/scene_01"
+    android:id="@+id/motionLayout"
+    tools:showPaths="true">
+
+    <View
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="557dp" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/mini_play"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00ff0000"
+        app:layout_constraintTop_toTopOf="@+id/button"
+        app:srcCompat="@drawable/menu_play" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/mini_pre"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00ff0000"
+        app:layout_constraintTop_toTopOf="@+id/button"
+        app:srcCompat="@drawable/menu_pre" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/mini_next"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00ff0000"
+        app:srcCompat="@drawable/menu_next" />
+
+    <ImageView
+        android:id="@+id/mini_album"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="@+id/button"
+        app:srcCompat="@drawable/album_10675897" />
+
+    <TextView
+        android:id="@+id/mini_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/mini_artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="15dp"/>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

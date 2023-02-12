@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_pre1"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:background="#00ff0000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img_prexml" />
+
+    <TextView
+        android:id="@+id/tv_pl_title"
+        android:layout_width="176dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:text="좋아요한 노래"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:fontFamily="@font/font_rokaf"
+        app:layout_constraintStart_toEndOf="@+id/btn_pre1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="370dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="@+id/guideline1">
+
+        <ListView
+            android:id="@+id/like_menuList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#ffffff"
+            android:dividerHeight="0px" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="60dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
