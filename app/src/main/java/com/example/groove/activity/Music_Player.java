@@ -3,6 +3,8 @@ package com.example.groove.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.database.Cursor;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -38,6 +40,8 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Timer;
 
 public class Music_Player extends AppCompatActivity {
     private PlayerControlView pvc;
@@ -55,6 +59,8 @@ public class Music_Player extends AppCompatActivity {
     SeekBar seekBar;
     PlayerControlView playerControlView;
     ImageButton music_play, music_next, music_pre;
+
+
 
 
 
@@ -121,7 +127,9 @@ public class Music_Player extends AppCompatActivity {
         seekBar = findViewById(R.id.seekBar_player);
         // 메인 xml exoplayer playControlView
         playerControlView = findViewById(R.id.main_pcv);
+        String mp3Name;
         music_play.setTag("재생");
+
         music_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,25 +162,6 @@ public class Music_Player extends AppCompatActivity {
                     player.pause();
                     Log.d("zzzzz", String.valueOf(i));
                 }
-
-                // 노래가 정지 돼있을때 시작
-//                if(i==0){
-////                    if(test==0){
-////                        releasePlayer(0);
-////                        test++;
-////                    }else{
-////                        releasePlayer(player.getCurrentPosition());
-////                    }
-//
-//
-//                    //Log.d("Test1",String.valueOf(player.getCurrentPosition()));
-//                    initializePlayer(index);
-//                    i=1;
-//                } else if(i==1){
-//                    Log.d("Test2",String.valueOf(player.getCurrentPosition()));
-//                    player.pause();
-//                    i=0;
-//                }
             }
         });
         // 다음 곡
@@ -234,40 +223,43 @@ public class Music_Player extends AppCompatActivity {
         player = new ExoPlayer.Builder(Music_Player.this).build();
         pvc.setPlayer(player);
 
-//        FirebaseStorage storage = FirebaseStorage.getInstance();
-//        StorageReference storageRef = storage.getReference();
-//
-//        // Create a reference with an initial file path and name
-//        StorageReference pathReference = storageRef.child("song1114595.mp3");
-//
-//        // Create a reference to a file from a Cloud Storage URI
-//        StorageReference gsReference = storage.getReferenceFromUrl("gs://groove-374902.appspot.com/song1114595.mp3");
-//
-//        // Create a reference from an HTTPS URL
-//        player.setAudioAttributes(AudioAttributes.DEFAULT, false);
-//        // Note that in the URL, characters are URL escaped!
-//        StorageReference httpsReference = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/b/bucket/o/song1114595.mp3");
-
-        // 로컬에 있는 음악 파일 리스트에 넣기
+        String mp3Name = "2223050";
         // com.example.프로젝트명.raw폴더의 mp3파일들의 리소스들을 찾는 것
-        int musicID = this.getResources().getIdentifier("song1", "raw", this.getPackageName());
+//        int musicID = this.getResources().getIdentifier("song1", "raw", this.getPackageName());
+        // 내부저장소에 있는 파일 uri
+        File mp3File = new File(getFilesDir()+"/song_mp3/"+mp3Name+".mp3");
         // musicID의 리소스 데이터를 Uri로 바꿔주는 것
-        Uri musicUri = RawResourceDataSource.buildRawResourceUri(musicID);
-//        Uri musicUri = MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL);
-//        Log.d("하ㅣ하하하하", String.valueOf(MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)));
-//        Log.d("하ㅣ하하하하", MediaStore.Audio.Media.ALBUM_ID);
+//        Uri musicUri = RawResourceDataSource.buildRawResourceUri(musicID);
+        Uri musicUri = Uri.fromFile(mp3File);
         // 바꾼 Uri를 exoplayer에 mediaitems 통해 미디어 항목 생성
         MediaItem mediaItems = MediaItem.fromUri(musicUri);
 
         // player에 미디어 항목을 세팅
+        player.seekTo(currentWindow, playbackPosition);
         player.setMediaItem(mediaItems);
         // player 준비
         player.prepare();
+        seekBar.setMax(100);
+
         // player가 준비가 됐고 playWhenReady가 true이면 재생, false면 정지
         player.setPlayWhenReady(playWhenReady);
-        // Seek바의 현재위치
-        player.seekTo(currentWindow, playbackPosition);
 
-        Log.d("백포지션", String.valueOf(player.isPlaying()));
+        Log.d("하하하", String.valueOf(player.getDuration()));
+        seekBar.setProgress(10);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                seekBar.setProgress((int) player.getContentPosition());
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+        Log.d("길이가..?", String.valueOf(player.getContentPosition()));
+
     }
 }
+
