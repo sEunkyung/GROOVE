@@ -243,6 +243,7 @@ public class Music_Player extends AppCompatActivity {
 
         // player가 준비가 됐고 playWhenReady가 true이면 재생, false면 정지
         player.setPlayWhenReady(playWhenReady);
+        Log.d("하하하하하하", "히히");
 
         Log.d("하하하", String.valueOf(player.getDuration()));
         seekBar.setProgress(10);
