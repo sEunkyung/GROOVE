@@ -78,7 +78,7 @@ public class Main_Home extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.42:3001/RecommendSong";
+        String url = "http://172.30.1.32:3001/RecommendSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -127,6 +127,26 @@ public class Main_Home extends Fragment {
                             gridLayoutManager = new GridLayoutManager(rootView.getContext(), 3, GridLayoutManager.HORIZONTAL, false);
                             mSongView.setLayoutManager(gridLayoutManager);	// 가로
 
+                            mSongView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                                @Override
+                                public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                                    return false;
+                                }
+
+                                @Override
+                                public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                                    View child = rv.findChildViewUnder(e.getX(), e.getY());
+                                    int position = rv.getChildAdapterPosition(child);
+                                    Log.d("포지션", String.valueOf(position));
+
+                                }
+
+                                @Override
+                                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                                }
+                            });
+
                             // 태그 곡 리사이클러뷰
                             mMainItemList = new ArrayList<>();
                             for(int i=0;i<tagNameArr.length;i++){
@@ -157,6 +177,7 @@ public class Main_Home extends Fragment {
 
                                 @Override
                                 public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+//                                    Toast.makeText(getContext(), "zzzzz", Toast.LENGTH_SHORT).show();
 
                                 }
 

@@ -84,7 +84,7 @@
         android:background="#FFFFFF"
         android:elevation="10dp">
 
-        <SeekBar
+        <androidx.appcompat.widget.AppCompatSeekBar
             android:id="@+id/seekBar_player"
             android:layout_width="300dp"
             android:layout_height="wrap_content"

@@ -1,12 +1,14 @@
 package com.example.groove.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSeekBar;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.database.Cursor;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,8 +31,10 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.example.groove.R;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.exoplayer2.upstream.RawResourceDataSource;
 
@@ -54,7 +58,7 @@ public class Music_Player extends AppCompatActivity {
             R.raw.song0, R.raw.song1};
     int index = 0;
     long test = 0;
-    SeekBar seekBar;
+    AppCompatSeekBar seekBar;
     PlayerControlView playerControlView;
     ImageButton music_play, music_next, music_pre;
 
@@ -135,6 +139,7 @@ public class Music_Player extends AppCompatActivity {
                     if(player.isPlaying()){
 
                         test  = player.getCurrentPosition();
+                        Log.d("지금포지션", String.valueOf(test));
                         player.pause();
                     }else{
                         if(test != 0){
@@ -217,11 +222,11 @@ public class Music_Player extends AppCompatActivity {
 
     private void initializePlayer(int pos){
 
-        Log.d("TestPod", String.valueOf(pos));
+        Log.d("인덱스값", String.valueOf(pos));
         player = new ExoPlayer.Builder(Music_Player.this).build();
         pvc.setPlayer(player);
 
-        String mp3Name = "2223050";
+        String mp3Name = "1414767";
         // com.example.프로젝트명.raw폴더의 mp3파일들의 리소스들을 찾는 것
 //        int musicID = this.getResources().getIdentifier("song1", "raw", this.getPackageName());
         // 내부저장소에 있는 파일 uri
@@ -231,19 +236,15 @@ public class Music_Player extends AppCompatActivity {
         Uri musicUri = Uri.fromFile(mp3File);
         // 바꾼 Uri를 exoplayer에 mediaitems 통해 미디어 항목 생성
         MediaItem mediaItems = MediaItem.fromUri(musicUri);
-
         // player에 미디어 항목을 세팅
-        player.seekTo(currentWindow, playbackPosition);
         player.setMediaItem(mediaItems);
         // player 준비
         player.prepare();
-        seekBar.setMax(100);
-
         // player가 준비가 됐고 playWhenReady가 true이면 재생, false면 정지
         player.setPlayWhenReady(playWhenReady);
-        Log.d("하하하하하하", "히히");
+        player.seekTo(currentWindow, playbackPosition);
 
-        Log.d("하하하", String.valueOf(player.getDuration()));
+        Log.d("노래길이가 잘 나오냐..?", String.valueOf(player.getTotalBufferedDuration()));
         seekBar.setProgress(10);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -257,7 +258,12 @@ public class Music_Player extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-        Log.d("길이가..?", String.valueOf(player.getContentPosition()));
+        Log.d("길이가..?", String.valueOf((float)player.getContentPosition()));
+        long dur = player.getDuration();
+
+        Log.d("길이가..?2", String.valueOf((int)dur/1000));
+
+        Log.d("전체길이가..?2", String.valueOf(player.getCurrentTimeline()));
 
     }
 }

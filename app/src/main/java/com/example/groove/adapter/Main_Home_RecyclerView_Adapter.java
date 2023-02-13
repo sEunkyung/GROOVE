@@ -2,10 +2,13 @@ package com.example.groove.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -89,6 +92,7 @@ public class Main_Home_RecyclerView_Adapter extends RecyclerView.Adapter<Recycle
             songName = itemView.findViewById(R.id.songName);
             artistName = itemView.findViewById(R.id.artistName);
             albumImg = itemView.findViewById(R.id.albumImg);
+
         }
     }
     public class MainTagViewHolder extends RecyclerView.ViewHolder {
