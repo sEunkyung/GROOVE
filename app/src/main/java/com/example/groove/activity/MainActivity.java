@@ -50,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
         String favart = intent.getStringExtra("favart");
         String recentsong = intent.getStringExtra("recentsong");
         String favsong = intent.getStringExtra("favsong");
+        String user_seq = intent.getStringExtra("user_seq");
         bundle.putString("nick", nick);
         bundle.putString("favart", favart);
         bundle.putString("recentsong", recentsong);
         bundle.putString("favsong", favsong);
+        bundle.putString("user_seq", user_seq);
 
 
 

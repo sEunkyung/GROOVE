@@ -1,11 +1,14 @@
 package com.example.groove.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatSeekBar;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Intent;
 import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -16,7 +19,9 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -61,10 +66,9 @@ public class Music_Player extends AppCompatActivity {
     AppCompatSeekBar seekBar;
     PlayerControlView playerControlView;
     ImageButton music_play, music_next, music_pre;
-
-
-
-
+    TextView play_title, play_artist;
+    ImageView img_player;
+    AppCompatImageButton btn_down, btn_heart;
 
     @Override
     protected void onStart() {
@@ -117,9 +121,58 @@ public class Music_Player extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_player_main);
+
+        btn_down = findViewById(R.id.btn_down);
+        btn_down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        // Main_Home에서 받아온 데이터
+        Intent intent = getIntent();
+        String song_id = intent.getStringExtra("song_id");
+        String song_title = intent.getStringExtra("song_title");
+        String artist_name = intent.getStringExtra("artist_name");
+        String album_img = intent.getStringExtra("album_img");
+        String song_lyrics = intent.getStringExtra("song_lyrics");
+        String bool_heart = intent.getStringExtra("lkies_date");
+
+        btn_heart = findViewById(R.id.btn_heart);
+        btn_heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(btn_heart.getTag().equals("heartoff")){
+                    btn_heart.setImageResource(R.drawable.img_heartxml);
+                    btn_heart.setTag("hearton");
+                } else{
+                    btn_heart.setImageResource(R.drawable.img_heart_emptyxml);
+                    btn_heart.setTag("heartoff");
+                }
+
+            }
+        });
+
+        if(bool_heart!=""){
+            btn_heart.setImageResource(R.drawable.img_heartxml);
+            btn_heart.setTag("hearton");
+        } else{
+            btn_heart.setImageResource(R.drawable.img_heart_emptyxml);
+            btn_heart.setTag("heartoff");
+        }
+
+        play_title = (TextView) findViewById(R.id.play_title);
+        play_artist = (TextView) findViewById(R.id.play_artist);
+        img_player = (ImageView) findViewById(R.id.img_player);
+
+        play_title.setText(song_title);
+        play_artist.setText(artist_name);
+        String imgfile = "album_" + album_img;
+        img_player.setImageResource(getResources().getIdentifier(imgfile,"drawable",getApplication().getPackageName() ));
+
         player = new ExoPlayer.Builder(this).build();
         pvc = findViewById(R.id.main_pcv);
-
 
         music_play = findViewById(R.id.music_play);
         music_pre = findViewById(R.id.music_pre);
@@ -131,7 +184,6 @@ public class Music_Player extends AppCompatActivity {
         playerControlView = findViewById(R.id.main_pcv);
         String mp3Name;
         music_play.setTag("재생");
-
         music_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,11 +274,14 @@ public class Music_Player extends AppCompatActivity {
 
     private void initializePlayer(int pos){
 
+        Intent intent = getIntent();
+        String song_id = intent.getStringExtra("song_id");
+
         Log.d("인덱스값", String.valueOf(pos));
         player = new ExoPlayer.Builder(Music_Player.this).build();
         pvc.setPlayer(player);
 
-        String mp3Name = "1414767";
+        String mp3Name = song_id;
         // com.example.프로젝트명.raw폴더의 mp3파일들의 리소스들을 찾는 것
 //        int musicID = this.getResources().getIdentifier("song1", "raw", this.getPackageName());
         // 내부저장소에 있는 파일 uri

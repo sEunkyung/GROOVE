@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -35,23 +36,36 @@ public class Movie_Player extends YouTubeBaseActivity {
     TextView tv_mvtitle, tv_lyrics;
     YouTubePlayer.OnInitializedListener listener;
     RequestQueue requestQueue;
-    String mv_title, mv_artist, mv_lyrics, mv_url;
+    AppCompatImageButton img_down;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_player);
 
+        // Main_Home에서 받아온 데이터
+        Intent intent = getIntent();
+        String art_id = intent.getStringExtra("art_id");
+
+
         youTubePlayerView = findViewById(R.id.pv_mv);
         tv_mvtitle = findViewById(R.id.tv_mvtitle);
         tv_lyrics = findViewById(R.id.tv_lyrics);
+        img_down = findViewById(R.id.img_down);
+
+        img_down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         // 서버로부터 video_url 테이블에서 데이터 가져와
         // 데이터를 화면에 띄워.
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://172.30.1.42:3001/MVplayer";
+        String url = "http://192.168.0.2:3001/MVplayer";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -117,6 +131,7 @@ public class Movie_Player extends YouTubeBaseActivity {
                 // 데이터를 key - value 형태로 만들어서 보내겠습니다
                 Map<String,String> params = new HashMap<String,String>();
                 // params -> key-value 형태로 만들어줌
+                params.put("artistid", art_id);
 
                 // key-value 로 만들어진 params 객체를 전송!
                 return params;
