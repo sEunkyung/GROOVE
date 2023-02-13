@@ -32,7 +32,7 @@ import java.util.Map;
 public class Movie_Player extends YouTubeBaseActivity {
 
     YouTubePlayerView youTubePlayerView;
-    TextView tv_mvtitle, tv_mvartist, tv_lyrics;
+    TextView tv_mvtitle, tv_lyrics;
     YouTubePlayer.OnInitializedListener listener;
     RequestQueue requestQueue;
     String mv_title, mv_artist, mv_lyrics, mv_url;
@@ -44,7 +44,6 @@ public class Movie_Player extends YouTubeBaseActivity {
 
         youTubePlayerView = findViewById(R.id.pv_mv);
         tv_mvtitle = findViewById(R.id.tv_mvtitle);
-        tv_mvartist = findViewById(R.id.tv_mvartist);
         tv_lyrics = findViewById(R.id.tv_lyrics);
 
         // 서버로부터 video_url 테이블에서 데이터 가져와
@@ -52,7 +51,7 @@ public class Movie_Player extends YouTubeBaseActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://192.168.0.2:3001/MVplayer";
+        String url = "http://172.30.1.42:3001/MVplayer";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -67,18 +66,15 @@ public class Movie_Player extends YouTubeBaseActivity {
 
                             String result = json.getString("result");
                             String lyrics = json.getString("lyrics");
-                            String artistName = json.getString("artistName");
                             String videoTitle = json.getString("videoTitle");
                             String videoUrl = json.getString("videoUrl");
 
                             Log.d("통신3", result);
-                            Log.d("아티스트", artistName);
                             Log.d("url주소", videoUrl);
 
                             // setText
                             videoUrl = videoUrl.replace("https://youtube.com/watch?v=", "");
                             tv_mvtitle.setText(videoTitle);
-                            tv_mvartist.setText(artistName);
                             tv_lyrics.setText(lyrics);
 
 

@@ -5,6 +5,13 @@ public class Main_Item {
     private String artistName;
     private int albumImg;
     private int viewType;
+    private String mvimg;
+
+    public Main_Item(String songName, int viewType, String mvimg) {
+        this.songName = songName;
+        this.viewType = viewType;
+        this.mvimg = mvimg;
+    }
 
     public Main_Item(String songName, String artistName, int albumImg) {
         this.songName = songName;
@@ -23,6 +30,14 @@ public class Main_Item {
         this.songName = songName;
         this.albumImg = albumImg;
         this.viewType = viewType;
+    }
+
+    public String getMvimg() {
+        return mvimg;
+    }
+
+    public void setMvimg(String mvimg) {
+        this.mvimg = mvimg;
     }
 
     public String getSongName() {

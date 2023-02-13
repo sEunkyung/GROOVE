@@ -3,11 +3,13 @@ package com.example.groove.fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -52,10 +54,10 @@ public class Main_Home extends Fragment {
     // 태그 정보(MySQL에서 받아온 데이터)
     String tagNameArr[] = new String[6];
     int tagImgArr[] = new int[6];
-
     // 뮤비 정보(MySQL에서 받아온 데이터)
-    String mvNameArr[] = new String[4];
-    int mvUrlArr[] = new int[4];
+    String mvNameArr[] = new String[9];
+    String mvUrlArr[] = new String[9];
+    String artArr[] = new String[9];
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
@@ -76,7 +78,7 @@ public class Main_Home extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://192.168.0.2:3001/RecommendSong";
+        String url = "http://172.30.1.42:3001/RecommendSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -92,12 +94,24 @@ public class Main_Home extends Fragment {
                             JSONArray song_title = json.getJSONArray("song_title");
                             JSONArray artist_name = json.getJSONArray("artist_name");
                             JSONArray album_img = json.getJSONArray("album_img");
+                            JSONArray mv_url = json.getJSONArray("video_url");
+                            JSONArray mv_tit = json.getJSONArray("video_title");
+                            JSONArray art_id = json.getJSONArray("artist_id");
 
                             for(int i=0; i<9; i++){
                                 songNameArr[i] = song_title.getString(i);
                                 artistNameArr[i] = artist_name.getString(i);
                                 String imgfile = "album_" + album_img.getInt(i);
                                 albumImgArr[i] =  getResources().getIdentifier(imgfile, "drawable", getActivity().getPackageName());
+                                String mvurl = (mv_url.getString(i));
+                                if(mvurl.contains("www")){
+                                    mvurl = mvurl.replace("https://www.youtube.com/watch?v=","");
+                                } else{
+                                    mvurl = mvurl.replace("https://youtube.com/watch?v=","");
+                                }
+                                mvUrlArr[i] = "https://img.youtube.com/vi/"+mvurl+"/maxresdefault.jpg";
+                                mvNameArr[i] = mv_tit.getString(i);
+                                artArr[i] = art_id.getString(i);
                             }
 
                             // 추천 곡 리사이클러뷰
@@ -125,13 +139,30 @@ public class Main_Home extends Fragment {
                             // 추천 뮤비 리사이클러뷰
                             mMainItemList = new ArrayList<>();
                             for(int i=0;i<mvNameArr.length;i++){
-                                mMainItemList.add(new Main_Item(mvNameArr[i], mvUrlArr[i], View_Type_Code.ViewType.THIRD_CONTENT));
+                                mMainItemList.add(new Main_Item(mvNameArr[i], View_Type_Code.ViewType.THIRD_CONTENT, mvUrlArr[i]));
                             }
                             mMvView = rootView.findViewById(R.id.list_mv);
                             mMainHomeRecyclerViewAdapter = new Main_Home_RecyclerView_Adapter(mMainItemList);
                             mMvView.setAdapter(mMainHomeRecyclerViewAdapter);
                             gridLayoutManager = new GridLayoutManager(rootView.getContext(), 1, GridLayoutManager.HORIZONTAL, false);
                             mMvView.setLayoutManager(gridLayoutManager);	// 가로
+
+                            mMvView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                                @Override
+                                public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                                    return false;
+                                }
+
+                                @Override
+                                public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+                                }
+
+                                @Override
+                                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                                }
+                            });
 
 
                         } catch (JSONException e) {
