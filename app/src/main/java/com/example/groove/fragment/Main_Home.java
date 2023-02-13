@@ -103,15 +103,17 @@ public class Main_Home extends Fragment {
                                 artistNameArr[i] = artist_name.getString(i);
                                 String imgfile = "album_" + album_img.getInt(i);
                                 albumImgArr[i] =  getResources().getIdentifier(imgfile, "drawable", getActivity().getPackageName());
-                                String mvurl = (mv_url.getString(i));
+                                String mvurl = mv_url.getString(i);
                                 if(mvurl.contains("www")){
                                     mvurl = mvurl.replace("https://www.youtube.com/watch?v=","");
                                 } else{
                                     mvurl = mvurl.replace("https://youtube.com/watch?v=","");
                                 }
+                                Log.d("유알엘", mvurl);
                                 mvUrlArr[i] = "https://img.youtube.com/vi/"+mvurl+"/maxresdefault.jpg";
                                 mvNameArr[i] = mv_tit.getString(i);
                                 artArr[i] = art_id.getString(i);
+                                Log.d("유알엘", mvUrlArr[i]);
                             }
 
                             // 추천 곡 리사이클러뷰

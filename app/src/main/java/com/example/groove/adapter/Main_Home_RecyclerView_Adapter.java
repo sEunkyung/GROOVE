@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.groove.R;
 import com.example.groove.data.Main_Item;
 import com.example.groove.data.View_Type_Code;
@@ -62,7 +63,8 @@ public class Main_Home_RecyclerView_Adapter extends RecyclerView.Adapter<Recycle
         } else{
             Main_Item item = mMainItemList.get(position);
             ((MainMvViewHolder) holder).mvName.setText(item.getSongName());
-            ((MainMvViewHolder) holder).mvImg.setImageResource(item.getAlbumImg());
+//            ((MainMvViewHolder) holder).mvImg.setImageResource(item.getAlbumImg());
+            Glide.with(holder.itemView).load(item.getMvimg()).into(((MainMvViewHolder) holder).mvImg);
         }
 
     }
