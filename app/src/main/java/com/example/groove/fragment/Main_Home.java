@@ -78,7 +78,6 @@ public class Main_Home extends Fragment {
         String favart = bundle.getString("favart");
         String recentsong = bundle.getString("recentsong");
         String favsong = bundle.getString("favsong");
-        String user_seq = bundle.getString("user_seq");
 
         txt_nick.setText(text+" 님을 위한,");
 
@@ -86,7 +85,7 @@ public class Main_Home extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://192.168.0.2:3001/RecommendSong";
+        String url = "http://172.30.1.32:3001/RecommendSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

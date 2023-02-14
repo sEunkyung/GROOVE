@@ -1,5 +1,8 @@
 package com.example.groove.activity;
 
+import static com.example.groove.activity.MainActivity.user_seq;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -33,6 +36,13 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
@@ -42,12 +52,19 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.exoplayer2.upstream.RawResourceDataSource;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 
 public class Music_Player extends AppCompatActivity {
@@ -69,6 +86,7 @@ public class Music_Player extends AppCompatActivity {
     TextView play_title, play_artist;
     ImageView img_player;
     AppCompatImageButton btn_down, btn_heart;
+    RequestQueue requestQueue;
 
     @Override
     protected void onStart() {
@@ -154,7 +172,7 @@ public class Music_Player extends AppCompatActivity {
             }
         });
 
-        if(bool_heart!=""){
+        if(bool_heart==""){
             btn_heart.setImageResource(R.drawable.img_heartxml);
             btn_heart.setTag("hearton");
         } else{
@@ -270,6 +288,57 @@ public class Music_Player extends AppCompatActivity {
             }
         });
         Log.d("ㅋㅋㅋgetPlayWhenReady", String.valueOf(player.getPlayWhenReady()));
+
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(getApplicationContext());
+        }
+        String url = "http://172.30.1.32:3001/InsertList";
+
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("통신", response);
+
+                        try {
+                            JSONObject json = new JSONObject(response);
+
+//                            String result = json.getString("result");
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("통신", "실패");
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                // getParams --> post 방식으로 데이터를 보낼 때 사용되는 메소드!
+                // 데이터를 key - value 형태로 만들어서 보내겠습니다
+                Map<String,String> params = new HashMap<String,String>();
+                // params -> key-value 형태로 만들어줌
+                params.put("user_seq", user_seq);
+                params.put("song_id", song_id);
+
+                // key-value 로 만들어진 params 객체를 전송!
+                return params;
+            }
+        };
+
+        requestQueue.add(request);
+
+
     }
 
     private void initializePlayer(int pos){

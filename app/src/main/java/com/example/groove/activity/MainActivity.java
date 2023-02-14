@@ -28,36 +28,43 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static ArrayList<String> song_list = new ArrayList<>();
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Main_Home fragmentHome = new Main_Home();
     private PlayList fragmentList = new PlayList();
     private MyMusic fragmentMyMusic = new MyMusic();
+
+    // 로그인 창에서 받아온 데이터
+    Bundle bundle = new Bundle();
+    Intent intent;
+    String nick, favart, recentsong, favsong;
+    public static String user_seq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_main_menu);
 
-        Bundle bundle = new Bundle();
-        // 로그인 창에서 받아온 데이터
-        Intent intent =getIntent();
-        String nick = intent.getStringExtra("nick");
-        String favart = intent.getStringExtra("favart");
-        String recentsong = intent.getStringExtra("recentsong");
-        String favsong = intent.getStringExtra("favsong");
-        String user_seq = intent.getStringExtra("user_seq");
+        intent = getIntent();
+        nick = intent.getStringExtra("nick");
+        favart = intent.getStringExtra("favart");
+        recentsong = intent.getStringExtra("recentsong");
+        favsong = intent.getStringExtra("favsong");
+        user_seq = intent.getStringExtra("user_seq");
+
+        song_list.addAll(intent.getStringArrayListExtra("song_list"));
+        Log.d("하하하", String.valueOf(song_list));
+
         bundle.putString("nick", nick);
         bundle.putString("favart", favart);
         bundle.putString("recentsong", recentsong);
         bundle.putString("favsong", favsong);
-        bundle.putString("user_seq", user_seq);
-
-
+        bundle.putStringArrayList("song_list", song_list);
 
         // 받아온 데이터 홈 프래그먼트에 보내기
         fragmentHome.setArguments(bundle);
@@ -67,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
+
+
     }
 
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {

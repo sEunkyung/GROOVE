@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,7 +73,7 @@ public class Login extends AppCompatActivity {
                 String inputId = login_id.getText().toString();
                 String inputPw = login_pw.getText().toString();
 
-                String url = "http://192.168.0.2:3001/Login";
+                String url = "http://172.30.1.32:3001/Login";
 
                 StringRequest request = new StringRequest(
                         Request.Method.POST,
@@ -93,7 +94,11 @@ public class Login extends AppCompatActivity {
                                     String recentsong = json.getString("recentSong");
                                     String favsong = json.getString("favSong");
                                     String user_seq = json.getString("user_seq");
-
+                                    JSONArray song_list2 = json.getJSONArray("song_list");
+                                    ArrayList<String> song_list = new ArrayList<String>();
+                                    for(int i=0; i<song_list2.length(); i++){
+                                        song_list.add(song_list2.getString(i));
+                                    }
                                     Log.d("로그인여부", result);
                                     Log.d("닉네임", nick);
                                     Log.d("선호 아티스트", favart);
@@ -112,6 +117,8 @@ public class Login extends AppCompatActivity {
                                             intent.putExtra("favart", favart);
                                             intent.putExtra("recentsong", recentsong);
                                             intent.putExtra("favsong", favsong);
+                                            intent.putExtra("user_seq", user_seq);
+                                            intent.putExtra("song_list", song_list);
                                             intent.putExtra("user_seq", user_seq);
                                         }
                                         startActivity(intent);
