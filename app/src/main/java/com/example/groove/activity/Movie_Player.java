@@ -65,7 +65,7 @@ public class Movie_Player extends YouTubeBaseActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://172.30.1.32:3001/MVplayer";
+        String url = "http://172.30.1.31:3001/MVplayer";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -77,24 +77,18 @@ public class Movie_Player extends YouTubeBaseActivity {
 
                         try {
                             JSONObject json = new JSONObject(response);
-
                             String result = json.getString("result");
                             String lyrics = json.getString("lyrics");
                             String videoTitle = json.getString("videoTitle");
                             String videoUrl = json.getString("videoUrl");
-
                             Log.d("통신3", result);
                             Log.d("url주소", videoUrl);
-
                             // setText
                             videoUrl = videoUrl.replace("https://youtube.com/watch?v=", "");
                             tv_mvtitle.setText(videoTitle);
                             tv_lyrics.setText(lyrics);
-
-
                             // 유튜브 영상 띄우기
                             String finalVideoUrl = videoUrl;
-
                             listener = new YouTubePlayer.OnInitializedListener() {
                                 @Override
                                 public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
@@ -102,16 +96,11 @@ public class Movie_Player extends YouTubeBaseActivity {
                                     //https://www.youtube.com/watch?v=bLoO0FSXncg 유투브에서 v="" 이부분이 키에 해당
                                     //https://www.youtube.com/watch?v=Fs_p7BHfzO0
                                 }
-
                                 @Override
                                 public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
                                 }
                             };
-
                             youTubePlayerView.initialize("AIzaSyA9TRnQ1Lyszy2USJsb-1J4NujODTQZo7I", listener);
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

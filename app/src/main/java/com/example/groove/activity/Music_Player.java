@@ -1,5 +1,6 @@
 package com.example.groove.activity;
 
+import static com.example.groove.activity.MainActivity.song_list;
 import static com.example.groove.activity.MainActivity.user_seq;
 
 import androidx.annotation.Nullable;
@@ -55,6 +56,7 @@ import com.google.android.exoplayer2.upstream.RawResourceDataSource;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,6 +65,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -158,28 +161,6 @@ public class Music_Player extends AppCompatActivity {
         String bool_heart = intent.getStringExtra("lkies_date");
 
         btn_heart = findViewById(R.id.btn_heart);
-        btn_heart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(btn_heart.getTag().equals("heartoff")){
-                    btn_heart.setImageResource(R.drawable.img_heartxml);
-                    btn_heart.setTag("hearton");
-                } else{
-                    btn_heart.setImageResource(R.drawable.img_heart_emptyxml);
-                    btn_heart.setTag("heartoff");
-                }
-
-            }
-        });
-
-        if(bool_heart==""){
-            btn_heart.setImageResource(R.drawable.img_heartxml);
-            btn_heart.setTag("hearton");
-        } else{
-            btn_heart.setImageResource(R.drawable.img_heart_emptyxml);
-            btn_heart.setTag("heartoff");
-        }
-
         play_title = (TextView) findViewById(R.id.play_title);
         play_artist = (TextView) findViewById(R.id.play_artist);
         img_player = (ImageView) findViewById(R.id.img_player);
@@ -253,13 +234,6 @@ public class Music_Player extends AppCompatActivity {
                     index = 0;
                 }
                 initializePlayer(index);
-//                releasePlayer(0);
-//                index += 1;
-//                if (index >= array.length){
-//                    index = 0;
-//                }
-//                // playbackPosition = 0; // 다음 곡으로 넘어가면 처음부터 시작
-//                initializePlayer(index);
             }
         });
         // 이전 곡
@@ -278,13 +252,6 @@ public class Music_Player extends AppCompatActivity {
                     index = array.length-1;
                 }
                 initializePlayer(index);
-//                releasePlayer(0);
-//                index -= 1;
-//                if (index < 0){
-//                    index = array.length-1;
-//                }
-//                //playbackPosition = 0; // 다음 곡으로 넘어가면 처음부터 시작
-//                initializePlayer(index);
             }
         });
         Log.d("ㅋㅋㅋgetPlayWhenReady", String.valueOf(player.getPlayWhenReady()));
@@ -292,7 +259,7 @@ public class Music_Player extends AppCompatActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://172.30.1.32:3001/InsertList";
+        String url = "http://172.30.1.31:3001/InsertList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -305,9 +272,40 @@ public class Music_Player extends AppCompatActivity {
                         try {
                             JSONObject json = new JSONObject(response);
 
-//                            String result = json.getString("result");
+                            JSONArray song_list2 = json.getJSONArray("song_list");
 
+                            btn_heart.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if(btn_heart.getTag().equals("heartoff")){
+                                        btn_heart.setImageResource(R.drawable.img_heartxml);
+                                        btn_heart.setTag("hearton");
+                                    } else{
+                                        btn_heart.setImageResource(R.drawable.img_heart_emptyxml);
+                                        btn_heart.setTag("heartoff");
+                                    }
 
+                                }
+                            });
+
+                            if(bool_heart==""){
+                                btn_heart.setImageResource(R.drawable.img_heartxml);
+                                btn_heart.setTag("hearton");
+                            } else{
+                                btn_heart.setImageResource(R.drawable.img_heart_emptyxml);
+                                btn_heart.setTag("heartoff");
+                            }
+
+                            if(!song_list.isEmpty()){
+                                song_list.clear();
+                            }
+                            Log.d("왜요?", String.valueOf(song_list));
+                            Log.d("왜요?", String.valueOf(song_list2));
+                            for(int i=0; i<song_list2.length(); i++){
+                                song_list.add(song_list2.getString(i));
+                            }
+                            Log.d("여기리스트는", String.valueOf(song_list.size()));
+                            Log.d("왜요?", String.valueOf(song_list));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -350,6 +348,8 @@ public class Music_Player extends AppCompatActivity {
         player = new ExoPlayer.Builder(Music_Player.this).build();
         pvc.setPlayer(player);
 
+        Log.d("하하하하하",song_id);
+        Log.d("하하하하하",song_list.get(0));
         String mp3Name = song_id;
         // com.example.프로젝트명.raw폴더의 mp3파일들의 리소스들을 찾는 것
 //        int musicID = this.getResources().getIdentifier("song1", "raw", this.getPackageName());

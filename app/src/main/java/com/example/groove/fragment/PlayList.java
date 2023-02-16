@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,7 +72,7 @@ public class PlayList extends Fragment {
         tv_pl_title = view.findViewById(R.id.tv_pl_title);
 
         playlist = view.findViewById(R.id.like_menuList);
-        dataArray = new ArrayList<Main_Item>();
+
         tv_pl_title.setText("재생목록");
         Log.d("하하하하하하하핳하하하ㅏ하하하하하하하", String.valueOf(song_list));
 
@@ -78,7 +80,7 @@ public class PlayList extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.32:3001/SongList";
+        String url = "http://172.30.1.31:3001/SongList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -90,24 +92,39 @@ public class PlayList extends Fragment {
 
                         try {
                             JSONObject json = new JSONObject(response);
-                            Log.d("키키", String.valueOf(response));
                             JSONArray song_title = json.getJSONArray("song_title");
                             JSONArray artist_name = json.getJSONArray("artist_name");
                             JSONArray album_img = json.getJSONArray("album_img");
+                            JSONArray song_lyrics = json.getJSONArray("song_lyrics");
 
-                            Log.d("하하하", song_title.getString(0));
+                            dataArray = new ArrayList<Main_Item>();
                             // 재생목록 리스트뷰
-                            for (int i = 0; i < song_list.size(); i++) {
-                                tit_arr.add(song_title.getString(i));
-                                art_arr.add(artist_name.getString(i));
-                                String imgfile = "album_" + album_img.getInt(i);
-                                img_arr.add(getResources().getIdentifier(imgfile, "drawable", getActivity().getPackageName()));
-                                Log.d("타이틀봅시다", tit_arr.get(i));
-                                dataArray.add(new Main_Item(tit_arr.get(i), art_arr.get(i), img_arr.get(i)));
+                            for (int i = 0; i < song_title.length(); i++) {
+                                dataArray.add(new Main_Item(song_title.getString(i), artist_name.getString(i), getResources().getIdentifier("album_"+ album_img.get(i), "drawable", getActivity().getPackageName())));
                             }
+
                             adapter = new PlayList_Adapter(getActivity().getApplicationContext(), R.layout.item_playlist, dataArray);
                             playlist.setAdapter(adapter);
 
+                            playlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    try {
+
+                                        Log.d("카카카카", String.valueOf(adapterView.getAdapter().getItem(i)));
+                                        Intent intent = new Intent(getActivity(), Music_Player.class);
+                                        intent.putExtra("song_id", song_list.get(i));
+                                        intent.putExtra("song_title", song_title.getString(i));
+                                        intent.putExtra("artist_name", artist_name.getString(i));
+                                        intent.putExtra("album_img", album_img.getString(i));
+                                        intent.putExtra("song_lyrics", song_lyrics.getString(i));
+                                        startActivity(intent);
+
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();

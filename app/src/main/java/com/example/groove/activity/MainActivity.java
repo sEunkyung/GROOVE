@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         favsong = intent.getStringExtra("favsong");
         user_seq = intent.getStringExtra("user_seq");
 
-        song_list.addAll(intent.getStringArrayListExtra("song_list"));
+        song_list = intent.getStringArrayListExtra("song_list");
         Log.d("하하하", String.valueOf(song_list));
 
         bundle.putString("nick", nick);

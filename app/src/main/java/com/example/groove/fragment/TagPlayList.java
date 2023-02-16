@@ -36,7 +36,6 @@ public class TagPlayList extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_taglist, container, false);
 
-
         btn_pre = view.findViewById(R.id.btn_pre3);
         img_playlist = view.findViewById(R.id.img_playlist);
         pl_title = view.findViewById(R.id.pl_title);
@@ -44,16 +43,11 @@ public class TagPlayList extends Fragment {
         menulist = view.findViewById(R.id.play_menuList);
         dataArray = new ArrayList<Main_Item>();
 
-        //
         for (int i = 0; i < 1; i++) {
             dataArray.add(new Main_Item(tit_arr[i], art_arr[i], img_arr[i]));
         }
-
         adapter = new PlayList_Adapter(getActivity().getApplicationContext(), R.layout.item_playlist, dataArray);
-
         menulist.setAdapter(adapter);
-
-        // Inflate the layout for this fragment
         return view;
     }
 
