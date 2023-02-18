@@ -27,6 +27,7 @@ import com.example.groove.R;
 import com.example.groove.activity.Fav_Artist_Selection;
 import com.example.groove.activity.Movie_Player;
 import com.example.groove.activity.Music_Player;
+import com.example.groove.activity.TagPlayList;
 import com.example.groove.adapter.Main_Home_RecyclerView_Adapter;
 import com.example.groove.data.Main_Item;
 import com.example.groove.data.RecyclerItemClickListener;
@@ -58,8 +59,8 @@ public class Main_Home extends Fragment {
     String artistNameArr[] = new String[9];
     int albumImgArr[] = new int[9];
     // 태그 정보(MySQL에서 받아온 데이터)
-    String tagNameArr[] = new String[6];
-    int tagImgArr[] = new int[6];
+    String tagNameArr[] = {"드라이브", "노동요", "헬스, 런닝", "요가, 필라테스", "데이트", "이별"};
+    int tagImgArr[] = {R.drawable.tag_drive, R.drawable.tag_work, R.drawable.tag_health, R.drawable.tag_yoga, R.drawable.tag_date, R.drawable.tag_sad};
     // 뮤비 정보(MySQL에서 받아온 데이터)
     String mvNameArr[] = new String[9];
     String mvUrlArr[] = new String[9];
@@ -164,6 +165,24 @@ public class Main_Home extends Fragment {
                             mTagView.setAdapter(mMainHomeRecyclerViewAdapter);
                             gridLayoutManager = new GridLayoutManager(rootView.getContext(), 1, GridLayoutManager.HORIZONTAL, false);
                             mTagView.setLayoutManager(gridLayoutManager);	// 가로
+
+                            mTagView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), mTagView, new RecyclerItemClickListener.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View view, int position) throws JSONException {
+
+                                    Intent intent = new Intent(getActivity(), TagPlayList.class);
+                                    intent.putExtra("tagName", tagNameArr[position]);
+                                    Log.d("카카카", String.valueOf(tagImgArr[position]));
+                                    Log.d("zzz카카", String.valueOf(R.drawable.tag_drive));
+                                    intent.putExtra("tagImg", tagImgArr[position]);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onLongItemClick(View view, int position) {
+
+                                }
+                            }));
 
                             // 추천 뮤비 리사이클러뷰
                             mMainItemList = new ArrayList<>();

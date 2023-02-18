@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
-    tools:context=".fragment.TagPlayList">
+    tools:context=".activity.TagPlayList">
 
     <ImageView
         android:id="@+id/img_album_pl"
