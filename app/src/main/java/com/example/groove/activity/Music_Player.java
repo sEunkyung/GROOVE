@@ -259,7 +259,7 @@ public class Music_Player extends AppCompatActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://192.168.0.2:3001/InsertList";
+        String url = "http://172.30.1.42:3001/InsertList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -299,7 +299,7 @@ public class Music_Player extends AppCompatActivity {
                                     if (requestQueue == null) {
                                         requestQueue = Volley.newRequestQueue(getApplicationContext());
                                     }
-                                    String url = "http://192.168.0.2:3001/LikesAdd";
+                                    String url = "http://172.30.1.42:3001/LikesAdd";
 
                                     StringRequest request = new StringRequest(
                                             Request.Method.POST,

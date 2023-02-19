@@ -28,19 +28,26 @@
             android:id="@+id/play_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="153dp"
             android:layout_marginTop="50dp"
+            android:layout_marginStart="53dp"
+            android:layout_marginBottom="4dp"
+            android:textAlignment="center"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="TextView"
             android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/btn_heart"
+            app:layout_constraintBottom_toTopOf="@+id/play_artist"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="153dp" />
 
         <TextView
             android:id="@+id/play_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
             android:text="TextView"
             android:textSize="18dp"
@@ -71,7 +78,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.45"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/play_title"
+            app:layout_constraintTop_toBottomOf="@+id/play_artist"
             app:layout_constraintVertical_bias="0.897"
             app:srcCompat="@drawable/album_1664" />
 

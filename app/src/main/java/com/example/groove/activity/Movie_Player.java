@@ -65,7 +65,7 @@ public class Movie_Player extends YouTubeBaseActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://192.168.0.2:3001/MVplayer";
+        String url = "http://172.30.1.42:3001/MVplayer";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

@@ -20,11 +20,13 @@
         android:id="@+id/songName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="18dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         app:layout_constraintStart_toEndOf="@+id/albumImg"
         app:layout_constraintTop_toTopOf="@+id/albumImg" />
 
@@ -36,6 +38,8 @@
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="18dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         app:layout_constraintEnd_toEndOf="@+id/songName"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/songName"
