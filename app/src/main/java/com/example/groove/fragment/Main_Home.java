@@ -1,5 +1,7 @@
 package com.example.groove.fragment;
 
+import static com.example.groove.activity.MainActivity.user_seq;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -146,6 +148,7 @@ public class Main_Home extends Fragment {
                                             intent.putExtra("artist_name", artist_name.getString(position));
                                             intent.putExtra("album_img", album_img.getString(position));
                                             intent.putExtra("song_lyrics", song_lyrics.getString(position));
+                                            intent.putExtra("user_seq", user_seq);
                                             startActivity(intent);
                                         }
 

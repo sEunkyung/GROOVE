@@ -98,12 +98,14 @@ public class Login extends AppCompatActivity {
                                     ArrayList<String> song_list = new ArrayList<String>();
                                     for(int i=0; i<song_list2.length(); i++){
                                         song_list.add(song_list2.getString(i));
+                                        Log.d("들어가고있니?", String.valueOf(song_list.get(i)));
                                     }
                                     Log.d("로그인여부", result);
                                     Log.d("닉네임", nick);
                                     Log.d("선호 아티스트", favart);
                                     Log.d("최근 들은 곡", recentsong);
                                     Log.d("선호 곡", favsong);
+
 
                                     // 로그인 성공했을 때 선호 아티스트가 null이면 선호 아티스트로 창으로 아니면 메인 창으로
                                     if(result.equals("로그인 성공")){

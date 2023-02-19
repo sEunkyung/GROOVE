@@ -270,23 +270,12 @@ public class Music_Player extends AppCompatActivity {
                         Log.d("통신", response);
 
                         try {
+
+
+
                             JSONObject json = new JSONObject(response);
 
                             JSONArray song_list2 = json.getJSONArray("song_list");
-
-                            btn_heart.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    if(btn_heart.getTag().equals("heartoff")){
-                                        btn_heart.setImageResource(R.drawable.img_heartxml);
-                                        btn_heart.setTag("hearton");
-                                    } else{
-                                        btn_heart.setImageResource(R.drawable.img_heart_emptyxml);
-                                        btn_heart.setTag("heartoff");
-                                    }
-
-                                }
-                            });
 
                             if(bool_heart==""){
                                 btn_heart.setImageResource(R.drawable.img_heartxml);
@@ -303,6 +292,73 @@ public class Music_Player extends AppCompatActivity {
                                 song_list.add(song_list2.getString(i));
                             }
 
+                            btn_heart.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    if (requestQueue == null) {
+                                        requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                    }
+                                    String url = "http://192.168.0.2:3001/LikesAdd";
+
+                                    StringRequest request = new StringRequest(
+                                            Request.Method.POST,
+                                            url,
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    Log.d("통신", response);
+
+                                                    try {
+                                                        JSONObject json = new JSONObject(response);
+
+                                                        JSONArray song_list2 = json.getJSONArray("song_list");
+
+                                                        btn_heart.setOnClickListener(new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View view) {
+
+
+                                                                if(btn_heart.getTag().equals("heartoff")){
+                                                                    btn_heart.setImageResource(R.drawable.img_heartxml);
+                                                                    btn_heart.setTag("hearton");
+                                                                } else{
+                                                                    btn_heart.setImageResource(R.drawable.img_heart_emptyxml);
+                                                                    btn_heart.setTag("heartoff");
+                                                                }
+
+                                                            }
+                                                        });
+
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    Log.d("통신", "실패");
+                                                }
+                                            }
+                                    ){
+                                        @Nullable
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            // getParams --> post 방식으로 데이터를 보낼 때 사용되는 메소드!
+                                            // 데이터를 key - value 형태로 만들어서 보내겠습니다
+                                            Map<String,String> params = new HashMap<String,String>();
+                                            // params -> key-value 형태로 만들어줌
+                                            params.put("user_seq", user_seq);
+                                            params.put("song_id", song_id);
+
+                                            // key-value 로 만들어진 params 객체를 전송!
+                                            return params;
+                                        }
+                                    };
+                                    requestQueue.add(request);
+                                }
+                            });
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -324,7 +380,7 @@ public class Music_Player extends AppCompatActivity {
                 // params -> key-value 형태로 만들어줌
                 params.put("user_seq", user_seq);
                 params.put("song_id", song_id);
-                params.put("bool_heart", bool_heart);
+//                params.put("bool_heart", bool_heart);
 
                 // key-value 로 만들어진 params 객체를 전송!
                 return params;
