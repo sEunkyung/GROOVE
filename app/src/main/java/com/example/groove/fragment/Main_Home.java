@@ -78,6 +78,7 @@ public class Main_Home extends Fragment {
         String favart = bundle.getString("favart");
         String recentsong = bundle.getString("recentsong");
         String favsong = bundle.getString("favsong");
+        String user_seq = bundle.getString("user_seq");
 
         txt_nick.setText(text+" 님을 위한,");
 
@@ -85,7 +86,7 @@ public class Main_Home extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.31:3001/RecommendSong";
+        String url = "http://172.30.1.49:3001/RecommendSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -106,6 +107,7 @@ public class Main_Home extends Fragment {
                             JSONArray art_id = json.getJSONArray("artist_id");
                             JSONArray song_id = json.getJSONArray("song_id");
                             JSONArray song_lyrics = json.getJSONArray("song_lyrics");
+
 
                             for(int i=0; i<9; i++){
                                 songNameArr[i] = song_title.getString(i);
@@ -215,6 +217,7 @@ public class Main_Home extends Fragment {
                 params.put("recSong", recentsong);
                 params.put("favSong", favsong);
                 params.put("favArt", favart);
+                params.put("user_seq", user_seq);
 
 
 
