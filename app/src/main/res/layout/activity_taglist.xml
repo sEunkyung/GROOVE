@@ -32,26 +32,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="370dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="수록곡"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_marginStart="17dp"
-            android:layout_marginTop="0dp" />
+            android:layout_marginTop="0dp"
+            android:text="수록곡"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/play_menuList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:dividerHeight="0px"
-            android:divider="#ffffff" />
+            android:divider="#ffffff"
+            android:dividerHeight="0px" />
 
     </LinearLayout>
 
