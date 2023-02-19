@@ -1,11 +1,14 @@
 package com.example.groove.activity;
 
+import static com.example.groove.activity.MainActivity.song_list;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -80,7 +83,7 @@ public class TagPlayList extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://172.30.1.31:3001/TagList";
+        String url = "http://192.168.0.2:3001/TagList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -95,13 +98,36 @@ public class TagPlayList extends AppCompatActivity {
                             JSONArray song_title = json.getJSONArray("song_title");
                             JSONArray artist_name = json.getJSONArray("artist_name");
                             JSONArray album_img = json.getJSONArray("album_img");
+                            JSONArray song_id = json.getJSONArray("song_id");
+                            JSONArray song_lyrics = json.getJSONArray("song_lyrics");
+
 
                             dataArray = new ArrayList<Main_Item>();
                             for (int i = 0; i < song_title.length(); i++) {
-                                dataArray.add(new Main_Item(song_title.getString(i), artist_name.getString(i), album_img.getInt(i)));
+                                dataArray.add(new Main_Item(song_title.getString(i), artist_name.getString(i), getResources().getIdentifier("album_"+ album_img.get(i), "drawable", getApplicationContext().getPackageName())));
                             }
                             adapter = new PlayList_Adapter(getApplicationContext().getApplicationContext(), R.layout.item_playlist, dataArray);
                             menulist.setAdapter(adapter);
+
+                            menulist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    try {
+
+                                    Intent intent = new Intent(getApplicationContext(), Music_Player.class);
+                                    intent.putExtra("song_id", song_id.getString(i));
+                                    intent.putExtra("song_title", song_title.getString(i));
+                                    intent.putExtra("artist_name", artist_name.getString(i));
+                                    intent.putExtra("album_img", album_img.getString(i));
+                                    intent.putExtra("song_lyrics", song_lyrics.getString(i));
+                                    startActivity(intent);
+
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+
+                                }
+                            });
 
 
                         } catch (JSONException e) {

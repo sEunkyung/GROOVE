@@ -259,7 +259,7 @@ public class Music_Player extends AppCompatActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://172.30.1.49:3001/InsertList";
+        String url = "http://192.168.0.2:3001/InsertList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -299,13 +299,9 @@ public class Music_Player extends AppCompatActivity {
                             if(!song_list.isEmpty()){
                                 song_list.clear();
                             }
-                            Log.d("왜요?", String.valueOf(song_list));
-                            Log.d("왜요?", String.valueOf(song_list2));
                             for(int i=0; i<song_list2.length(); i++){
                                 song_list.add(song_list2.getString(i));
                             }
-                            Log.d("여기리스트는", String.valueOf(song_list.size()));
-                            Log.d("왜요?", String.valueOf(song_list));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -328,6 +324,7 @@ public class Music_Player extends AppCompatActivity {
                 // params -> key-value 형태로 만들어줌
                 params.put("user_seq", user_seq);
                 params.put("song_id", song_id);
+                params.put("bool_heart", bool_heart);
 
                 // key-value 로 만들어진 params 객체를 전송!
                 return params;
@@ -368,7 +365,6 @@ public class Music_Player extends AppCompatActivity {
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow, playbackPosition);
 
-        Log.d("노래길이가 잘 나오냐..?", String.valueOf(player.getTotalBufferedDuration()));
         seekBar.setProgress(10);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
