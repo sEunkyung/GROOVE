@@ -259,7 +259,7 @@ public class Music_Player extends AppCompatActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://172.30.1.42:3001/InsertList";
+        String url = "http://192.168.0.2:3001/InsertList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -271,13 +271,12 @@ public class Music_Player extends AppCompatActivity {
 
                         try {
 
-
-
                             JSONObject json = new JSONObject(response);
 
                             JSONArray song_list2 = json.getJSONArray("song_list");
-
-                            if(bool_heart==""){
+                            int bool_heart = json.getInt("bool_likes");
+                            Log.d("좋아요정보", String.valueOf(bool_heart));
+                            if(bool_heart==1){
                                 btn_heart.setImageResource(R.drawable.img_heartxml);
                                 btn_heart.setTag("hearton");
                             } else{
@@ -296,10 +295,18 @@ public class Music_Player extends AppCompatActivity {
                                 @Override
                                 public void onClick(View view) {
 
+                                    if(btn_heart.getTag().equals("heartoff")){
+                                        btn_heart.setImageResource(R.drawable.img_heartxml);
+                                        btn_heart.setTag("hearton");
+                                    } else{
+                                        btn_heart.setImageResource(R.drawable.img_heart_emptyxml);
+                                        btn_heart.setTag("heartoff");
+                                    }
+
                                     if (requestQueue == null) {
                                         requestQueue = Volley.newRequestQueue(getApplicationContext());
                                     }
-                                    String url = "http://172.30.1.42:3001/LikesAdd";
+                                    String url = "http://192.168.0.2:3001/LikesAdd";
 
                                     StringRequest request = new StringRequest(
                                             Request.Method.POST,
@@ -311,24 +318,8 @@ public class Music_Player extends AppCompatActivity {
 
                                                     try {
                                                         JSONObject json = new JSONObject(response);
-
-                                                        JSONArray song_list2 = json.getJSONArray("song_list");
-
-                                                        btn_heart.setOnClickListener(new View.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(View view) {
-
-
-                                                                if(btn_heart.getTag().equals("heartoff")){
-                                                                    btn_heart.setImageResource(R.drawable.img_heartxml);
-                                                                    btn_heart.setTag("hearton");
-                                                                } else{
-                                                                    btn_heart.setImageResource(R.drawable.img_heart_emptyxml);
-                                                                    btn_heart.setTag("heartoff");
-                                                                }
-
-                                                            }
-                                                        });
+                                                        String results = json.getString("results");
+                                                        Log.d("결과", results);
 
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();
