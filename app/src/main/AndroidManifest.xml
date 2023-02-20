@@ -30,8 +30,6 @@
         <activity
             android:name=".activity.Motion"
             android:exported="false">
-
-
         </activity>
         <activity
             android:name=".activity.Music_Player"

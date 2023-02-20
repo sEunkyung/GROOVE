@@ -2,8 +2,6 @@ package com.example.groove.fragment;
 
 import static com.example.groove.activity.MainActivity.user_seq;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,11 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +22,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
-import com.example.groove.activity.MainActivity;
 import com.example.groove.activity.Music_Player;
 import com.example.groove.adapter.MyMusic_RecyclerView_Adapter;
 import com.example.groove.data.Main_Item;
@@ -52,68 +46,34 @@ public class MyMusic extends Fragment {
     private MyMusic_RecyclerView_Adapter mMusicListAdapter;
     GridLayoutManager gridLayoutManager;
 
-    AppCompatImageButton btn_pre, ImageView;
-
     // 최근 정보(MySQL에서 받아온 데이터)
-//    private String songNameArr[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-//    private int albumImgArr[] = {R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152,
-//            R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152,
-//            R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152};
     private String songNameArr[] = new String[4];
     private int albumImgArr[] = new int[4];
 
 
     // 좋아요 정보(MySQL에서 받아온 데이터)
-    private String songNameArr2[] = {"11", "12", "13", "14", "15", "16", "17", "18", "19", "20"};
-    private int albumImgArr2[] = {R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152,
-            R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152,
-            R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152};
+    ArrayList<String> songNameArr2 = new ArrayList<>();;
+    ArrayList<Integer> albumImgArr2 = new ArrayList<>();;
 
     // 선호 아티스트 정보(MySQL에서 받아온 데이터, 유저정보)
-    private String songNameArr3[] = {"21", "22", "23", "24", "25", "26", "27", "28", "29", "30"};
-    private int albumImgArr3[] = {R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152,
-            R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152,
-            R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152};
-
+    private String songNameArr3[] = new String[3];
+    private int albumImgArr3[] = new int[3];
+//    ArrayList<String> songNameArr3 = new ArrayList<>();;
+//    ArrayList<Integer> albumImgArr3 = new ArrayList<>();;
     RequestQueue requestQueue;
 
-    MainActivity mainActivity;
-
-    // 화면이 붙을 때 작동하는 메소드
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mainActivity = (MainActivity) getActivity();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mainActivity = null;
-    }
-
-    @SuppressLint("MissingInflatedId")
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mymusic, container, false);
-        btn_pre = rootView.findViewById(R.id.btn_pre);
-        btn_pre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), Main_Home.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                startActivity(intent);
-                mainActivity.onChangeFragment(0);
-            }
-        });
+
 
 
         if (requestQueue == null){
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.49:3001/RecentSong";
+        String url = "http://172.30.1.31:3001/RecentSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -126,7 +86,11 @@ public class MyMusic extends Fragment {
                             JSONObject json = new JSONObject(response);
                             Log.d("최근에 뭘 들었나", String.valueOf(response));
                             JSONArray song_title = json.getJSONArray("song_title");
-                            JSONArray album_img = json.getJSONArray("album_id");
+                            JSONArray album_img = json.getJSONArray("album_img");
+                            JSONArray song_title_likes = json.getJSONArray("song_title_likes");
+                            JSONArray album_img_likes = json.getJSONArray("album_img_likes");
+                            JSONArray fav_id = json.getJSONArray("fav_id");
+                            JSONArray fav_name = json.getJSONArray("fav_name");
 
                             for (int i=0; i<4; i++){
                                 songNameArr[i] = song_title.getString(i);
@@ -155,17 +119,14 @@ public class MyMusic extends Fragment {
                                     intent.putExtra("album_img", album_img.getString(position));
                                     startActivity(intent);
                                 }
-
                                 @Override
                                 public void onLongItemClick(View view, int position) {
-
                                 }
                             }));
-
                             // 좋아요한 곡 리사이클러뷰
                             mMusicItemList = new ArrayList<>();
-                            for(int i=0;i<10;i++){
-                                mMusicItemList.add(new Main_Item(songNameArr2[i], albumImgArr2[i], View_Type_Code.ViewType.SECOND_CONTENT));
+                            for(int i=0;i<album_img_likes.length();i++){
+                                mMusicItemList.add(new Main_Item(song_title_likes.getString(i), getResources().getIdentifier("album_"+ album_img_likes.getInt(i), "drawable", getActivity().getPackageName()), View_Type_Code.ViewType.SECOND_CONTENT));
                             }
                             mLikeView = rootView.findViewById(R.id.list_likesong);
                             mMusicListAdapter = new MyMusic_RecyclerView_Adapter(mMusicItemList);
@@ -175,8 +136,8 @@ public class MyMusic extends Fragment {
 
                             // 선호 아티스트 선택 리사이클러뷰
                             mMusicItemList = new ArrayList<>();
-                            for(int i=0;i<10;i++){
-                                mMusicItemList.add(new Main_Item(songNameArr3[i], albumImgArr3[i], View_Type_Code.ViewType.THIRD_CONTENT));
+                            for(int i=0;i<3;i++){
+                                mMusicItemList.add(new Main_Item(fav_name.getString(i), getResources().getIdentifier("artist_"+ fav_id.getInt(i), "drawable", getActivity().getPackageName()), View_Type_Code.ViewType.THIRD_CONTENT));
                             }
                             mFavArtistView = rootView.findViewById(R.id.list_favartist);
                             mMusicListAdapter = new MyMusic_RecyclerView_Adapter(mMusicItemList);
@@ -214,7 +175,5 @@ public class MyMusic extends Fragment {
 
         return rootView;
     }
-
-
 
 }

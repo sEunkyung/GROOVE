@@ -95,13 +95,13 @@ public class PlayList extends Fragment {
         playlist = view.findViewById(R.id.like_menuList);
 
         tv_pl_title.setText("재생목록");
-        Log.d("하하하하하하하핳하하하ㅏ하하하하하하하", String.valueOf(song_list));
+        Log.d("하하하하하하하하하하하하하하하하하", String.valueOf(song_list));
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.49:3001/SongList";
+        String url = "http://172.30.1.31:3001/SongList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -121,7 +121,7 @@ public class PlayList extends Fragment {
                             dataArray = new ArrayList<Main_Item>();
                             // 재생목록 리스트뷰
                             for (int i = 0; i < song_title.length(); i++) {
-                                dataArray.add(new Main_Item(song_title.getString(i), artist_name.getString(i), getResources().getIdentifier("album_"+ album_img.get(i), "drawable", getActivity().getPackageName())));
+                                dataArray.add(new Main_Item(song_title.getString(i), artist_name.getString(i), getResources().getIdentifier("album_"+ album_img.getInt(i), "drawable", getActivity().getPackageName())));
                             }
 
                             adapter = new PlayList_Adapter(getActivity().getApplicationContext(), R.layout.item_playlist, dataArray);
@@ -167,7 +167,6 @@ public class PlayList extends Fragment {
                 // 데이터를 key - value 형태로 만들어서 보내겠습니다
                 Map<String,String> params = new HashMap<String,String>();
                 // params -> key-value 형태로 만들어줌
-//                params.put("song_list", song_list.toString());
                 params.put("user_seq", user_seq);
 
                 // key-value 로 만들어진 params 객체를 전송!

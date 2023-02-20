@@ -70,19 +70,9 @@ public class TagPlayList extends AppCompatActivity {
         pl_info = findViewById(R.id.pl_info);
         menulist = findViewById(R.id.play_menuList);
 
-
-
-        btn_pre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-
         Intent intent = getIntent();
         tagName = intent.getStringExtra("tagName");
-        pl_title.setText(tagName);
+        pl_title.setText("# "+tagName);
         tagImg = intent.getIntExtra("tagImg",0);
 //        Log.d("카카카", String.valueOf(arr));
 //        String imgfile = "tag_" + album_img.getInt(i);
@@ -93,7 +83,7 @@ public class TagPlayList extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://172.30.1.49:3001/TagList";
+        String url = "http://172.30.1.31:3001/TagList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

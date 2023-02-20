@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <FrameLayout
+        android:id="@+id/music_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -191,34 +198,13 @@
             app:layout_constraintVertical_bias="0.019"
             app:srcCompat="@drawable/btn_shufflexml" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_related"
-            android:layout_width="136dp"
-            android:layout_height="75dp"
-            android:text="관련음악"
-            android:background="#00ff0000"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:menu="@menu/music_bottom"
+            tools:layout_editor_absoluteX="0dp" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_lyrics"
-            android:layout_width="136dp"
-            android:layout_height="75dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
-            android:text="가사"
-            android:background="#00ff0000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_list"
-            app:layout_constraintStart_toEndOf="@+id/btn_related" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_list"
-            android:layout_width="136dp"
-            android:layout_height="75dp"
-            android:text="재생목록"
-            android:background="#00ff0000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

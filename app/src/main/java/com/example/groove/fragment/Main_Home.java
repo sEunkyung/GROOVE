@@ -88,7 +88,7 @@ public class Main_Home extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.49:3001/RecommendSong";
+        String url = "http://172.30.1.31:3001/RecommendSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -161,7 +161,7 @@ public class Main_Home extends Fragment {
                             // 태그 곡 리사이클러뷰
                             mMainItemList = new ArrayList<>();
                             for(int i=0;i<tagNameArr.length;i++){
-                                mMainItemList.add(new Main_Item(tagNameArr[i], tagImgArr[i], View_Type_Code.ViewType.SECOND_CONTENT));
+                                mMainItemList.add(new Main_Item("# " + tagNameArr[i], tagImgArr[i], View_Type_Code.ViewType.SECOND_CONTENT));
                             }
                             mTagView = rootView.findViewById(R.id.list_hashtag);
                             mMainHomeRecyclerViewAdapter = new Main_Home_RecyclerView_Adapter(mMainItemList);

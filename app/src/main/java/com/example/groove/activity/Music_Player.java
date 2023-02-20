@@ -3,11 +3,14 @@ package com.example.groove.activity;
 import static com.example.groove.activity.MainActivity.song_list;
 import static com.example.groove.activity.MainActivity.user_seq;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatSeekBar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
@@ -21,7 +24,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -45,6 +50,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
+import com.example.groove.fragment.Lyrics;
+import com.example.groove.fragment.Main_Home;
+import com.example.groove.fragment.MyMusic;
+import com.example.groove.fragment.PlayList;
+import com.example.groove.fragment.Relative_Music;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
@@ -53,6 +63,7 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.DefaultTimeBar;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.exoplayer2.upstream.RawResourceDataSource;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 
@@ -71,12 +82,18 @@ import java.util.Map;
 import java.util.Timer;
 
 public class Music_Player extends AppCompatActivity {
+
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private Lyrics fragmentLyrics = new Lyrics();
+    private Relative_Music fragmentRalative = new Relative_Music();
     private PlayerControlView pvc;
     private ExoPlayer player;
     private Boolean playWhenReady = true;
     private int currentWindow = 0;
     private long playbackPosition = 0;
     int i = 0;
+    String bool_heart = "0";
+    FrameLayout music_bottom;
 
     // 추가
     int[] array = {R.raw.song2, R.raw.song4, R.raw.song3,
@@ -89,6 +106,7 @@ public class Music_Player extends AppCompatActivity {
     TextView play_title, play_artist;
     ImageView img_player;
     AppCompatImageButton btn_down, btn_heart;
+    AppCompatButton btn_related, btn_lyrics, btn_list;
     RequestQueue requestQueue;
 
     @Override
@@ -120,8 +138,6 @@ public class Music_Player extends AppCompatActivity {
             player.play();
         }
     }
-
-
     private void releasePlayer(long current) {
         if(player != null){
             playWhenReady = player.getPlayWhenReady();
@@ -131,7 +147,6 @@ public class Music_Player extends AppCompatActivity {
             player = null;
         }
     }
-
     private void newRelease(){
         player.pause();
         player = null;
@@ -143,6 +158,8 @@ public class Music_Player extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_player_main);
 
+        music_bottom = findViewById(R.id.music_bottom);
+        music_bottom.setVisibility(FrameLayout.GONE);
         btn_down = findViewById(R.id.btn_down);
         btn_down.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +175,6 @@ public class Music_Player extends AppCompatActivity {
         String artist_name = intent.getStringExtra("artist_name");
         String album_img = intent.getStringExtra("album_img");
         String song_lyrics = intent.getStringExtra("song_lyrics");
-        String bool_heart = intent.getStringExtra("lkies_date");
 
         btn_heart = findViewById(R.id.btn_heart);
         play_title = (TextView) findViewById(R.id.play_title);
@@ -176,6 +192,7 @@ public class Music_Player extends AppCompatActivity {
         music_play = findViewById(R.id.music_play);
         music_pre = findViewById(R.id.music_pre);
         music_next = findViewById(R.id.music_next);
+//        btn_lyrics = findViewById(R.id.btn_lyrics);
 
         // custom_control_layout.xml SeekBar
         seekBar = findViewById(R.id.seekBar_player);
@@ -254,12 +271,18 @@ public class Music_Player extends AppCompatActivity {
                 initializePlayer(index);
             }
         });
-        Log.d("ㅋㅋㅋgetPlayWhenReady", String.valueOf(player.getPlayWhenReady()));
+        Log.d("getPlayWhenReady", String.valueOf(player.getPlayWhenReady()));
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.music_bottom, fragmentRalative).commitAllowingStateLoss();
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://172.30.1.49:3001/InsertList";
+        String url = "http://172.30.1.31:3001/InsertList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -270,13 +293,13 @@ public class Music_Player extends AppCompatActivity {
                         Log.d("통신", response);
 
                         try {
-
                             JSONObject json = new JSONObject(response);
 
                             JSONArray song_list2 = json.getJSONArray("song_list");
-                            int bool_heart = json.getInt("bool_likes");
+                            bool_heart = json.getString("bool_likes");
                             Log.d("좋아요정보", String.valueOf(bool_heart));
-                            if(bool_heart==1){
+
+                            if(bool_heart.equals("1")){
                                 btn_heart.setImageResource(R.drawable.img_heartxml);
                                 btn_heart.setTag("hearton");
                             } else{
@@ -306,7 +329,7 @@ public class Music_Player extends AppCompatActivity {
                                     if (requestQueue == null) {
                                         requestQueue = Volley.newRequestQueue(getApplicationContext());
                                     }
-                                    String url = "http://192.168.0.2:3001/LikesAdd";
+                                    String url = "http://172.30.1.31:3001/LikesAdd";
 
                                     StringRequest request = new StringRequest(
                                             Request.Method.POST,
@@ -319,6 +342,7 @@ public class Music_Player extends AppCompatActivity {
                                                     try {
                                                         JSONObject json = new JSONObject(response);
                                                         String results = json.getString("results");
+                                                        bool_heart = json.getString("bool_heart");
                                                         Log.d("결과", results);
 
                                                     } catch (JSONException e) {
@@ -342,6 +366,7 @@ public class Music_Player extends AppCompatActivity {
                                             // params -> key-value 형태로 만들어줌
                                             params.put("user_seq", user_seq);
                                             params.put("song_id", song_id);
+                                            params.put("bool_heart", String.valueOf(bool_heart));
 
                                             // key-value 로 만들어진 params 객체를 전송!
                                             return params;
@@ -371,7 +396,7 @@ public class Music_Player extends AppCompatActivity {
                 // params -> key-value 형태로 만들어줌
                 params.put("user_seq", user_seq);
                 params.put("song_id", song_id);
-//                params.put("bool_heart", bool_heart);
+                params.put("bool_heart", String.valueOf(bool_heart));
 
                 // key-value 로 만들어진 params 객체를 전송!
                 return params;
@@ -433,5 +458,33 @@ public class Music_Player extends AppCompatActivity {
         Log.d("전체길이가..?2", String.valueOf(player.getCurrentTimeline()));
 
     }
+
+    class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+            switch (menuItem.getItemId()) {
+                case R.id.music_relative: // 연관곡 프래그먼트
+                    transaction.replace(R.id.music_bottom, fragmentRalative).commitAllowingStateLoss();
+                    break;
+                case R.id.music_lyrics: // 가사 프래그먼트
+                    transaction.replace(R.id.music_bottom, fragmentLyrics).commitAllowingStateLoss();
+                    break;
+                case R.id.music_list: // 음악목록 프래그먼트
+                    transaction.replace(R.id.music_bottom, fragmentRalative).commitAllowingStateLoss();
+                    break;
+            }
+            return true;
+        }
+    }
+    // 프래그먼트 번호에 따라 페이지 이동
+    public void onChangeFragment(int index){
+        if (index == 0){// 메인 홈
+            getSupportFragmentManager().beginTransaction().replace(R.id.music_bottom, fragmentRalative).commit();
+        }
+    }
+
+
 }
 
