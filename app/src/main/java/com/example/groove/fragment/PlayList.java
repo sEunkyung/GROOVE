@@ -3,6 +3,7 @@ package com.example.groove.fragment;
 import static com.example.groove.activity.MainActivity.song_list;
 import static com.example.groove.activity.MainActivity.user_seq;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,10 +57,24 @@ public class PlayList extends Fragment {
     PlayList_Adapter adapter; // 어댑터 사용!
     RequestQueue requestQueue;
 
+    MainActivity mainActivity;
+
     // DB에서 받아온 정보 넣는곳-
     ArrayList<String> tit_arr = new ArrayList<>();
     ArrayList<String> art_arr = new ArrayList<>();
     ArrayList<Integer> img_arr = new ArrayList<>();;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mainActivity = (MainActivity) getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mainActivity = null;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +83,12 @@ public class PlayList extends Fragment {
 
 
         btn_pre = view.findViewById(R.id.btn_pre1);
+        btn_pre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity.onChangeFragment(0);
+            }
+        });
 
         tv_pl_title = view.findViewById(R.id.tv_pl_title);
 
@@ -80,7 +101,7 @@ public class PlayList extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.42:3001/SongList";
+        String url = "http://172.30.1.49:3001/SongList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

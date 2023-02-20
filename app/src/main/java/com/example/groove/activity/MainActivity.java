@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     String nick, favart, recentsong, favsong;
     public static String user_seq;
 
+    Main_Home mainHome; // 메인 프래그먼트
+    MyMusic myMusic; // 보관함 프래그먼트
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
 
+        // 프래그먼트
+        mainHome = new Main_Home();
+        myMusic = new MyMusic();
 
     }
 
@@ -96,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
             return true;
+        }
+    }
+    // 프래그먼트 번호에 따라 페이지 이동
+    public void onChangeFragment(int index){
+        if (index == 0){// 메인 홈
+            getSupportFragmentManager().beginTransaction().replace(R.id.menu_frame_layout, fragmentHome).commit();
         }
     }
 }
