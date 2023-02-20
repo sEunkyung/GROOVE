@@ -105,7 +105,7 @@ public class Fav_Artist_Selection extends AppCompatActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://172.30.1.31:3001/Choice_art";
+        String url = "http://192.168.0.2:3001/Choice_art";
 
 
         StringRequest request = new StringRequest(

@@ -22,7 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
-import com.example.groove.activity.Music_Player;
+import com.example.groove.activity.PlayerActivity;
 import com.example.groove.adapter.MyMusic_RecyclerView_Adapter;
 import com.example.groove.data.Main_Item;
 import com.example.groove.data.RecyclerItemClickListener;
@@ -35,7 +35,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 public class MyMusic extends Fragment {
 
@@ -73,7 +72,7 @@ public class MyMusic extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.31:3001/RecentSong";
+        String url = "http://192.168.0.2:3001/RecentSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -114,7 +113,7 @@ public class MyMusic extends Fragment {
                             mRecentView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), mRecentView, new RecyclerItemClickListener.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(View view, int position) throws JSONException {
-                                    Intent intent = new Intent(getActivity(), Music_Player.class);
+                                    Intent intent = new Intent(getActivity(), PlayerActivity.class);
                                     intent.putExtra("song_title", song_title.getString(position));
                                     intent.putExtra("album_img", album_img.getString(position));
                                     startActivity(intent);

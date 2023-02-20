@@ -7,13 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/music_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </FrameLayout>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -187,7 +180,6 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="13dp"
-            android:layout_marginTop="72dp"
             android:layout_marginEnd="32dp"
             android:background="#00ff0000"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -195,16 +187,8 @@
             app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toEndOf="@+id/music_next"
             app:layout_constraintTop_toBottomOf="@id/seekBar_player"
-            app:layout_constraintVertical_bias="0.019"
+            app:layout_constraintVertical_bias="0.335"
             app:srcCompat="@drawable/btn_shufflexml" />
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/music_bottom"
-            tools:layout_editor_absoluteX="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

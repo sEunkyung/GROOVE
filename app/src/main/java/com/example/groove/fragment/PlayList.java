@@ -3,7 +3,6 @@ package com.example.groove.fragment;
 import static com.example.groove.activity.MainActivity.song_list;
 import static com.example.groove.activity.MainActivity.user_seq;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,12 +13,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -29,22 +25,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
-import com.example.groove.activity.MainActivity;
-import com.example.groove.activity.Movie_Player;
-import com.example.groove.activity.Music_Player;
-import com.example.groove.adapter.Main_Home_RecyclerView_Adapter;
+import com.example.groove.activity.PlayerActivity;
 import com.example.groove.adapter.PlayList_Adapter;
 import com.example.groove.data.Main_Item;
-import com.example.groove.data.RecyclerItemClickListener;
-import com.example.groove.data.View_Type_Code;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,24 +46,10 @@ public class PlayList extends Fragment {
     PlayList_Adapter adapter; // 어댑터 사용!
     RequestQueue requestQueue;
 
-    MainActivity mainActivity;
-
     // DB에서 받아온 정보 넣는곳-
     ArrayList<String> tit_arr = new ArrayList<>();
     ArrayList<String> art_arr = new ArrayList<>();
     ArrayList<Integer> img_arr = new ArrayList<>();;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mainActivity = (MainActivity) getActivity();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mainActivity = null;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,12 +58,6 @@ public class PlayList extends Fragment {
 
 
         btn_pre = view.findViewById(R.id.btn_pre1);
-        btn_pre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.onChangeFragment(0);
-            }
-        });
 
         tv_pl_title = view.findViewById(R.id.tv_pl_title);
 
@@ -101,7 +70,7 @@ public class PlayList extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.31:3001/SongList";
+        String url = "http://192.168.0.2:3001/SongList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -133,7 +102,7 @@ public class PlayList extends Fragment {
                                     try {
 
                                         Log.d("카카카카", String.valueOf(adapterView.getAdapter().getItem(i)));
-                                        Intent intent = new Intent(getActivity(), Music_Player.class);
+                                        Intent intent = new Intent(getActivity(), PlayerActivity.class);
                                         intent.putExtra("song_id", song_list.get(i));
                                         intent.putExtra("song_title", song_title.getString(i));
                                         intent.putExtra("artist_name", artist_name.getString(i));

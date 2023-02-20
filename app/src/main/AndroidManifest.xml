@@ -32,7 +32,7 @@
             android:exported="false">
         </activity>
         <activity
-            android:name=".activity.Music_Player"
+            android:name=".activity.PlayerActivity"
             android:exported="false">
         </activity>
         <activity
