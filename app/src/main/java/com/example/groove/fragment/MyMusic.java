@@ -2,6 +2,8 @@ package com.example.groove.fragment;
 
 import static com.example.groove.activity.MainActivity.user_seq;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,8 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
+import com.example.groove.activity.MainActivity;
 import com.example.groove.activity.Music_Player;
 import com.example.groove.adapter.MyMusic_RecyclerView_Adapter;
 import com.example.groove.data.Main_Item;
@@ -46,6 +52,8 @@ public class MyMusic extends Fragment {
     private MyMusic_RecyclerView_Adapter mMusicListAdapter;
     GridLayoutManager gridLayoutManager;
 
+    AppCompatImageButton btn_pre, ImageView;
+
     // 최근 정보(MySQL에서 받아온 데이터)
 //    private String songNameArr[] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 //    private int albumImgArr[] = {R.drawable.album_745152, R.drawable.album_745152, R.drawable.album_745152,
@@ -69,18 +77,43 @@ public class MyMusic extends Fragment {
 
     RequestQueue requestQueue;
 
+    MainActivity mainActivity;
+
+    // 화면이 붙을 때 작동하는 메소드
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mainActivity = (MainActivity) getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mainActivity = null;
+    }
+
+    @SuppressLint("MissingInflatedId")
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mymusic, container, false);
-
+        btn_pre = rootView.findViewById(R.id.btn_pre);
+        btn_pre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), Main_Home.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                startActivity(intent);
+                mainActivity.onChangeFragment(0);
+            }
+        });
 
 
         if (requestQueue == null){
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://192.168.0.2:3001/RecentSong";
+        String url = "http://172.30.1.49:3001/RecentSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -181,5 +214,7 @@ public class MyMusic extends Fragment {
 
         return rootView;
     }
+
+
 
 }
