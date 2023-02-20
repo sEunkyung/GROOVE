@@ -259,7 +259,7 @@ public class Music_Player extends AppCompatActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://172.30.1.31:3001/InsertList";
+        String url = "http://192.168.0.2:3001/InsertList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -270,25 +270,13 @@ public class Music_Player extends AppCompatActivity {
                         Log.d("통신", response);
 
                         try {
+
                             JSONObject json = new JSONObject(response);
 
                             JSONArray song_list2 = json.getJSONArray("song_list");
-
-                            btn_heart.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    if(btn_heart.getTag().equals("heartoff")){
-                                        btn_heart.setImageResource(R.drawable.img_heartxml);
-                                        btn_heart.setTag("hearton");
-                                    } else{
-                                        btn_heart.setImageResource(R.drawable.img_heart_emptyxml);
-                                        btn_heart.setTag("heartoff");
-                                    }
-
-                                }
-                            });
-
-                            if(bool_heart==""){
+                            int bool_heart = json.getInt("bool_likes");
+                            Log.d("좋아요정보", String.valueOf(bool_heart));
+                            if(bool_heart==1){
                                 btn_heart.setImageResource(R.drawable.img_heartxml);
                                 btn_heart.setTag("hearton");
                             } else{
@@ -299,14 +287,69 @@ public class Music_Player extends AppCompatActivity {
                             if(!song_list.isEmpty()){
                                 song_list.clear();
                             }
-                            Log.d("왜요?", String.valueOf(song_list));
-                            Log.d("왜요?", String.valueOf(song_list2));
                             for(int i=0; i<song_list2.length(); i++){
                                 song_list.add(song_list2.getString(i));
                             }
-                            Log.d("여기리스트는", String.valueOf(song_list.size()));
-                            Log.d("왜요?", String.valueOf(song_list));
 
+                            btn_heart.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    if(btn_heart.getTag().equals("heartoff")){
+                                        btn_heart.setImageResource(R.drawable.img_heartxml);
+                                        btn_heart.setTag("hearton");
+                                    } else{
+                                        btn_heart.setImageResource(R.drawable.img_heart_emptyxml);
+                                        btn_heart.setTag("heartoff");
+                                    }
+
+                                    if (requestQueue == null) {
+                                        requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                    }
+                                    String url = "http://192.168.0.2:3001/LikesAdd";
+
+                                    StringRequest request = new StringRequest(
+                                            Request.Method.POST,
+                                            url,
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    Log.d("통신", response);
+
+                                                    try {
+                                                        JSONObject json = new JSONObject(response);
+                                                        String results = json.getString("results");
+                                                        Log.d("결과", results);
+
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    Log.d("통신", "실패");
+                                                }
+                                            }
+                                    ){
+                                        @Nullable
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            // getParams --> post 방식으로 데이터를 보낼 때 사용되는 메소드!
+                                            // 데이터를 key - value 형태로 만들어서 보내겠습니다
+                                            Map<String,String> params = new HashMap<String,String>();
+                                            // params -> key-value 형태로 만들어줌
+                                            params.put("user_seq", user_seq);
+                                            params.put("song_id", song_id);
+
+                                            // key-value 로 만들어진 params 객체를 전송!
+                                            return params;
+                                        }
+                                    };
+                                    requestQueue.add(request);
+                                }
+                            });
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -328,6 +371,7 @@ public class Music_Player extends AppCompatActivity {
                 // params -> key-value 형태로 만들어줌
                 params.put("user_seq", user_seq);
                 params.put("song_id", song_id);
+//                params.put("bool_heart", bool_heart);
 
                 // key-value 로 만들어진 params 객체를 전송!
                 return params;
@@ -368,7 +412,6 @@ public class Music_Player extends AppCompatActivity {
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow, playbackPosition);
 
-        Log.d("노래길이가 잘 나오냐..?", String.valueOf(player.getTotalBufferedDuration()));
         seekBar.setProgress(10);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

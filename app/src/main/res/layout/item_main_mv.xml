@@ -20,20 +20,13 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="15dp"
+        android:ellipsize="end"
+        android:maxLines="3"
         app:layout_constraintEnd_toEndOf="@+id/mvImg"
         app:layout_constraintHorizontal_bias="0.014"
         app:layout_constraintStart_toStartOf="@+id/mvImg"
         app:layout_constraintTop_toBottomOf="@+id/mvImg" />
-
-    <TextView
-        android:id="@+id/mvArtist"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/mvName"
-        app:layout_constraintStart_toStartOf="@+id/mvName"
-        app:layout_constraintTop_toBottomOf="@+id/mvName" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

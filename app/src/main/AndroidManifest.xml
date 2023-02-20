@@ -64,6 +64,11 @@
             android:name=".activity.MainActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".activity.TagPlayList"
+            android:exported="false">
+
+        </activity>
     </application>
 
 </manifest>

@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         bundle.putString("recentsong", recentsong);
         bundle.putString("favsong", favsong);
         bundle.putStringArrayList("song_list", song_list);
+        bundle.putString("user_seq", user_seq);
 
         // 받아온 데이터 홈 프래그먼트에 보내기
         fragmentHome.setArguments(bundle);
