@@ -9,51 +9,53 @@
 
     <ImageView
         android:id="@+id/img_album_pl"
-        android:layout_width="82dp"
-        android:layout_height="75dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:src="@android:drawable/btn_star_big_off"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_title_pl"
-        android:layout_width="180dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/font_rokaf"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="17dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="TextView"
         android:textColor="@color/black"
-        android:textSize="15dp"
-        android:ellipsize="end"
-        android:maxLines="2"
+        android:textSize="16dp"
         app:layout_constraintStart_toEndOf="@+id/img_album_pl"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/img_album_pl" />
 
     <TextView
         android:id="@+id/tv_singer_pl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/font_rokaf"
-        android:text="TextView"
-        android:textSize="12dp"
+        android:layout_marginTop="6dp"
         android:ellipsize="end"
         android:maxLines="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tv_title_pl" />
+        android:text="TextView"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_title_pl"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_title_pl"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_pl" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_play_pl"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="16dp"
         android:background="#00ff0000"
-        app:srcCompat="@drawable/img_playxml"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img_playxml" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

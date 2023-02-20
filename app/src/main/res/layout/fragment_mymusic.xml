@@ -28,7 +28,7 @@
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="4dp"
                 android:background="#00ff0000"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +42,7 @@
                 android:gravity="center"
                 android:text="내 음악"
                 android:textColor="@color/black"
-                android:fontFamily="@font/font_rokaf"
+                android:fontFamily="@font/nanum_bold"
                 android:textSize="25dp"
                 app:layout_constraintStart_toEndOf="@+id/btn_pre2"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -64,11 +64,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="0dp"
             android:text="최근 감상한 노래"
             android:textColor="@color/black"
             android:textSize="25dp"
-            android:fontFamily="@font/font_rokaf"
+            android:fontFamily="@font/nanum_bold"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,12 +98,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="0dp"
                 android:text="좋아요한 노래"
                 android:textColor="@color/black"
                 android:textSize="25dp"
-                android:fontFamily="@font/font_rokaf"
+                android:fontFamily="@font/nanum_bold"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,7 +112,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="23dp"
                 android:src="@drawable/img_nextxml" />
 
         </LinearLayout>
@@ -139,12 +141,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="0dp"
                 android:text="선호 아티스트"
                 android:textColor="@color/black"
                 android:textSize="25dp"
-                android:fontFamily="@font/font_rokaf"
+                android:fontFamily="@font/nanum_bold"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -152,7 +155,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="23dp"
                 android:src="@drawable/img_nextxml" />
         </LinearLayout>
 

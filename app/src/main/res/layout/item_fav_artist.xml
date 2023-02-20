@@ -27,7 +27,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="가수이름"
-        android:fontFamily=""
+        android:fontFamily="@font/nanum_basic"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fav_img" />
