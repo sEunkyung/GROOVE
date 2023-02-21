@@ -180,7 +180,6 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="13dp"
-            android:layout_marginTop="72dp"
             android:layout_marginEnd="32dp"
             android:background="#00ff0000"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -188,37 +187,8 @@
             app:layout_constraintHorizontal_bias="0.3"
             app:layout_constraintStart_toEndOf="@+id/music_next"
             app:layout_constraintTop_toBottomOf="@id/seekBar_player"
-            app:layout_constraintVertical_bias="0.019"
+            app:layout_constraintVertical_bias="0.335"
             app:srcCompat="@drawable/btn_shufflexml" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_related"
-            android:layout_width="136dp"
-            android:layout_height="75dp"
-            android:text="관련음악"
-            android:background="#00ff0000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_lyrics"
-            android:layout_width="136dp"
-            android:layout_height="75dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
-            android:text="가사"
-            android:background="#00ff0000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_list"
-            app:layout_constraintStart_toEndOf="@+id/btn_related" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_list"
-            android:layout_width="136dp"
-            android:layout_height="75dp"
-            android:text="재생목록"
-            android:background="#00ff0000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

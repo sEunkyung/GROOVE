@@ -3,17 +3,14 @@
 
     <item
         android:id="@+id/music_relative"
-        android:icon="@drawable/img_home"
-        android:title="홈" />
+        android:title="연관음악" />
 
     <item
         android:id="@+id/music_lyrics"
-        android:icon="@drawable/img_list"
-        android:title="재생목록" />
+        android:title="가사" />
 
     <item
         android:id="@+id/music_list"
-        android:icon="@drawable/img_account"
-        android:title="내음악" />
+        android:title="재생목록" />
 
 </menu>

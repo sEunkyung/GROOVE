@@ -34,7 +34,7 @@ public class Motion extends AppCompatActivity {
 
                     // 만약 세로를 얼마이상 움직인 후 화면에서 손가락을 뗐다면 인텐트 실행해서 다른 액티비티 실행
                     if (curY>300){
-                        Intent intent = new Intent(Motion.this, Music_Player.class);
+                        Intent intent = new Intent(Motion.this, PlayerActivity.class);
                         startActivity(intent);
                         //overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                         finish();

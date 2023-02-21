@@ -1,13 +1,9 @@
 package com.example.groove.activity;
 
-import static com.example.groove.activity.MainActivity.song_list;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -16,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,11 +21,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
-import com.example.groove.adapter.Main_Home_RecyclerView_Adapter;
 import com.example.groove.adapter.PlayList_Adapter;
 import com.example.groove.data.Main_Item;
-import com.example.groove.data.RecyclerItemClickListener;
-import com.example.groove.data.View_Type_Code;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,19 +61,9 @@ public class TagPlayList extends AppCompatActivity {
         pl_info = findViewById(R.id.pl_info);
         menulist = findViewById(R.id.play_menuList);
 
-
-
-        btn_pre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-
         Intent intent = getIntent();
         tagName = intent.getStringExtra("tagName");
-        pl_title.setText(tagName);
+        pl_title.setText("# "+tagName);
         tagImg = intent.getIntExtra("tagImg",0);
 //        Log.d("카카카", String.valueOf(arr));
 //        String imgfile = "tag_" + album_img.getInt(i);
@@ -93,7 +74,7 @@ public class TagPlayList extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://172.30.1.49:3001/TagList";
+        String url = "http://172.30.1.31:3001/TagList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -124,7 +105,7 @@ public class TagPlayList extends AppCompatActivity {
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                     try {
 
-                                    Intent intent = new Intent(getApplicationContext(), Music_Player.class);
+                                    Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
                                     intent.putExtra("song_id", song_id.getString(i));
                                     intent.putExtra("song_title", song_title.getString(i));
                                     intent.putExtra("artist_name", artist_name.getString(i));

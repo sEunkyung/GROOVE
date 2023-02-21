@@ -4,21 +4,13 @@ import static android.app.PendingIntent.getActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,18 +24,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
 import com.example.groove.adapter.Fav_Artist_Selection_RecyclerView_Adapter;
-import com.example.groove.adapter.Main_Home_RecyclerView_Adapter;
 import com.example.groove.data.Main_Item;
 import com.example.groove.data.RecyclerItemClickListener;
 import com.example.groove.data.View_Type_Code;
-import com.example.groove.fragment.Main_Home;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,6 +48,8 @@ public class Fav_Artist_Selection extends AppCompatActivity {
     ImageButton btn_next2;
     RequestQueue requestQueue;
 
+    RecyclerView fav_re;
+    Fav_Artist_Selection_RecyclerView_Adapter adapter;
 
 
     int index;
@@ -74,6 +64,7 @@ public class Fav_Artist_Selection extends AppCompatActivity {
 
     private ArrayList<String> selectart;
 
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +75,8 @@ public class Fav_Artist_Selection extends AppCompatActivity {
         civ = findViewById(R.id.fav_artist_img);
         favItemList = new ArrayList<>();
         selectart = new ArrayList<>();
+
+        fav_re = findViewById(R.id.fav_re);
 
 
 //        for(int i=0;i<8;i++){
@@ -105,7 +98,7 @@ public class Fav_Artist_Selection extends AppCompatActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://172.30.1.34:3001/Choice_art";
+        String url = "http://172.30.1.49:3001/Choice_art";
 
 
         StringRequest request = new StringRequest(
@@ -151,13 +144,18 @@ public class Fav_Artist_Selection extends AppCompatActivity {
                             mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) throws JSONException {
-                               Intent intent = new Intent(getApplicationContext(), LikeList.class);
-                                intent.putExtra("fav_sel_art", fav_art.getString(position));
-                                intent.putExtra("fav_sel_name", fav_name.getString(position));
+                               Intent intent = new Intent(getApplicationContext(), Fav_Artist_Selection.class);
+//                                intent.putExtra("fav_sel_art", fav_art.getString(position));
+//                                intent.putExtra("fav_sel_name", fav_name.getString(position));
+                                // DB에서 랜덤으로 가져온 값
+                                intent.putExtra("fav_sel_art", artistIdArr[position].toString());
+                                intent.putExtra("fav_sel_name", artistNameArr[position].toString());
                                 Log.d("클릭", String.valueOf(position));
-                                Log.d("테스트1", String.valueOf(fav_name.get(position)));
-                                Log.d("테스트2", String.valueOf(favItemList.get(position)));
-                                Log.d("테스트2", String.valueOf(selectart));
+//                                Log.d("테스트1", String.valueOf(fav_name.get(position)));
+//                                Log.d("테스트2", String.valueOf(favItemList.get(position)));
+//                                Log.d("테스트3", String.valueOf(selectart));
+                                Log.d("테스트44444", String.valueOf(artistIdArr[position]));
+                                Log.d("테스트55555", String.valueOf(artistNameArr[position]));
                                 // 다음 버튼을 눌러야 값이 보내지게 startActivity는 하단 버튼에 입력
 
                             }
@@ -206,7 +204,9 @@ public class Fav_Artist_Selection extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), LikeList.class);
+                Intent intent = new Intent(getApplicationContext(), Fav_Artist_Selection.class);
+                intent.putExtra("fav_sel_art",artistImgArr);
+                intent.putExtra("fav_sel_name", artistNameArr);
                 startActivity(intent);
                 finish();
             }
