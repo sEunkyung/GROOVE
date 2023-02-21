@@ -1,9 +1,11 @@
 package com.example.groove.fragment;
 
+import static com.example.groove.activity.MainActivity.aname_list;
+import static com.example.groove.activity.MainActivity.salbum_list;
 import static com.example.groove.activity.MainActivity.song_list;
+import static com.example.groove.activity.MainActivity.stitle_list;
 import static com.example.groove.activity.MainActivity.user_seq;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,12 +16,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -29,22 +28,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
-import com.example.groove.activity.MainActivity;
-import com.example.groove.activity.Movie_Player;
-import com.example.groove.activity.Music_Player;
-import com.example.groove.adapter.Main_Home_RecyclerView_Adapter;
+import com.example.groove.activity.PlayerActivity;
 import com.example.groove.adapter.PlayList_Adapter;
 import com.example.groove.data.Main_Item;
-import com.example.groove.data.RecyclerItemClickListener;
-import com.example.groove.data.View_Type_Code;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,24 +49,10 @@ public class PlayList extends Fragment {
     PlayList_Adapter adapter; // 어댑터 사용!
     RequestQueue requestQueue;
 
-    MainActivity mainActivity;
-
     // DB에서 받아온 정보 넣는곳-
     ArrayList<String> tit_arr = new ArrayList<>();
     ArrayList<String> art_arr = new ArrayList<>();
     ArrayList<Integer> img_arr = new ArrayList<>();;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mainActivity = (MainActivity) getActivity();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mainActivity = null;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,25 +61,19 @@ public class PlayList extends Fragment {
 
 
         btn_pre = view.findViewById(R.id.btn_pre1);
-        btn_pre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.onChangeFragment(0);
-            }
-        });
 
         tv_pl_title = view.findViewById(R.id.tv_pl_title);
 
         playlist = view.findViewById(R.id.like_menuList);
 
         tv_pl_title.setText("재생목록");
-        Log.d("하하하하하하하핳하하하ㅏ하하하하하하하", String.valueOf(song_list));
+        Log.d("하하하하하하하하하하하하하하하하하", String.valueOf(song_list));
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.49:3001/SongList";
+        String url = "http://172.30.1.31:3001/SongList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -120,8 +92,11 @@ public class PlayList extends Fragment {
 
                             dataArray = new ArrayList<Main_Item>();
                             // 재생목록 리스트뷰
+//                            for (int i = 0; i < song_title.length(); i++) {
+//                                dataArray.add(new Main_Item(song_title.getString(i), artist_name.getString(i), getResources().getIdentifier("album_"+ album_img.getInt(i), "drawable", getActivity().getPackageName())));
+//                            }
                             for (int i = 0; i < song_title.length(); i++) {
-                                dataArray.add(new Main_Item(song_title.getString(i), artist_name.getString(i), getResources().getIdentifier("album_"+ album_img.get(i), "drawable", getActivity().getPackageName())));
+                                dataArray.add(new Main_Item(stitle_list.get(i), aname_list.get(i), getResources().getIdentifier("album_"+ salbum_list.get(i), "drawable", getActivity().getPackageName())));
                             }
 
                             adapter = new PlayList_Adapter(getActivity().getApplicationContext(), R.layout.item_playlist, dataArray);
@@ -130,20 +105,16 @@ public class PlayList extends Fragment {
                             playlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                    try {
 
-                                        Log.d("카카카카", String.valueOf(adapterView.getAdapter().getItem(i)));
-                                        Intent intent = new Intent(getActivity(), Music_Player.class);
-                                        intent.putExtra("song_id", song_list.get(i));
-                                        intent.putExtra("song_title", song_title.getString(i));
-                                        intent.putExtra("artist_name", artist_name.getString(i));
-                                        intent.putExtra("album_img", album_img.getString(i));
-                                        intent.putExtra("song_lyrics", song_lyrics.getString(i));
-                                        startActivity(intent);
+                                    Log.d("카카카카", String.valueOf(adapterView.getAdapter().getItem(i)));
+                                    Intent intent = new Intent(getActivity(), PlayerActivity.class);
+//                                    intent.putExtra("song_id", song_list.get(i));
+//                                    intent.putExtra("song_title", stitle_list.get(i));
+//                                    intent.putExtra("artist_name", aname_list.get(i));
+//                                    intent.putExtra("album_img", salbum_list.get(i));
+                                    intent.putExtra("plindex",i);
+                                    startActivity(intent);
 
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
-                                    }
                                 }
                             });
 
@@ -167,7 +138,6 @@ public class PlayList extends Fragment {
                 // 데이터를 key - value 형태로 만들어서 보내겠습니다
                 Map<String,String> params = new HashMap<String,String>();
                 // params -> key-value 형태로 만들어줌
-//                params.put("song_list", song_list.toString());
                 params.put("user_seq", user_seq);
 
                 // key-value 로 만들어진 params 객체를 전송!

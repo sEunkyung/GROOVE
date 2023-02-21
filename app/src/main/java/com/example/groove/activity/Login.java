@@ -73,7 +73,7 @@ public class Login extends AppCompatActivity {
                 String inputId = login_id.getText().toString();
                 String inputPw = login_pw.getText().toString();
 
-                String url = "http://172.30.1.49:3001/Login";
+                String url = "http://172.30.1.31:3001/Login";
 
                 StringRequest request = new StringRequest(
                         Request.Method.POST,
@@ -95,9 +95,20 @@ public class Login extends AppCompatActivity {
                                     String favsong = json.getString("favSong");
                                     String user_seq = json.getString("user_seq");
                                     JSONArray song_list2 = json.getJSONArray("song_list");
+                                    JSONArray stitle_list2 = json.getJSONArray("stitle_list");
+                                    JSONArray aname_list2 = json.getJSONArray("aname_list");
+                                    JSONArray salbum_list2 = json.getJSONArray("salbum_list");
+
                                     ArrayList<String> song_list = new ArrayList<String>();
+                                    ArrayList<String> stitle_list = new ArrayList<String>();
+                                    ArrayList<String> aname_list = new ArrayList<String>();
+                                    ArrayList<Integer> salbum_list = new ArrayList<Integer>();
+
                                     for(int i=0; i<song_list2.length(); i++){
                                         song_list.add(song_list2.getString(i));
+                                        stitle_list.add(stitle_list2.getString(i));
+                                        aname_list.add(aname_list2.getString(i));
+                                        salbum_list.add(salbum_list2.getInt(i));
                                         Log.d("들어가고있니?", String.valueOf(song_list.get(i)));
                                     }
                                     Log.d("로그인여부", result);
@@ -121,6 +132,9 @@ public class Login extends AppCompatActivity {
                                             intent.putExtra("favsong", favsong);
                                             intent.putExtra("user_seq", user_seq);
                                             intent.putExtra("song_list", song_list);
+                                            intent.putExtra("stitle_list", stitle_list);
+                                            intent.putExtra("aname_list", aname_list);
+                                            intent.putExtra("salbum_list", salbum_list);
                                             intent.putExtra("user_seq", user_seq);
                                         }
                                         startActivity(intent);

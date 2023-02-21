@@ -1,18 +1,19 @@
 package com.example.groove.fragment;
 
+import static com.example.groove.activity.MainActivity.aname_list;
+import static com.example.groove.activity.MainActivity.salbum_list;
+import static com.example.groove.activity.MainActivity.song_list;
+import static com.example.groove.activity.MainActivity.stitle_list;
 import static com.example.groove.activity.MainActivity.user_seq;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -26,16 +27,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
-import com.example.groove.activity.Fav_Artist_Selection;
 import com.example.groove.activity.Movie_Player;
-import com.example.groove.activity.Music_Player;
+import com.example.groove.activity.PlayerActivity;
 import com.example.groove.activity.TagPlayList;
 import com.example.groove.adapter.Main_Home_RecyclerView_Adapter;
 import com.example.groove.data.Main_Item;
 import com.example.groove.data.RecyclerItemClickListener;
 import com.example.groove.data.View_Type_Code;
-import com.example.groove.databinding.FragmentMainHomeBinding;
-import com.google.common.io.Resources;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,7 +86,7 @@ public class Main_Home extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.49:3001/RecommendSong";
+        String url = "http://172.30.1.31:3001/RecommendSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -142,13 +140,11 @@ public class Main_Home extends Fragment {
                             mSongView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), mSongView, new RecyclerItemClickListener.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(View view, int position) throws JSONException {
-                                            Intent intent = new Intent(getActivity(), Music_Player.class);
-                                            intent.putExtra("song_id", song_id.getString(position));
-                                            intent.putExtra("song_title", song_title.getString(position));
-                                            intent.putExtra("artist_name", artist_name.getString(position));
-                                            intent.putExtra("album_img", album_img.getString(position));
-                                            intent.putExtra("song_lyrics", song_lyrics.getString(position));
-                                            intent.putExtra("user_seq", user_seq);
+                                            Intent intent = new Intent(getActivity(), PlayerActivity.class);
+                                            song_list.add(0, song_id.getString(position));
+                                            stitle_list.add(0, song_title.getString(position));
+                                            aname_list.add(0, artist_name.getString(position));
+                                            salbum_list.add(0, album_img.getInt(position));
                                             startActivity(intent);
                                         }
 
@@ -161,7 +157,7 @@ public class Main_Home extends Fragment {
                             // 태그 곡 리사이클러뷰
                             mMainItemList = new ArrayList<>();
                             for(int i=0;i<tagNameArr.length;i++){
-                                mMainItemList.add(new Main_Item(tagNameArr[i], tagImgArr[i], View_Type_Code.ViewType.SECOND_CONTENT));
+                                mMainItemList.add(new Main_Item("# " + tagNameArr[i], tagImgArr[i], View_Type_Code.ViewType.SECOND_CONTENT));
                             }
                             mTagView = rootView.findViewById(R.id.list_hashtag);
                             mMainHomeRecyclerViewAdapter = new Main_Home_RecyclerView_Adapter(mMainItemList);
