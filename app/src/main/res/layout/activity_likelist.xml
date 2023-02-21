@@ -7,6 +7,18 @@
     android:background="#FFFFFF">
 
     <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_next"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="#00ff0000"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img_nextxml" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_pre1"
         android:layout_width="48dp"
         android:layout_height="48dp"

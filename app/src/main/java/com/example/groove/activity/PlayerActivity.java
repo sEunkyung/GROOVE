@@ -45,11 +45,12 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Main_Home, PlayList 에서 받아온 데이터
         Intent intent = getIntent();
+        String song_id = intent.getStringExtra("song_id");
         String plindex = intent.getStringExtra("plindex");
 
         bundle.putString("plindex", plindex);
+        bundle.putString("song_id", song_id);
 
-//        bundle.putString("song_id", song_id);
 //        bundle.putString("song_title", song_title);
 //        bundle.putString("artist_name", artist_name);
 //        bundle.putString("album_img", album_img);
@@ -77,13 +78,13 @@ public class PlayerActivity extends AppCompatActivity {
         switch (view.getId()){
 
             case R.id.btn_related:
-                transaction.replace(R.id.music_bottom, fragmentRalative).commitAllowingStateLoss();
+                transaction.add(R.id.music_bottom, fragmentRalative).commitAllowingStateLoss();
                 break;
             case R.id.btn_lyrics:
-                transaction.replace(R.id.music_bottom, fragmentLyrics).commitAllowingStateLoss();
+                transaction.add(R.id.music_bottom, fragmentLyrics).commitAllowingStateLoss();
                 break;
             case R.id.btn_list:
-                transaction.replace(R.id.music_bottom, fragmentPlaylist).commitAllowingStateLoss();
+                transaction.add(R.id.music_bottom, fragmentPlaylist).commitAllowingStateLoss();
                 break;
         }
     }

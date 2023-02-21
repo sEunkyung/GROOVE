@@ -1,9 +1,5 @@
 package com.example.groove.fragment;
 
-import static com.example.groove.activity.MainActivity.aname_list;
-import static com.example.groove.activity.MainActivity.salbum_list;
-import static com.example.groove.activity.MainActivity.song_list;
-import static com.example.groove.activity.MainActivity.stitle_list;
 import static com.example.groove.activity.MainActivity.user_seq;
 import static com.example.groove.activity.PlayerActivity.index;
 
@@ -55,6 +51,8 @@ import java.util.Map;
 
 public class Music_Player extends Fragment {
 
+    public static String playerSong_id;
+
     private PlayerControlView pvc;
     private MediaPlayer player = new MediaPlayer();
     String bool_heart = "0";
@@ -69,6 +67,10 @@ public class Music_Player extends Fragment {
     // 곡 리스트 인덱스
     Bundle bundle;
     int i=0;
+    ArrayList<String> song_list = new ArrayList<>();
+    ArrayList<String> stitle_list = new ArrayList<>();
+    ArrayList<String> aname_list = new ArrayList<>();
+    ArrayList<String> salbum_list = new ArrayList<>();
 //    @Override
 //    public void onStart() {
 //        super.onStart();
@@ -123,23 +125,16 @@ public class Music_Player extends Fragment {
         time_start = rootView.findViewById(R.id.time_start);
         time_end = rootView.findViewById(R.id.time_end);
 
+        bundle = getArguments();
+        String song_id = bundle.getString("song_id");
+//        Log.d("번들에서 song_id 잘왔어?", song_id);
         try{
-            bundle = getArguments();
             index = Integer.parseInt(bundle.getString("plindex"));
             Log.d("처음index", String.valueOf(index));
         } catch(Exception e){
             index = 0;
+
         }
-
-
-        play_title.setText(stitle_list.get(index));
-        Log.d("두번째index", String.valueOf(index));
-        play_artist.setText(aname_list.get(index));
-        Log.d("두번째index", String.valueOf(index));
-        String imgfile = "album_" + salbum_list.get(index);
-        Log.d("두번째index", String.valueOf(index));
-        img_player.setImageResource(getResources().getIdentifier(imgfile,"drawable",getActivity().getPackageName() ));
-
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
 
@@ -279,7 +274,7 @@ public class Music_Player extends Fragment {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getActivity());
         }
-        String url = "http://172.30.1.31:3001/InsertList";
+        String url = "http://192.168.0.2:3001/InsertList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -293,6 +288,10 @@ public class Music_Player extends Fragment {
                             JSONObject json = new JSONObject(response);
 
                             JSONArray song_list2 = json.getJSONArray("song_list");
+                            JSONArray stitle_list2 = json.getJSONArray("stitle_list");
+                            JSONArray aname_list2 = json.getJSONArray("aname_list");
+                            JSONArray salbum_list2 = json.getJSONArray("salbum_list");
+
                             bool_heart = json.getString("bool_likes");
                             Log.d("좋아요정보", String.valueOf(bool_heart));
 
@@ -306,19 +305,29 @@ public class Music_Player extends Fragment {
 
                             if(!song_list.isEmpty()){
                                 song_list.clear();
+                                stitle_list.clear();
+                                aname_list.clear();
+                                salbum_list.clear();
                             }
                             for(int i=0; i<song_list2.length(); i++){
                                 song_list.add(song_list2.getString(i));
+                                stitle_list.add(stitle_list2.getString(i));
+                                aname_list.add(aname_list2.getString(i));
+                                salbum_list.add(salbum_list2.getString(i));
                             }
 
+
                             // 노래 세팅
+                            play_title.setText(stitle_list.get(index));
+                            play_artist.setText(aname_list.get(index));
+                            String imgfile = "album_" + salbum_list.get(index);
+                            img_player.setImageResource(getResources().getIdentifier(imgfile,"drawable",getActivity().getPackageName()));
+
                             player = new MediaPlayer();
                             player.setAudioAttributes(new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build());
-                            Log.d("위치", getActivity().getFilesDir().getAbsolutePath());
                             player.setDataSource(getActivity().getFilesDir().getAbsolutePath()+"/song_mp3/"+song_list.get(index)+".mp3");
-                            Log.d("세번째index", String.valueOf(index));
-                            Log.d("노래경로", getActivity().getFilesDir().getAbsolutePath()+"/song_mp3/"+song_list.get(index)+".mp3");
                             player.prepare();
+
 
 
                             btn_heart.setOnClickListener(new View.OnClickListener() {
@@ -336,7 +345,7 @@ public class Music_Player extends Fragment {
                                     if (requestQueue == null) {
                                         requestQueue = Volley.newRequestQueue(getActivity());
                                     }
-                                    String url = "http://172.30.1.31:3001/LikesAdd";
+                                    String url = "http://192.168.0.2:3001/LikesAdd";
 
                                     StringRequest request = new StringRequest(
                                             Request.Method.POST,
@@ -404,7 +413,7 @@ public class Music_Player extends Fragment {
                 Map<String,String> params = new HashMap<String,String>();
                 // params -> key-value 형태로 만들어줌
                 params.put("user_seq", user_seq);
-                params.put("song_id", song_list.get(index));
+                params.put("song_id", song_id);
                 params.put("bool_heart", String.valueOf(bool_heart));
 
                 // key-value 로 만들어진 params 객체를 전송!

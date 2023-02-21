@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frag_lyrics"
     android:layout_width="match_parent"
@@ -21,11 +22,24 @@
                 android:id="@+id/player_lyrics"
                 android:layout_width="match_parent"
                 android:layout_height="653dp"
+                android:background="#FFFFFF"
                 android:fontFamily="@font/font_nanum"
                 android:gravity="center"
                 android:text="TextView"
                 android:textSize="15dp" />
+
         </LinearLayout>
     </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_down2"
+        android:layout_width="50dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:background="#00ff0000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img_downxml" />
 
 </FrameLayout>

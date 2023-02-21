@@ -51,7 +51,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fav_re"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="593dp" />
 
     </LinearLayout>
 

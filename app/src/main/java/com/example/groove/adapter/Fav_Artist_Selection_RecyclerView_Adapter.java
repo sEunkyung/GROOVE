@@ -1,8 +1,6 @@
 package com.example.groove.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.groove.R;
-import com.example.groove.activity.LikeList;
 import com.example.groove.data.Main_Item;
 
 import java.util.ArrayList;
@@ -35,25 +32,25 @@ public class Fav_Artist_Selection_RecyclerView_Adapter extends RecyclerView.Adap
             fav_artist_name = (TextView)itemView.findViewById(R.id.fav_artist_name);
             fav_artist_img = (CircleImageView)itemView.findViewById(R.id.fav_artist_img);
 
-            fav_artist_img.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAbsoluteAdapterPosition();
-
-                    if ( mSelectedItems.get(position, false) ){
-                        mSelectedItems.put(position, false);
-                        view.setAlpha(1);
-
-                    } else {
-                        mSelectedItems.put(position, true);
-                        // 아티스트 선택시 정보 불러오기
-                        Log.d("선택 아티스트", (fav_artist_name).getText().toString());
-                        view.setAlpha((float) 0.3);
-                    }
-
-
-                }
-            });
+//            fav_artist_img.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    int position = getAbsoluteAdapterPosition();
+//
+//                    if ( mSelectedItems.get(position, false) ){
+//                        mSelectedItems.put(position, false);
+//                        view.setAlpha(1);
+//
+//                    } else {
+//                        mSelectedItems.put(position, true);
+//                        // 아티스트 선택시 정보 불러오기
+//                        Log.d("선택 아티스트", (fav_artist_name).getText().toString());
+//                        view.setAlpha((float) 0.3);
+//                    }
+//
+//
+//                }
+//            });
 
         }
     }

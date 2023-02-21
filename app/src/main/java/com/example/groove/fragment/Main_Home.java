@@ -1,11 +1,5 @@
 package com.example.groove.fragment;
 
-import static com.example.groove.activity.MainActivity.aname_list;
-import static com.example.groove.activity.MainActivity.salbum_list;
-import static com.example.groove.activity.MainActivity.song_list;
-import static com.example.groove.activity.MainActivity.stitle_list;
-import static com.example.groove.activity.MainActivity.user_seq;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -66,6 +60,8 @@ public class Main_Home extends Fragment {
     String mvUrlArr[] = new String[9];
     String artArr[] = new String[9];
 
+    String item_song_id;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
 
@@ -77,8 +73,9 @@ public class Main_Home extends Fragment {
         Bundle bundle = getArguments();
         String text = bundle.getString("nick");
         String favart = bundle.getString("favart");
-        String recentsong = bundle.getString("recentsong");
         String favsong = bundle.getString("favsong");
+        // 다음 과제로 해볼것 최근 들은 곡이 있다면 그 분위기에 맞는 곡 추천
+        String recsong = "";
 
         txt_nick.setText(text+" 님을 위한,");
 
@@ -86,7 +83,7 @@ public class Main_Home extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.31:3001/RecommendSong";
+        String url = "http://192.168.0.2:3001/RecommendSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -106,7 +103,6 @@ public class Main_Home extends Fragment {
                             JSONArray mv_tit = json.getJSONArray("video_title");
                             JSONArray art_id = json.getJSONArray("artist_id");
                             JSONArray song_id = json.getJSONArray("song_id");
-                            JSONArray song_lyrics = json.getJSONArray("song_lyrics");
 
                             for(int i=0; i<9; i++){
                                 songNameArr[i] = song_title.getString(i);
@@ -140,12 +136,13 @@ public class Main_Home extends Fragment {
                             mSongView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), mSongView, new RecyclerItemClickListener.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(View view, int position) throws JSONException {
+
+                                            item_song_id = song_id.getString(position);
+
                                             Intent intent = new Intent(getActivity(), PlayerActivity.class);
-                                            song_list.add(0, song_id.getString(position));
-                                            stitle_list.add(0, song_title.getString(position));
-                                            aname_list.add(0, artist_name.getString(position));
-                                            salbum_list.add(0, album_img.getInt(position));
+                                            intent.putExtra("song_id", item_song_id);
                                             startActivity(intent);
+
                                         }
 
                                         @Override
@@ -230,8 +227,8 @@ public class Main_Home extends Fragment {
                 // 데이터를 key - value 형태로 만들어서 보내겠습니다
                 Map<String,String> params = new HashMap<String,String>();
                 // params -> key-value 형태로 만들어줌
-                params.put("recSong", recentsong);
                 params.put("favSong", favsong);
+                params.put("recSong", recsong);
                 params.put("favArt", favart);
 
 

@@ -13,14 +13,14 @@ import com.example.groove.data.Main_Item;
 
 import java.util.ArrayList;
 
-public class PlayList_Adapter extends BaseAdapter {
+public class Fav_Songs_Selection_Adapter extends BaseAdapter {
 
     private Context context; // 현재 액티비티의 정보
     private int layout; // 리스트뷰에 보여질 항목의 레이아웃에 대한 정보
     private ArrayList<Main_Item> dataArray; // 데이터셋
     private LayoutInflater inflater; // xml -> View 객체로 변환
 
-    public PlayList_Adapter(Context context, int layout, ArrayList<Main_Item> dataArray){
+    public Fav_Songs_Selection_Adapter(Context context, int layout, ArrayList<Main_Item> dataArray){
         this.context = context;
         this.layout = layout;
         this.dataArray = dataArray;
@@ -51,9 +51,9 @@ public class PlayList_Adapter extends BaseAdapter {
         // layout 에 저장되어있는 my_item.xml 을 java에서 사용할 수 있도록 view 객체로 변환한다는 의미
         view = inflater.inflate(layout, null);
 
-        ImageView img_album = view.findViewById(R.id.img_album_pl);
-        TextView tv_title = view.findViewById(R.id.tv_title_pl);
-        TextView tv_singer = view.findViewById(R.id.tv_singer_pl);
+        ImageView img_album = view.findViewById(R.id.img_album_like);
+        TextView tv_title = view.findViewById(R.id.tv_title_like);
+        TextView tv_singer = view.findViewById(R.id.tv_singer_like);
 
 
         img_album.setImageResource(dataArray.get(i).getAlbumImg());

@@ -23,6 +23,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
+import com.example.groove.activity.Fav_Artist_Selection;
+import com.example.groove.activity.LikeList;
 import com.example.groove.activity.PlayerActivity;
 import com.example.groove.adapter.MyMusic_RecyclerView_Adapter;
 import com.example.groove.data.Main_Item;
@@ -42,6 +44,7 @@ public class MyMusic extends Fragment {
     private RecyclerView mRecentView;
     private RecyclerView mLikeView;
     private RecyclerView mFavArtistView;
+    private LinearLayout btn_likeartist, btn_likelist;
     private ArrayList<Main_Item> mMusicItemList;
     private MyMusic_RecyclerView_Adapter mMusicListAdapter;
     GridLayoutManager gridLayoutManager;
@@ -65,13 +68,14 @@ public class MyMusic extends Fragment {
                              Bundle savedInstanceState){
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mymusic, container, false);
-
+        btn_likeartist = rootView.findViewById(R.id.btn_likeartist);
+        btn_likelist = rootView.findViewById(R.id.btn_likelist);
 
         if (requestQueue == null){
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.31:3001/RecentSong";
+        String url = "http://192.168.0.2:3001/RecentSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -89,6 +93,7 @@ public class MyMusic extends Fragment {
                             JSONArray album_img_likes = json.getJSONArray("album_img_likes");
                             JSONArray fav_id = json.getJSONArray("fav_id");
                             JSONArray fav_name = json.getJSONArray("fav_name");
+                            JSONArray song_id = json.getJSONArray("song_id");
 
                             for (int i=0; i<4; i++){
                                 songNameArr[i] = song_title.getString(i);
@@ -113,8 +118,7 @@ public class MyMusic extends Fragment {
                                 @Override
                                 public void onItemClick(View view, int position) throws JSONException {
                                     Intent intent = new Intent(getActivity(), PlayerActivity.class);
-                                    intent.putExtra("song_title", song_title.getString(position));
-                                    intent.putExtra("album_img", album_img.getString(position));
+                                    intent.putExtra("song_id", song_id.getString(position));
                                     startActivity(intent);
                                 }
                                 @Override
@@ -142,6 +146,23 @@ public class MyMusic extends Fragment {
                             mFavArtistView.setAdapter(mMusicListAdapter);
                             gridLayoutManager = new GridLayoutManager(rootView.getContext(), 1, GridLayoutManager.HORIZONTAL, false);
                             mFavArtistView.setLayoutManager(gridLayoutManager);	// 가로
+
+                            btn_likelist.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getActivity(), LikeList.class);
+                                    intent.putExtra("user_seq", user_seq);
+                                    startActivity(intent);
+                                }
+                            });
+                            btn_likeartist.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getActivity(), Fav_Artist_Selection.class);
+                                    intent.putExtra("user_seq", user_seq);
+                                    startActivity(intent);
+                                }
+                            });
 
                         }catch (JSONException e){
                             e.printStackTrace();

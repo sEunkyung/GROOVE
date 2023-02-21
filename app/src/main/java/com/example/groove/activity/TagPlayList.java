@@ -74,7 +74,7 @@ public class TagPlayList extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://172.30.1.31:3001/TagList";
+        String url = "http://192.168.0.2:3001/TagList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
