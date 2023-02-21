@@ -87,7 +87,7 @@ public class Join extends AppCompatActivity {
                 String joinEmail = edit_joinEmail.getText().toString();
                 String joinBirth = edit_joinBirth.getText().toString();
 
-                String url = "http://192.168.0.2:3001/Join";    // 서버주소
+                String url = "http://172.30.1.49:3001/Join";    // 서버주소
                 StringRequest request = new StringRequest(
                         Request.Method.POST,
                         url,

@@ -23,6 +23,7 @@ public class LikeList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_likelist);
 
+        // 전달한 데이터를 받을 intent
         Intent intent = getIntent();
         String fav_sel_art = intent.getStringExtra("fav_sel_art");
         String fav_sel_name = intent.getStringExtra("fav_sel_name");
