@@ -36,6 +36,7 @@ public class PlayerActivity extends AppCompatActivity {
     private Relative_Music fragmentRalative;
     private PlayList fragmentPlaylist;
     Bundle bundle = new Bundle();
+    AppCompatImageButton btn_down;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -51,6 +52,13 @@ public class PlayerActivity extends AppCompatActivity {
         bundle.putString("plindex", plindex);
         bundle.putString("song_id", song_id);
 
+        btn_down = findViewById(R.id.btn_down);
+        btn_down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 //        bundle.putString("song_title", song_title);
 //        bundle.putString("artist_name", artist_name);
 //        bundle.putString("album_img", album_img);
@@ -66,7 +74,7 @@ public class PlayerActivity extends AppCompatActivity {
         fragmentMusicPlayer.setArguments(bundle);
 
         transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.music_bottom, fragmentMusicPlayer).commitAllowingStateLoss();
+        transaction.add(R.id.music_bottom, fragmentMusicPlayer).commitAllowingStateLoss();
 
 
     }

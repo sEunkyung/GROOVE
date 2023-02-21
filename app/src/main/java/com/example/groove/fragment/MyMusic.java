@@ -95,18 +95,17 @@ public class MyMusic extends Fragment {
                             JSONArray fav_name = json.getJSONArray("fav_name");
                             JSONArray song_id = json.getJSONArray("song_id");
 
-                            for (int i=0; i<4; i++){
-                                songNameArr[i] = song_title.getString(i);
-                                String imgfile = "album_" + album_img.getInt(i);
-                                albumImgArr[i] = getResources().getIdentifier(imgfile, "drawable", getActivity().getPackageName());
-
-                            }
+//                            for (int i=0; i<4; i++){
+//                                songNameArr[i] = song_title.getString(i);
+//                                String imgfile = "album_" + album_img.getInt(i);
+//                                albumImgArr[i] = getResources().getIdentifier(imgfile, "drawable", getActivity().getPackageName());
+//                            }
                             Log.d("user_seq", String.valueOf(user_seq));
 
                             // 최근 곡 리사이클러뷰
                             mMusicItemList = new ArrayList<>();
-                            for(int i=0;i<4;i++){
-                                mMusicItemList.add(new Main_Item(songNameArr[i], albumImgArr[i], View_Type_Code.ViewType.FIRST_CONTENT));
+                            for(int i=0;i<song_title.length();i++){
+                                mMusicItemList.add(new Main_Item(song_title.getString(i), getResources().getIdentifier("album_" + album_img.getInt(i), "drawable", getActivity().getPackageName()), View_Type_Code.ViewType.FIRST_CONTENT));
                             }
                             mRecentView = rootView.findViewById(R.id.list_recent);
                             mMusicListAdapter = new MyMusic_RecyclerView_Adapter(mMusicItemList);

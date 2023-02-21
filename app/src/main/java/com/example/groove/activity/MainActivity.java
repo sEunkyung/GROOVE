@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentHome.setArguments(bundle);
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.menu_frame_layout, fragmentHome).commitAllowingStateLoss();
+        transaction.add(R.id.menu_frame_layout, fragmentHome).commitAllowingStateLoss();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());

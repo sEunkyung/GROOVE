@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
 import android.media.AudioAttributes;
@@ -60,7 +61,7 @@ public class Music_Player extends Fragment {
     ImageButton music_play, music_next, music_pre, btn_shuffle, btn_repeat;
     TextView play_title, play_artist, time_start, time_end;
     ImageView img_player;
-    AppCompatImageButton btn_down, btn_heart;
+    AppCompatImageButton btn_heart;
     AppCompatButton btn_related, btn_lyrics, btn_list;
     RequestQueue requestQueue;
     SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
@@ -109,7 +110,6 @@ public class Music_Player extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_music_player, container, false);
         View main  = inflater.inflate(R.layout.activity_playeractivity, container, false);
 
-        btn_down = rootView.findViewById(R.id.btn_down);
         btn_heart = rootView.findViewById(R.id.btn_heart);
         play_title = (TextView) rootView.findViewById(R.id.play_title);
         play_artist = (TextView) rootView.findViewById(R.id.play_artist);
@@ -137,6 +137,7 @@ public class Music_Player extends Fragment {
         }
 
         SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
+
 
         music_play.setOnClickListener(new View.OnClickListener() {
             @Override

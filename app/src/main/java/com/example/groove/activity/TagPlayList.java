@@ -91,6 +91,8 @@ public class TagPlayList extends AppCompatActivity {
                             JSONArray album_img = json.getJSONArray("album_img");
                             JSONArray song_id = json.getJSONArray("song_id");
                             JSONArray song_lyrics = json.getJSONArray("song_lyrics");
+                            String tag_ment = json.getString("tag_ment");
+                            pl_info.setText(tag_ment);
 
 
                             dataArray = new ArrayList<Main_Item>();

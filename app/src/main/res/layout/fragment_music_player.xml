@@ -13,17 +13,6 @@
         android:layout_weight="3"
         android:layout_marginBottom="10dp">
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_down"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:background="#00ff0000"
-            app:srcCompat="@drawable/img_downxml"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/play_title"
             android:layout_width="0dp"
