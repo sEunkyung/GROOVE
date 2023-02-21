@@ -67,7 +67,10 @@ public class PlayList extends Fragment {
         playlist = view.findViewById(R.id.like_menuList);
 
         tv_pl_title.setText("재생목록");
-        Log.d("하하하하하하하하하하하하하하하하하", String.valueOf(song_list));
+        Log.d("하하하하하하하하하하하하하하하하하2", String.valueOf(song_list));
+        Log.d("하하하하하하하하하하하하하하하하하2", String.valueOf(stitle_list));
+        Log.d("하하하하하하하하하하하하하하하하하2", String.valueOf(aname_list));
+        Log.d("하하하하하하하하하하하하하하하하하2", String.valueOf(salbum_list));
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getContext());
@@ -95,7 +98,7 @@ public class PlayList extends Fragment {
 //                            for (int i = 0; i < song_title.length(); i++) {
 //                                dataArray.add(new Main_Item(song_title.getString(i), artist_name.getString(i), getResources().getIdentifier("album_"+ album_img.getInt(i), "drawable", getActivity().getPackageName())));
 //                            }
-                            for (int i = 0; i < song_title.length(); i++) {
+                            for (int i = 0; i < stitle_list.size(); i++) {
                                 dataArray.add(new Main_Item(stitle_list.get(i), aname_list.get(i), getResources().getIdentifier("album_"+ salbum_list.get(i), "drawable", getActivity().getPackageName())));
                             }
 
@@ -112,7 +115,7 @@ public class PlayList extends Fragment {
 //                                    intent.putExtra("song_title", stitle_list.get(i));
 //                                    intent.putExtra("artist_name", aname_list.get(i));
 //                                    intent.putExtra("album_img", salbum_list.get(i));
-                                    intent.putExtra("plindex",i);
+                                    intent.putExtra("plindex",String.valueOf(i));
                                     startActivity(intent);
 
                                 }

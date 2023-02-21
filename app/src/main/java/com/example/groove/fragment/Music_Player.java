@@ -5,6 +5,7 @@ import static com.example.groove.activity.MainActivity.salbum_list;
 import static com.example.groove.activity.MainActivity.song_list;
 import static com.example.groove.activity.MainActivity.stitle_list;
 import static com.example.groove.activity.MainActivity.user_seq;
+import static com.example.groove.activity.PlayerActivity.index;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,7 +59,6 @@ public class Music_Player extends Fragment {
     private MediaPlayer player = new MediaPlayer();
     String bool_heart = "0";
     AppCompatSeekBar seekBar_player;
-    PlayerControlView playerControlView;
     ImageButton music_play, music_next, music_pre, btn_shuffle, btn_repeat;
     TextView play_title, play_artist, time_start, time_end;
     ImageView img_player;
@@ -67,9 +67,37 @@ public class Music_Player extends Fragment {
     RequestQueue requestQueue;
     SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
     // 곡 리스트 인덱스
-    int index = 0;
-    Bundle bundle = new Bundle();
-
+    Bundle bundle;
+    int i=0;
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        if(i==1)
+//            player.start();
+//    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (player != null){
+            player.release();
+            // ◁ : Stop
+            // ○ : Pause
+        }
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (player.isPlaying()) {
+            player.pause();
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!player.isPlaying()){
+            player.start();
+        }
+    }
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -78,11 +106,6 @@ public class Music_Player extends Fragment {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_music_player, container, false);
         View main  = inflater.inflate(R.layout.activity_playeractivity, container, false);
-
-        // PlayerActivity 데이터 받아오기
-        bundle = getArguments();
-//        Log.d("하하", bundle.getString("plindex"));
-//        index = Integer.parseInt(bundle.getString("plindex"));
 
         btn_down = rootView.findViewById(R.id.btn_down);
         btn_heart = rootView.findViewById(R.id.btn_heart);
@@ -100,9 +123,21 @@ public class Music_Player extends Fragment {
         time_start = rootView.findViewById(R.id.time_start);
         time_end = rootView.findViewById(R.id.time_end);
 
+        try{
+            bundle = getArguments();
+            index = Integer.parseInt(bundle.getString("plindex"));
+            Log.d("처음index", String.valueOf(index));
+        } catch(Exception e){
+            index = 0;
+        }
+
+
         play_title.setText(stitle_list.get(index));
+        Log.d("두번째index", String.valueOf(index));
         play_artist.setText(aname_list.get(index));
+        Log.d("두번째index", String.valueOf(index));
         String imgfile = "album_" + salbum_list.get(index);
+        Log.d("두번째index", String.valueOf(index));
         img_player.setImageResource(getResources().getIdentifier(imgfile,"drawable",getActivity().getPackageName() ));
 
 
@@ -281,6 +316,8 @@ public class Music_Player extends Fragment {
                             player.setAudioAttributes(new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build());
                             Log.d("위치", getActivity().getFilesDir().getAbsolutePath());
                             player.setDataSource(getActivity().getFilesDir().getAbsolutePath()+"/song_mp3/"+song_list.get(index)+".mp3");
+                            Log.d("세번째index", String.valueOf(index));
+                            Log.d("노래경로", getActivity().getFilesDir().getAbsolutePath()+"/song_mp3/"+song_list.get(index)+".mp3");
                             player.prepare();
 
 

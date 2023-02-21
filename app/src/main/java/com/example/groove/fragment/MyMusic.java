@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -49,7 +50,6 @@ public class MyMusic extends Fragment {
     private String songNameArr[] = new String[4];
     private int albumImgArr[] = new int[4];
 
-
     // 좋아요 정보(MySQL에서 받아온 데이터)
     ArrayList<String> songNameArr2 = new ArrayList<>();;
     ArrayList<Integer> albumImgArr2 = new ArrayList<>();;
@@ -65,7 +65,6 @@ public class MyMusic extends Fragment {
                              Bundle savedInstanceState){
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_mymusic, container, false);
-
 
 
         if (requestQueue == null){

@@ -2,6 +2,11 @@ package com.example.groove.activity;
 
 import static android.app.PendingIntent.getActivity;
 
+import static com.example.groove.activity.MainActivity.aname_list;
+import static com.example.groove.activity.MainActivity.salbum_list;
+import static com.example.groove.activity.MainActivity.song_list;
+import static com.example.groove.activity.MainActivity.stitle_list;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
 import com.example.groove.adapter.Fav_Artist_Selection_RecyclerView_Adapter;
+import com.example.groove.adapter.Main_Home_RecyclerView_Adapter;
 import com.example.groove.data.Main_Item;
 import com.example.groove.data.RecyclerItemClickListener;
 import com.example.groove.data.View_Type_Code;
@@ -44,23 +50,19 @@ public class Fav_Artist_Selection extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ArrayList<Main_Item> favItemList;
     private Fav_Artist_Selection_RecyclerView_Adapter mRecyclerViewAdapter;
-
     ImageButton btn_next2;
     RequestQueue requestQueue;
-
-    RecyclerView fav_re;
-    Fav_Artist_Selection_RecyclerView_Adapter adapter;
 
 
     int index;
 
     // 가수 이름(MySQL에서 받아온 데이터)
-    private String artistNameArr[] = new String[8];
+    private String artistNameArr[] = new String[10];
     // 가수 이미지(MySQL에서 받아온 데이터)
-    private int artistImgArr[] = new int[8];
+    private int artistImgArr[] = new int[10];
     private CircleImageView civ;
 
-    private String artistIdArr[] = new String[8];
+    private String artistIdArr[] = new String[10];
 
     private ArrayList<String> selectart;
 
@@ -76,103 +78,73 @@ public class Fav_Artist_Selection extends AppCompatActivity {
         favItemList = new ArrayList<>();
         selectart = new ArrayList<>();
 
-        fav_re = findViewById(R.id.fav_re);
-
-
-//        for(int i=0;i<8;i++){
-//            favItemList.add(new Main_Item(artistNameArr[i], artistImgArr[i], View_Type_Code.ViewType.FIRST_CONTENT));
-//            Log.d("크크크", String.valueOf(favItemList.get(i).getSongName()));
-//        }
-        mRecyclerViewAdapter = new Fav_Artist_Selection_RecyclerView_Adapter(favItemList);
-        mRecyclerView.setAdapter(mRecyclerViewAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));	// 가로
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2, GridLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
-
         btn_next2 = findViewById(R.id.btn_next2);
-//        fav_artist_name = findViewById(R.id.fav_artist_name);
-//        String favArtist = fav_artist_name.getText().toString();
-//        String url = "";
-
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://172.30.1.49:3001/Choice_art";
 
+        String url = "http://172.30.1.31:3001/Choice_art";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
                 url,
                 new Response.Listener<String>() {
                     @Override
-
                     public void onResponse(String response) {
-                        Log.d("통신",response);
+                        Log.d("통신", response);
 
                         try {
                             JSONObject json = new JSONObject(response);
-                            JSONArray fav_art = json.getJSONArray("fav_art");
-                            JSONArray fav_name = json.getJSONArray("fav_name");
+                            Log.d("선호 아티스트 목록", String.valueOf(response));
+                            JSONArray artist_id = json.getJSONArray("artist_id");
+                            JSONArray artist_name = json.getJSONArray("artist_name");
 
-                            Random random = new Random();
-                            int[] k = new int[8];
-                            boolean check = true;
-                            for(int i=0; i<8; i++) {
-                                check = true;
-                                // 랜덤으로 아티스트 불러오기 8개
-                                //int I = random.nextInt(20) + 1; // 너무 많으면 렉걸려서 20개
-                                int rnd = random.nextInt(100)+1;
-                                k[i] = rnd;
-                                artistIdArr[i] = fav_art.getString(rnd);
-                                artistNameArr[i] = fav_name.getString(rnd);
-                                String imgfile = "artist_" + fav_art.getString(rnd);
-                                artistImgArr[i] =  getResources().getIdentifier(imgfile, "drawable", getApplicationContext().getPackageName());
-
-                                for(int j=0; j<i; j++) {
-                                    if(k[j] == k[i]) {
-                                        i--;
-                                        check = false;
-                                    }
-                                }
-                                if(check == true) {
-                                    favItemList.add(new Main_Item(artistNameArr[i], artistImgArr[i], View_Type_Code.ViewType.FIRST_CONTENT));
-                                    //selectart.add(Integer.parseInt(artistIdArr[i]), artistNameArr[i]);
-                                }
+//                          추천 곡 리사이클러뷰
+                            for(int i=0;i<10;i++){
+                            favItemList.add(new Main_Item(artist_name.getString(i), getResources().getIdentifier("artist_" + artist_id.getInt(i), "drawable", getApplicationContext().getPackageName()), View_Type_Code.ViewType.FIRST_CONTENT));
+                            Log.d("크크크", String.valueOf(favItemList.get(i).getSongName()));
                             }
+                            mRecyclerViewAdapter = new Fav_Artist_Selection_RecyclerView_Adapter(favItemList);
+                            mRecyclerView.setAdapter(mRecyclerViewAdapter);
+                            mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));	// 가로
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2, GridLayoutManager.VERTICAL, false);
+                            mRecyclerView.setLayoutManager(gridLayoutManager);
 
                             mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position) throws JSONException {
-                               Intent intent = new Intent(getApplicationContext(), Fav_Artist_Selection.class);
-//                                intent.putExtra("fav_sel_art", fav_art.getString(position));
-//                                intent.putExtra("fav_sel_name", fav_name.getString(position));
-                                // DB에서 랜덤으로 가져온 값
-                                intent.putExtra("fav_sel_art", artistIdArr[position].toString());
-                                intent.putExtra("fav_sel_name", artistNameArr[position].toString());
-                                Log.d("클릭", String.valueOf(position));
-//                                Log.d("테스트1", String.valueOf(fav_name.get(position)));
-//                                Log.d("테스트2", String.valueOf(favItemList.get(position)));
-//                                Log.d("테스트3", String.valueOf(selectart));
-                                Log.d("테스트44444", String.valueOf(artistIdArr[position]));
-                                Log.d("테스트55555", String.valueOf(artistNameArr[position]));
-                                // 다음 버튼을 눌러야 값이 보내지게 startActivity는 하단 버튼에 입력
+                                @Override
+                                public void onItemClick(View view, int position) throws JSONException {
+//                                    Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
+//                                    song_list.add(0, song_id.getString(position));
+//                                    stitle_list.add(0, song_title.getString(position));
+//                                    aname_list.add(0, artist_name.getString(position));
+//                                    salbum_list.add(0, album_img.getInt(position));
+//                                    startActivity(intent);
+                                }
 
-                            }
 
-                            @Override
-                            public void onLongItemClick(View view, int position) {
+                                @Override
+                                public void onLongItemClick(View view, int position) {
 
-                            }
-
+                                }
                             }));
+
+                            btn_next2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getApplicationContext(), LikeList.class);
+                                    intent.putExtra("fav_sel_art",artistImgArr);
+                                    intent.putExtra("fav_sel_name", artistNameArr);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                             throw new RuntimeException(e);
                         }
                     }
-
                 },
                 new Response.ErrorListener() {
                     @Override
@@ -188,6 +160,10 @@ public class Fav_Artist_Selection extends AppCompatActivity {
                 // 데이터를 key - value 형태로 만들어서 보내겠습니다
                 Map<String,String> params = new HashMap<String,String>();
                 // params -> key-value 형태로 만들어줌
+//                params.put("recSong", recentsong);
+//                params.put("favSong", favsong);
+//                params.put("favArt", favart);
+
 
 
                 // key-value 로 만들어진 params 객체를 전송!
@@ -196,22 +172,6 @@ public class Fav_Artist_Selection extends AppCompatActivity {
         };
 
         requestQueue.add(request);
-
-
-
-
-        btn_next2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(getApplicationContext(), Fav_Artist_Selection.class);
-                intent.putExtra("fav_sel_art",artistImgArr);
-                intent.putExtra("fav_sel_name", artistNameArr);
-                startActivity(intent);
-                finish();
-            }
-        });
-
 
 
 

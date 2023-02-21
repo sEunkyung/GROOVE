@@ -28,6 +28,7 @@ import com.google.android.exoplayer2.util.Log;
 
 public class PlayerActivity extends AppCompatActivity {
 
+    public static int index = 0;
     private FragmentManager fragmentManager;
     FragmentTransaction transaction;
     private Music_Player fragmentMusicPlayer;
@@ -44,19 +45,14 @@ public class PlayerActivity extends AppCompatActivity {
 
         // Main_Home, PlayList 에서 받아온 데이터
         Intent intent = getIntent();
-        String song_id = intent.getStringExtra("song_id");
-        String song_title = intent.getStringExtra("song_title");
-        String artist_name = intent.getStringExtra("artist_name");
-        String album_img = intent.getStringExtra("album_img");
-//        String plindex = intent.getStringExtra("plindex");
+        String plindex = intent.getStringExtra("plindex");
 
-//        Log.d("여기선 옴?", plindex);
+        bundle.putString("plindex", plindex);
 
-        bundle.putString("song_id", song_id);
-        bundle.putString("song_title", song_title);
-        bundle.putString("artist_name", artist_name);
-        bundle.putString("album_img", album_img);
-//        bundle.putString("plindex", plindex);
+//        bundle.putString("song_id", song_id);
+//        bundle.putString("song_title", song_title);
+//        bundle.putString("artist_name", artist_name);
+//        bundle.putString("album_img", album_img);
 
         fragmentManager = getSupportFragmentManager();
 
