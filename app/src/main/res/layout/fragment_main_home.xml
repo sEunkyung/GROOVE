@@ -31,12 +31,21 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="44dp"
-        android:layout_height="54dp"
+        android:layout_width="35dp"
+        android:layout_height="43dp"
         android:layout_marginStart="15dp"
         android:src="@drawable/img_logo"
         app:layout_constraintBottom_toTopOf="@+id/linear"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/img_search"
+        app:layout_constraintBottom_toTopOf="@+id/linear"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
@@ -70,12 +79,13 @@
             android:textColor="@color/black"
             android:fontFamily="@font/nanum_bold"
             android:textStyle="bold"
-            android:textSize="30dp" />
+            android:textSize="23dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_recsong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -93,13 +103,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="40dp"
             android:layout_marginBottom="0dp"
             android:text="지금 나는"
             android:fontFamily="@font/nanum_bold"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="30dp" />
+            android:textSize="23dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_hashtag"
@@ -123,12 +133,12 @@
             android:layout_height="wrap_content"
             android:text="추천 MV"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:layout_marginBottom="0dp"
             android:fontFamily="@font/nanum_bold"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="30dp" />
+            android:textSize="23dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_mv"
