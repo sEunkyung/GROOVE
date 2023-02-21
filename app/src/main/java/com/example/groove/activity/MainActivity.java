@@ -20,6 +20,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static ArrayList<String> song_list = new ArrayList<>();
+    public static ArrayList<String> stitle_list = new ArrayList<>();
+    public static ArrayList<String> aname_list = new ArrayList<>();
+    public static ArrayList<Integer> salbum_list = new ArrayList<>();
     public static String user_seq;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Main_Home fragmentHome = new Main_Home();
@@ -46,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
         user_seq = intent.getStringExtra("user_seq");
 
         song_list = intent.getStringArrayListExtra("song_list");
+        stitle_list = intent.getStringArrayListExtra("stitle_list");
+        aname_list = intent.getStringArrayListExtra("aname_list");
+        salbum_list = intent.getIntegerArrayListExtra("salbum_list");
+
         Log.d("하하하", String.valueOf(song_list));
 
         bundle.putString("nick", nick);
@@ -53,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
         bundle.putString("recentsong", recentsong);
         bundle.putString("favsong", favsong);
         bundle.putStringArrayList("song_list", song_list);
+        bundle.putStringArrayList("stitle_list", stitle_list);
+        bundle.putStringArrayList("aname_list", aname_list);
+        bundle.putIntegerArrayList("salbum_list", salbum_list);
         bundle.putString("user_seq", user_seq);
 
         // 받아온 데이터 홈 프래그먼트에 보내기

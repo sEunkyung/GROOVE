@@ -1,6 +1,9 @@
 package com.example.groove.fragment;
 
+import static com.example.groove.activity.MainActivity.aname_list;
+import static com.example.groove.activity.MainActivity.salbum_list;
 import static com.example.groove.activity.MainActivity.song_list;
+import static com.example.groove.activity.MainActivity.stitle_list;
 import static com.example.groove.activity.MainActivity.user_seq;
 
 import android.content.Intent;
@@ -70,7 +73,7 @@ public class PlayList extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://192.168.0.2:3001/SongList";
+        String url = "http://172.30.1.31:3001/SongList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -89,8 +92,11 @@ public class PlayList extends Fragment {
 
                             dataArray = new ArrayList<Main_Item>();
                             // 재생목록 리스트뷰
+//                            for (int i = 0; i < song_title.length(); i++) {
+//                                dataArray.add(new Main_Item(song_title.getString(i), artist_name.getString(i), getResources().getIdentifier("album_"+ album_img.getInt(i), "drawable", getActivity().getPackageName())));
+//                            }
                             for (int i = 0; i < song_title.length(); i++) {
-                                dataArray.add(new Main_Item(song_title.getString(i), artist_name.getString(i), getResources().getIdentifier("album_"+ album_img.getInt(i), "drawable", getActivity().getPackageName())));
+                                dataArray.add(new Main_Item(stitle_list.get(i), aname_list.get(i), getResources().getIdentifier("album_"+ salbum_list.get(i), "drawable", getActivity().getPackageName())));
                             }
 
                             adapter = new PlayList_Adapter(getActivity().getApplicationContext(), R.layout.item_playlist, dataArray);
@@ -99,20 +105,16 @@ public class PlayList extends Fragment {
                             playlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                    try {
 
-                                        Log.d("카카카카", String.valueOf(adapterView.getAdapter().getItem(i)));
-                                        Intent intent = new Intent(getActivity(), PlayerActivity.class);
-                                        intent.putExtra("song_id", song_list.get(i));
-                                        intent.putExtra("song_title", song_title.getString(i));
-                                        intent.putExtra("artist_name", artist_name.getString(i));
-                                        intent.putExtra("album_img", album_img.getString(i));
-                                        intent.putExtra("song_lyrics", song_lyrics.getString(i));
-                                        startActivity(intent);
+                                    Log.d("카카카카", String.valueOf(adapterView.getAdapter().getItem(i)));
+                                    Intent intent = new Intent(getActivity(), PlayerActivity.class);
+//                                    intent.putExtra("song_id", song_list.get(i));
+//                                    intent.putExtra("song_title", stitle_list.get(i));
+//                                    intent.putExtra("artist_name", aname_list.get(i));
+//                                    intent.putExtra("album_img", salbum_list.get(i));
+                                    intent.putExtra("plindex",i);
+                                    startActivity(intent);
 
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
-                                    }
                                 }
                             });
 

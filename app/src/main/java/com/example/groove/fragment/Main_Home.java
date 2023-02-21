@@ -1,5 +1,9 @@
 package com.example.groove.fragment;
 
+import static com.example.groove.activity.MainActivity.aname_list;
+import static com.example.groove.activity.MainActivity.salbum_list;
+import static com.example.groove.activity.MainActivity.song_list;
+import static com.example.groove.activity.MainActivity.stitle_list;
 import static com.example.groove.activity.MainActivity.user_seq;
 
 import android.content.Intent;
@@ -82,7 +86,7 @@ public class Main_Home extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://192.168.0.2:3001/RecommendSong";
+        String url = "http://172.30.1.31:3001/RecommendSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -137,12 +141,10 @@ public class Main_Home extends Fragment {
                                         @Override
                                         public void onItemClick(View view, int position) throws JSONException {
                                             Intent intent = new Intent(getActivity(), PlayerActivity.class);
-                                            intent.putExtra("song_id", song_id.getString(position));
-                                            intent.putExtra("song_title", song_title.getString(position));
-                                            intent.putExtra("artist_name", artist_name.getString(position));
-                                            intent.putExtra("album_img", album_img.getString(position));
-                                            intent.putExtra("song_lyrics", song_lyrics.getString(position));
-                                            intent.putExtra("user_seq", user_seq);
+                                            song_list.add(0, song_id.getString(position));
+                                            stitle_list.add(0, song_title.getString(position));
+                                            aname_list.add(0, artist_name.getString(position));
+                                            salbum_list.add(0, album_img.getInt(position));
                                             startActivity(intent);
                                         }
 

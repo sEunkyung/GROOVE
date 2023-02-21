@@ -24,6 +24,7 @@ import com.example.groove.fragment.PlayList;
 import com.example.groove.fragment.Relative_Music;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerControlView;
+import com.google.android.exoplayer2.util.Log;
 
 public class PlayerActivity extends AppCompatActivity {
 
@@ -41,19 +42,21 @@ public class PlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playeractivity);
 
-        // Main_Home에서 받아온 데이터
+        // Main_Home, PlayList 에서 받아온 데이터
         Intent intent = getIntent();
         String song_id = intent.getStringExtra("song_id");
         String song_title = intent.getStringExtra("song_title");
         String artist_name = intent.getStringExtra("artist_name");
         String album_img = intent.getStringExtra("album_img");
-        String song_lyrics = intent.getStringExtra("song_lyrics");
+//        String plindex = intent.getStringExtra("plindex");
+
+//        Log.d("여기선 옴?", plindex);
 
         bundle.putString("song_id", song_id);
         bundle.putString("song_title", song_title);
         bundle.putString("artist_name", artist_name);
         bundle.putString("album_img", album_img);
-        bundle.putString("song_lyrics", song_lyrics);
+//        bundle.putString("plindex", plindex);
 
         fragmentManager = getSupportFragmentManager();
 

@@ -1,8 +1,12 @@
 package com.example.groove.fragment;
 
+import static com.example.groove.activity.MainActivity.aname_list;
+import static com.example.groove.activity.MainActivity.salbum_list;
 import static com.example.groove.activity.MainActivity.song_list;
+import static com.example.groove.activity.MainActivity.stitle_list;
 import static com.example.groove.activity.MainActivity.user_seq;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -15,6 +19,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +68,8 @@ public class Music_Player extends Fragment {
     SimpleDateFormat timeFormat = new SimpleDateFormat("mm:ss");
     // 곡 리스트 인덱스
     int index = 0;
+    Bundle bundle = new Bundle();
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -71,16 +79,12 @@ public class Music_Player extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_music_player, container, false);
         View main  = inflater.inflate(R.layout.activity_playeractivity, container, false);
 
+        // PlayerActivity 데이터 받아오기
+        bundle = getArguments();
+//        Log.d("하하", bundle.getString("plindex"));
+//        index = Integer.parseInt(bundle.getString("plindex"));
+
         btn_down = rootView.findViewById(R.id.btn_down);
-
-        // Main_Home에서 받아온 데이터
-        Bundle bundle = getArguments();
-        String song_id = bundle.getString("song_id");
-        String song_title = bundle.getString("song_title");
-        String artist_name = bundle.getString("artist_name");
-        String album_img = bundle.getString("album_img");
-        String song_lyrics = bundle.getString("song_lyrics");
-
         btn_heart = rootView.findViewById(R.id.btn_heart);
         play_title = (TextView) rootView.findViewById(R.id.play_title);
         play_artist = (TextView) rootView.findViewById(R.id.play_artist);
@@ -96,9 +100,9 @@ public class Music_Player extends Fragment {
         time_start = rootView.findViewById(R.id.time_start);
         time_end = rootView.findViewById(R.id.time_end);
 
-        play_title.setText(song_title);
-        play_artist.setText(artist_name);
-        String imgfile = "album_" + album_img;
+        play_title.setText(stitle_list.get(index));
+        play_artist.setText(aname_list.get(index));
+        String imgfile = "album_" + salbum_list.get(index);
         img_player.setImageResource(getResources().getIdentifier(imgfile,"drawable",getActivity().getPackageName() ));
 
 
@@ -107,10 +111,6 @@ public class Music_Player extends Fragment {
         music_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Log.d("카카카", String.valueOf(getActivity().getFilesDir().getAbsolutePath()+"/song_mp3/1114595.mp3"));
-//                    File mp3File = new File(getContext().getFilesDir().getAbsolutePath()+"/song_mp3/1114595.mp3");
-//                    Uri musicUri = Uri.fromFile(mp3File);
-
                 if(player.isPlaying()){
                     player.pause();
                     music_play.setImageResource(R.drawable.btn_playxml);
@@ -121,7 +121,30 @@ public class Music_Player extends Fragment {
                     player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mediaPlayer) {
+                            try {
                             music_play.setImageResource(R.drawable.btn_playxml);
+                            if(index >= song_list.size()-1 && btn_repeat.getTag().equals("반복재생")){
+                                index = 0;
+                            }else if(index >= song_list.size()-1 && btn_repeat.getTag().equals("안반복재생")){
+                                player.stop();
+                            } else {
+                                index++;
+                            }
+                            play_title.setText(stitle_list.get(index));
+                            play_artist.setText(aname_list.get(index));
+                            String imgfile = "album_" + salbum_list.get(index);
+                            img_player.setImageResource(getResources().getIdentifier(imgfile,"drawable",getActivity().getPackageName() ));
+                            player.release();
+                            player = new MediaPlayer();
+                            player.setAudioAttributes(new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build());
+                            player.setDataSource(getActivity().getFilesDir().getAbsolutePath()+"/song_mp3/"+song_list.get(index)+".mp3");
+                            player.prepare();
+                            time_end.setText(timeFormat.format(player.getDuration()));
+                            playClicked(view);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
                         }
                     });
                     music_play.setImageResource(R.drawable.btn_pausexml);
@@ -140,11 +163,16 @@ public class Music_Player extends Fragment {
                     } else {
                         index++;
                     }
+                    play_title.setText(stitle_list.get(index));
+                    play_artist.setText(aname_list.get(index));
+                    String imgfile = "album_" + salbum_list.get(index);
+                    img_player.setImageResource(getResources().getIdentifier(imgfile,"drawable",getActivity().getPackageName() ));
                     player.release();
                     player = new MediaPlayer();
                     player.setAudioAttributes(new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build());
                     player.setDataSource(getActivity().getFilesDir().getAbsolutePath()+"/song_mp3/"+song_list.get(index)+".mp3");
                     player.prepare();
+                    time_end.setText(timeFormat.format(player.getDuration()));
                     playClicked(view);
                     music_play.setImageResource(R.drawable.btn_pausexml);
                     } catch (IOException e) {
@@ -164,12 +192,18 @@ public class Music_Player extends Fragment {
                     } else{
                         index--;
                     }
+                    play_title.setText(stitle_list.get(index));
+                    play_artist.setText(aname_list.get(index));
+                    String imgfile = "album_" + salbum_list.get(index);
+                    img_player.setImageResource(getResources().getIdentifier(imgfile,"drawable",getActivity().getPackageName() ));
                     player.release();
                     player = new MediaPlayer();
                     player.setAudioAttributes(new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build());
                     player.setDataSource(getActivity().getFilesDir().getAbsolutePath()+"/song_mp3/"+song_list.get(index)+".mp3");
                     player.prepare();
+                    time_end.setText(timeFormat.format(player.getDuration()));
                     playClicked(view);
+
                     music_play.setImageResource(R.drawable.btn_pausexml);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -210,7 +244,7 @@ public class Music_Player extends Fragment {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getActivity());
         }
-        String url = "http://192.168.0.2:3001/InsertList";
+        String url = "http://172.30.1.31:3001/InsertList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -245,6 +279,7 @@ public class Music_Player extends Fragment {
                             // 노래 세팅
                             player = new MediaPlayer();
                             player.setAudioAttributes(new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build());
+                            Log.d("위치", getActivity().getFilesDir().getAbsolutePath());
                             player.setDataSource(getActivity().getFilesDir().getAbsolutePath()+"/song_mp3/"+song_list.get(index)+".mp3");
                             player.prepare();
 
@@ -264,7 +299,7 @@ public class Music_Player extends Fragment {
                                     if (requestQueue == null) {
                                         requestQueue = Volley.newRequestQueue(getActivity());
                                     }
-                                    String url = "http://192.168.0.2:3001/LikesAdd";
+                                    String url = "http://172.30.1.31:3001/LikesAdd";
 
                                     StringRequest request = new StringRequest(
                                             Request.Method.POST,
@@ -300,7 +335,7 @@ public class Music_Player extends Fragment {
                                             Map<String,String> params = new HashMap<String,String>();
                                             // params -> key-value 형태로 만들어줌
                                             params.put("user_seq", user_seq);
-                                            params.put("song_id", song_id);
+                                            params.put("song_id", song_list.get(index));
                                             params.put("bool_heart", String.valueOf(bool_heart));
 
                                             // key-value 로 만들어진 params 객체를 전송!
@@ -332,7 +367,7 @@ public class Music_Player extends Fragment {
                 Map<String,String> params = new HashMap<String,String>();
                 // params -> key-value 형태로 만들어줌
                 params.put("user_seq", user_seq);
-                params.put("song_id", song_id);
+                params.put("song_id", song_list.get(index));
                 params.put("bool_heart", String.valueOf(bool_heart));
 
                 // key-value 로 만들어진 params 객체를 전송!
@@ -345,11 +380,17 @@ public class Music_Player extends Fragment {
         return rootView;
     }
 
-    public void playClicked(View v){
-//
-//        time_start = v.findViewById(R.id.time_start);
-//        time_end = v.findViewById(R.id.time_end);
+    Handler myHandler = new Handler(){
+        // HandlerMessage로 Message객체를 통해서 요청을 받아옴!!
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            if(msg.arg1==1){
+                time_start.setText(""+timeFormat.format(msg.arg2));
+            }
+        }
+    };
 
+    public void playClicked(View v){
         seekBar_player.setMax(player.getDuration());
 //        time_end.setText(timeFormat.format(player.getDuration()));
         seekBar_player.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -367,22 +408,31 @@ public class Music_Player extends Fragment {
             }
         });
         player.start();
-        new Thread(new Runnable(){
-            @Override
-            public void run(){
-                while(player.isPlaying()){
-                    try{
-                        Thread.sleep(1000);
-                    } catch(Exception e){
-                        e.printStackTrace();
-                    }
-                    seekBar_player.setProgress(player.getCurrentPosition());
-                    Log.d("잘되긴하냐", timeFormat.format(player.getCurrentPosition()));
-//                    time_start.setText(timeFormat.format(player.getCurrentPosition()));
-                }
-            }
-        }).start();
+        Mythread mythread = new Mythread();
+        mythread.start();
+    }
 
+    class Mythread extends Thread{
+        // 새로운 작업 공간에서 실행시킬 로직 정의!! --> run 메소드 오버라이딩
+        @Override
+        public void run(){
+            while(player.isPlaying()){
+                try{
+                    Thread.sleep(1000);
+
+                    Message msg = myHandler.obtainMessage();
+                    msg.arg1 =1;
+                    msg.arg2 = player.getCurrentPosition();
+                    myHandler.sendMessage(msg);
+
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                seekBar_player.setProgress(player.getCurrentPosition());
+                Log.d("잘되긴하냐", timeFormat.format(player.getCurrentPosition()));
+
+            }
+        }
     }
 
 }
