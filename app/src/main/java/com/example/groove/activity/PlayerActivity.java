@@ -1,5 +1,7 @@
 package com.example.groove.activity;
 
+import static com.example.groove.fragment.PlayList.frag;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -48,6 +50,7 @@ public class PlayerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String song_id = intent.getStringExtra("song_id");
         String plindex = intent.getStringExtra("plindex");
+        frag=1;
 
         bundle.putString("plindex", plindex);
         bundle.putString("song_id", song_id);

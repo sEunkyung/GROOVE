@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,7 +45,7 @@ public class Fav_Artist_Selection extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ArrayList<Main_Item> favItemList;
     private Fav_Artist_Selection_RecyclerView_Adapter mRecyclerViewAdapter;
-    ImageButton btn_next2;
+    AppCompatImageButton btn_next2, btn_pre5;
     RequestQueue requestQueue;
     private SparseBooleanArray mSelectedItems = new SparseBooleanArray(0);
 
@@ -72,6 +73,14 @@ public class Fav_Artist_Selection extends AppCompatActivity {
         favItemList = new ArrayList<>();
         selectart = new ArrayList<>();
         btn_next2 = findViewById(R.id.btn_next2);
+        btn_pre5 = findViewById(R.id.btn_pre5);
+
+        btn_pre5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         Intent intent = getIntent();
         String user_seq = intent.getStringExtra("user_seq");
@@ -80,7 +89,7 @@ public class Fav_Artist_Selection extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://192.168.0.2:3001/Choice_art";
+        String url = "http://172.30.1.31:3001/Choice_art";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -132,10 +141,7 @@ public class Fav_Artist_Selection extends AppCompatActivity {
                                         Log.d("몇번째지", String.valueOf(artist_id.getInt(position)));
                                         Log.d("하하", selectart.toString());
                                     }
-
                                 }
-
-
                                 @Override
                                 public void onLongItemClick(View view, int position) {
 
@@ -149,7 +155,7 @@ public class Fav_Artist_Selection extends AppCompatActivity {
                                         requestQueue = Volley.newRequestQueue(getApplicationContext());
                                     }
 
-                                    String url = "http://192.168.0.2:3001/FavArtistInsert";
+                                    String url = "http://172.30.1.31:3001/FavArtistInsert";
 
                                     StringRequest request = new StringRequest(
                                             Request.Method.POST,
@@ -162,8 +168,6 @@ public class Fav_Artist_Selection extends AppCompatActivity {
                                                     try {
                                                         JSONObject json = new JSONObject(response);
                                                         Log.d("키키", String.valueOf(response));
-
-
 
                                                         Intent intent = new Intent(getApplicationContext(), Fav_Songs_Selection.class);
                                                         intent.putExtra("fav_sel_art", selectart);

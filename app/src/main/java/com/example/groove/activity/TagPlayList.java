@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class TagPlayList extends AppCompatActivity {
 
-    AppCompatImageButton btn_pre; // 이전버튼
+    AppCompatImageButton btn_pre3; // 이전버튼
     ImageView img_playlist; // 플리 이미지
     TextView pl_title, pl_info; // 플리 이름 / 설명
     ListView menulist;  // 플리내 수록곡이 담길곳
@@ -55,7 +55,7 @@ public class TagPlayList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taglist);
 
-        btn_pre = findViewById(R.id.btn_pre3);
+        btn_pre3 = findViewById(R.id.btn_pre3);
         img_playlist = findViewById(R.id.img_playlist);
         pl_title = findViewById(R.id.pl_title);
         pl_info = findViewById(R.id.pl_info);
@@ -69,12 +69,18 @@ public class TagPlayList extends AppCompatActivity {
 //        String imgfile = "tag_" + album_img.getInt(i);
 //        int a =  getResources().getIdentifier(imgfile, "drawable", getActivity().getPackageName());
         img_playlist.setImageResource(tagImg);
+        btn_pre3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://192.168.0.2:3001/TagList";
+        String url = "http://172.30.1.31:3001/TagList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

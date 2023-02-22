@@ -36,6 +36,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
+import com.example.groove.activity.PlayerActivity;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.material.timepicker.TimeFormat;
 
@@ -275,7 +276,7 @@ public class Music_Player extends Fragment {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getActivity());
         }
-        String url = "http://192.168.0.2:3001/InsertList";
+        String url = "http://172.30.1.31:3001/InsertList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -323,13 +324,14 @@ public class Music_Player extends Fragment {
                             play_artist.setText(aname_list.get(index));
                             String imgfile = "album_" + salbum_list.get(index);
                             img_player.setImageResource(getResources().getIdentifier(imgfile,"drawable",getActivity().getPackageName()));
-
+                            int j = index;
                             player = new MediaPlayer();
                             player.setAudioAttributes(new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build());
                             player.setDataSource(getActivity().getFilesDir().getAbsolutePath()+"/song_mp3/"+song_list.get(index)+".mp3");
                             player.prepare();
-
-
+                            Bundle result = new Bundle();
+                            result.putString("song_id", song_list.get(index));
+                            getParentFragmentManager().setFragmentResult("result", result);
 
                             btn_heart.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -346,7 +348,7 @@ public class Music_Player extends Fragment {
                                     if (requestQueue == null) {
                                         requestQueue = Volley.newRequestQueue(getActivity());
                                     }
-                                    String url = "http://192.168.0.2:3001/LikesAdd";
+                                    String url = "http://172.30.1.31:3001/LikesAdd";
 
                                     StringRequest request = new StringRequest(
                                             Request.Method.POST,
@@ -438,6 +440,9 @@ public class Music_Player extends Fragment {
     };
 
     public void playClicked(View v){
+        Bundle result = new Bundle();
+        result.putString("song_id", song_list.get(index));
+        getParentFragmentManager().setFragmentResult("result", result);
         seekBar_player.setMax(player.getDuration());
 //        time_end.setText(timeFormat.format(player.getDuration()));
         seekBar_player.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

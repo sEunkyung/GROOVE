@@ -39,6 +39,7 @@ import java.util.Map;
 
 public class PlayList extends Fragment {
 
+    public static int frag = 0;
     AppCompatImageButton btn_pre; // 이전버튼
     TextView tv_pl_title;
     ListView playlist;  // 플리내 수록곡이 담길곳
@@ -69,20 +70,24 @@ public class PlayList extends Fragment {
 
         tv_pl_title.setText("재생목록");
 
-        btn_pre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().remove(PlayList.this).commit();
-                fragmentManager.popBackStack();
-            }
-        });
+        if(frag == 0){
+            btn_pre.setImageResource(R.drawable.img_playlistxml);
+        } else if(frag==1){
+            btn_pre.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    fragmentManager.beginTransaction().remove(PlayList.this).commit();
+                    fragmentManager.popBackStack();
+                }
+            });
+        }
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://192.168.0.2:3001/SongList";
+        String url = "http://172.30.1.31:3001/SongList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

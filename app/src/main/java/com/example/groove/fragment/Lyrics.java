@@ -3,9 +3,12 @@ package com.example.groove.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -43,10 +47,22 @@ import java.util.Map;
 public class Lyrics extends Fragment {
 
    private TextView player_lyrics;
-   ImageButton btn_down2;
+   LinearLayout btn_down2;
    String song_id;
    RequestQueue requestQueue;
    Bundle bundle = new Bundle();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getParentFragmentManager().setFragmentResultListener("result", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                song_id = result.getString("song_id");
+                Log.d("과연..?", song_id);
+            }
+        });
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
@@ -72,7 +88,7 @@ public class Lyrics extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://192.168.0.2:3001/Lyrics";
+        String url = "http://172.30.1.31:3001/Lyrics";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -109,7 +125,7 @@ public class Lyrics extends Fragment {
                 // 데이터를 key - value 형태로 만들어서 보내겠습니다
                 Map<String,String> params = new HashMap<String,String>();
                 // params -> key-value 형태로 만들어줌
-                params.put("song_id", "30515340");
+                params.put("song_id", song_id);
                 // key-value 로 만들어진 params 객체를 전송!
                 return params;
             }

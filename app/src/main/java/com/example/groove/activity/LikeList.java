@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -33,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LikeList extends AppCompatActivity {
-    ImageButton btn_pre1;
+    AppCompatImageButton btn_pre1;
     TextView tv_pl_title;
     ListView like_menuList;
     ArrayList<Main_Item> dataArray;
@@ -60,12 +61,18 @@ public class LikeList extends AppCompatActivity {
 
         // 뒤로가기
         btn_pre1 = findViewById(R.id.btn_pre1);
+        btn_pre1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://192.168.0.2:3001/LikesSongs";
+        String url = "http://172.30.1.31:3001/LikesSongs";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

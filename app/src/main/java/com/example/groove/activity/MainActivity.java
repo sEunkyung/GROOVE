@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import static com.example.groove.fragment.PlayList.frag;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_main_menu);
 
+        frag =0;
         intent = getIntent();
         nick = intent.getStringExtra("nick");
         favart = intent.getStringExtra("favart");
