@@ -27,6 +27,7 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btn_down3"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_gravity="left"
@@ -36,7 +37,6 @@
                     android:src="@drawable/img_downxml"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-
                 </androidx.appcompat.widget.AppCompatImageButton>
             </LinearLayout>
 

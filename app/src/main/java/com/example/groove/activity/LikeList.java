@@ -109,7 +109,7 @@ public class LikeList extends AppCompatActivity {
                                 dataArray.add(new Main_Item(stitle_list.get(i), aname_list.get(i), getResources().getIdentifier("album_"+ salbum_list.get(i), "drawable", getApplicationContext().getPackageName())));
                             }
 
-                            adapter = new PlayList_Adapter(getApplicationContext().getApplicationContext(), R.layout.item_playlist, dataArray);
+                            adapter = new PlayList_Adapter(getApplicationContext().getApplicationContext(), R.layout.item_likelist, dataArray);
                             like_menuList.setAdapter(adapter);
 
                             like_menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

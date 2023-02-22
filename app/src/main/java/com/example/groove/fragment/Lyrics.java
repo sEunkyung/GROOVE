@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
@@ -48,6 +49,7 @@ public class Lyrics extends Fragment {
 
    private TextView player_lyrics;
    LinearLayout btn_down2;
+   AppCompatImageButton btn_down3;
    String song_id;
    RequestQueue requestQueue;
    Bundle bundle = new Bundle();
@@ -73,8 +75,16 @@ public class Lyrics extends Fragment {
 
         player_lyrics = rootView.findViewById(R.id.player_lyrics);
         btn_down2 = rootView.findViewById(R.id.btn_down2);
-
+        btn_down3 = rootView.findViewById(R.id.btn_down3);
         btn_down2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().remove(Lyrics.this).commit();
+                fragmentManager.popBackStack();
+            }
+        });
+        btn_down3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
