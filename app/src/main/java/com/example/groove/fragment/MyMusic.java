@@ -75,7 +75,7 @@ public class MyMusic extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.31:3001/RecentSong";
+        String url = "http://172.30.1.42:3001/RecentSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
