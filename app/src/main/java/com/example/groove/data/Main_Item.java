@@ -32,6 +32,10 @@ public class Main_Item {
         this.viewType = viewType;
     }
 
+    public Main_Item(String songName) {
+        this.songName = songName;
+    }
+
     public String getMvimg() {
         return mvimg;
     }

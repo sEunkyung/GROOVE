@@ -39,11 +39,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_search"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@drawable/img_search"
+        android:layout_marginEnd="15dp"
+        android:background="#00ff0000"
+        android:src="@drawable/img_searchxml"
         app:layout_constraintBottom_toTopOf="@+id/linear"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -79,7 +81,7 @@
             android:textColor="@color/black"
             android:fontFamily="@font/nanum_bold"
             android:textStyle="bold"
-            android:textSize="23dp" />
+            android:textSize="20dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_recsong"
@@ -109,7 +111,7 @@
             android:fontFamily="@font/nanum_bold"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="23dp" />
+            android:textSize="20dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_hashtag"
@@ -138,7 +140,7 @@
             android:fontFamily="@font/nanum_bold"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="23dp" />
+            android:textSize="20dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_mv"
