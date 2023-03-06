@@ -72,7 +72,7 @@ public class LikeList extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://172.30.1.42:3001/LikesSongs";
+        String url = "http://172.30.1.31:3001/LikesSongs";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

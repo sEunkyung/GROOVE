@@ -80,7 +80,7 @@ public class Fav_Songs_Selection extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://172.30.1.42:3001/Choice_songs";
+        String url = "http://172.30.1.31:3001/Choice_songs";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -141,7 +141,7 @@ public class Fav_Songs_Selection extends AppCompatActivity {
                                         requestQueue = Volley.newRequestQueue(getApplicationContext());
                                     }
 
-                                    String url = "http://172.30.1.42:3001/FavSongsInsert";
+                                    String url = "http://172.30.1.31:3001/FavSongsInsert";
 
                                     StringRequest request = new StringRequest(
                                             Request.Method.POST,
