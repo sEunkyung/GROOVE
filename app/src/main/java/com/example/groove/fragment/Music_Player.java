@@ -125,6 +125,8 @@ public class Music_Player extends Fragment {
         seekBar_player = rootView.findViewById(R.id.seekBar_player);
         time_start = rootView.findViewById(R.id.time_start);
         time_end = rootView.findViewById(R.id.time_end);
+        btn_repeat.setAlpha((float)0.3);
+        btn_shuffle.setAlpha((float)0.3);
 
         bundle = getArguments();
         String song_id = bundle.getString("song_id");
@@ -249,13 +251,13 @@ public class Music_Player extends Fragment {
             public void onClick(View view) {
 
                 if(btn_shuffle.getTag().equals("순차재생")){
-                    btn_shuffle.setImageResource(R.drawable.img_heartxml);
+                    btn_shuffle.setAlpha((float)1);
                     index = (int)(Math.random() * song_list.size());
-                    btn_shuffle.setTag("반복재생");
+                    btn_shuffle.setTag("셔플재생");
                 } else{
-                    btn_shuffle.setImageResource(R.drawable.img_heartxml);
                     index = (int)(Math.random() * song_list.size());
-                    btn_shuffle.setTag("반복재생");
+                    btn_shuffle.setAlpha((float)0.3);
+                    btn_shuffle.setTag("순차재생");
                 }
             }
         });
@@ -264,10 +266,11 @@ public class Music_Player extends Fragment {
             @Override
             public void onClick(View view) {
                 if(btn_repeat.getTag().equals("반복재생")){
-                    btn_repeat.setImageResource(R.drawable.img_heartxml);
+                    btn_repeat.setAlpha((float)1);
                     btn_repeat.setTag("안반복재생");
                 } else{
                     btn_repeat.setImageResource(R.drawable.btn_repeatxml);
+                    btn_repeat.setAlpha((float)0.3);
                     btn_repeat.setTag("반복재생");
                 }
             }
