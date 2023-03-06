@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,8 +23,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.groove.R;
+import com.example.groove.activity.Fav_Artist_Selection;
 import com.example.groove.activity.Movie_Player;
 import com.example.groove.activity.PlayerActivity;
+import com.example.groove.activity.Search;
 import com.example.groove.activity.TagPlayList;
 import com.example.groove.adapter.Main_Home_RecyclerView_Adapter;
 import com.example.groove.data.Main_Item;
@@ -46,6 +50,7 @@ public class Main_Home extends Fragment {
     GridLayoutManager gridLayoutManager;
     private TextView txt_nick;
 
+    AppCompatImageButton btn_search;
     RequestQueue requestQueue;
 
     // 곡 정보(MySQL에서 받아온 데이터)
@@ -68,7 +73,6 @@ public class Main_Home extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_main_home, container, false);
         View main  = inflater.inflate(R.layout.activity_navigation_main_menu, container, false);
 
-
         txt_nick = rootView.findViewById(R.id.txt_nick);
         Bundle bundle = getArguments();
         String text = bundle.getString("nick");
@@ -77,13 +81,24 @@ public class Main_Home extends Fragment {
         // 다음 과제로 해볼것 최근 들은 곡이 있다면 그 분위기에 맞는 곡 추천
         String recsong = "";
 
+        btn_search = rootView.findViewById(R.id.btn_search);
+
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Search.class);
+                startActivity(intent);
+
+            }
+        });
+
         txt_nick.setText(text+" 님을 위한,");
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.42:3001/RecommendSong";
+        String url = "http://172.30.1.31:3001/RecommendSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatSeekBar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -31,6 +32,7 @@ import com.google.android.exoplayer2.util.Log;
 public class PlayerActivity extends AppCompatActivity {
 
     public static int index = 0;
+    public static String song_ids;
     private FragmentManager fragmentManager;
     FragmentTransaction transaction;
     private Music_Player fragmentMusicPlayer;
@@ -39,6 +41,7 @@ public class PlayerActivity extends AppCompatActivity {
     private PlayList fragmentPlaylist;
     Bundle bundle = new Bundle();
     AppCompatImageButton btn_down;
+    AppCompatButton btn_related, btn_lyrics, btn_list;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -46,9 +49,18 @@ public class PlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playeractivity);
 
+        btn_related = findViewById(R.id.btn_related);
+        btn_lyrics = findViewById(R.id.btn_lyrics);
+        btn_list = findViewById(R.id.btn_list);
+
+        btn_related.setTag("off");
+        btn_lyrics.setTag("off");
+        btn_list.setTag("off");
+
         // Main_Home, PlayList 에서 받아온 데이터
         Intent intent = getIntent();
         String song_id = intent.getStringExtra("song_id");
+        song_ids = intent.getStringExtra("song_id");
         String plindex = intent.getStringExtra("plindex");
         frag=1;
 
@@ -87,15 +99,32 @@ public class PlayerActivity extends AppCompatActivity {
         transaction = fragmentManager.beginTransaction();
 
         switch (view.getId()){
-
             case R.id.btn_related:
-                transaction.add(R.id.music_bottom, fragmentRalative).commitAllowingStateLoss();
+                if(btn_related.getTag().equals("off")){
+                    transaction.add(R.id.music_bottom, fragmentRalative).commitAllowingStateLoss();
+                    btn_related.setTag("on");
+                } else{
+                    transaction.remove(fragmentRalative).commit();
+                    btn_related.setTag("off");
+                }
                 break;
             case R.id.btn_lyrics:
-                transaction.add(R.id.music_bottom, fragmentLyrics).commitAllowingStateLoss();
+                if(btn_lyrics.getTag().equals("off")){
+                    transaction.add(R.id.music_bottom, fragmentLyrics).commitAllowingStateLoss();
+                    btn_lyrics.setTag("on");
+                } else{
+                    transaction.remove(fragmentLyrics).commit();
+                    btn_lyrics.setTag("off");
+                }
                 break;
             case R.id.btn_list:
-                transaction.add(R.id.music_bottom, fragmentPlaylist).commitAllowingStateLoss();
+                if(btn_list.getTag().equals("off")){
+                    transaction.add(R.id.music_bottom, fragmentPlaylist).commitAllowingStateLoss();
+                    btn_list.setTag("on");
+                } else{
+                    transaction.remove(fragmentPlaylist).commit();
+                    btn_list.setTag("off");
+                }
                 break;
         }
     }

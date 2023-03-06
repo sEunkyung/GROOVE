@@ -73,7 +73,7 @@ public class Login extends AppCompatActivity {
                 String inputId = login_id.getText().toString();
                 String inputPw = login_pw.getText().toString();
 
-                String url = "http://172.30.1.42:3001/Login";
+                String url = "http://172.30.1.31:3001/Login";
 
                 StringRequest request = new StringRequest(
                         Request.Method.POST,
