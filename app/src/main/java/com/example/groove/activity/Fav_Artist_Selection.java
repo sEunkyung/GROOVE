@@ -2,6 +2,8 @@ package com.example.groove.activity;
 
 import static android.app.PendingIntent.getActivity;
 
+import static com.example.groove.activity.Login.my_url;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -89,7 +91,7 @@ public class Fav_Artist_Selection extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://172.30.1.49:3001/Choice_art";
+        String url = "http://"+my_url+":3001/Choice_art";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -155,7 +157,7 @@ public class Fav_Artist_Selection extends AppCompatActivity {
                                         requestQueue = Volley.newRequestQueue(getApplicationContext());
                                     }
 
-                                    String url = "http://172.30.1.49:3001/FavArtistInsert";
+                                    String url = "http://"+my_url+":3001/FavArtistInsert";
 
                                     StringRequest request = new StringRequest(
                                             Request.Method.POST,

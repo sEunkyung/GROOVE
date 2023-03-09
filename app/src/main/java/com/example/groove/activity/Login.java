@@ -35,6 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Login extends AppCompatActivity {
     public static String user_seq;
+    public static String my_url = "172.30.1.33";
     EditText login_id, login_pw;
     AppCompatButton btn_joinform, btn_login;
     RequestQueue requestQueue;
@@ -73,7 +74,7 @@ public class Login extends AppCompatActivity {
                 String inputId = login_id.getText().toString();
                 String inputPw = login_pw.getText().toString();
 
-                String url = "http://172.30.1.49:3001/Login";
+                String url = "http://"+my_url+":3001/Login";
 
                 StringRequest request = new StringRequest(
                         Request.Method.POST,

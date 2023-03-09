@@ -1,5 +1,6 @@
 package com.example.groove.fragment;
 
+import static com.example.groove.activity.Login.my_url;
 import static com.example.groove.activity.MainActivity.user_seq;
 import static com.example.groove.activity.PlayerActivity.index;
 
@@ -288,7 +289,7 @@ public class Music_Player extends Fragment {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getActivity());
         }
-        String url = "http://172.30.1.49:3001/InsertList";
+        String url = "http://"+my_url+":3001/InsertList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -360,7 +361,7 @@ public class Music_Player extends Fragment {
                                     if (requestQueue == null) {
                                         requestQueue = Volley.newRequestQueue(getActivity());
                                     }
-                                    String url = "http://172.30.1.49:3001/LikesAdd";
+                                    String url = "http://"+my_url+":3001/LikesAdd";
 
                                     StringRequest request = new StringRequest(
                                             Request.Method.POST,

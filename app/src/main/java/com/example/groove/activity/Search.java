@@ -1,5 +1,6 @@
 package com.example.groove.activity;
 
+import static com.example.groove.activity.Login.my_url;
 import static com.example.groove.activity.MainActivity.user_seq;
 
 import androidx.annotation.Nullable;
@@ -62,7 +63,7 @@ public class Search extends AppCompatActivity {
                             requestQueue = Volley.newRequestQueue(getApplicationContext());
                         }
 
-                        String url = "http://172.30.1.42:3001/";
+                        String url = "http://"+my_url+":3001:3001/";
 
                         StringRequest request = new StringRequest(
                                 Request.Method.POST,
