@@ -1,6 +1,7 @@
 package com.example.groove.fragment;
 
 import static com.example.groove.activity.MainActivity.user_seq;
+import static com.example.groove.activity.PlayerActivity.song_ids;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -92,7 +93,7 @@ public class Relative_Music extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.49:3001/RelativeSongs";
+        String url = "http://172.30.1.31:3001/RelativeSongs";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -161,7 +162,7 @@ public class Relative_Music extends Fragment {
                 // 데이터를 key - value 형태로 만들어서 보내겠습니다
                 Map<String,String> params = new HashMap<String,String>();
                 // params -> key-value 형태로 만들어줌
-                params.put("song_id", song_id);
+                params.put("song_id", song_ids);
 
                 // key-value 로 만들어진 params 객체를 전송!
                 return params;

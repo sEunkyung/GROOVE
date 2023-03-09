@@ -22,28 +22,27 @@
         android:theme="@style/Theme.GROOVE"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".SearchList"
+            android:exported="false" />
+        <activity
+            android:name=".activity.Search"
+            android:exported="false"></activity>
         <activity
             android:name=".activity.Fav_Artist_Selection"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".activity.Motion"
-            android:exported="false">
-
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".activity.PlayerActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".activity.Fav_Songs_Selection"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".activity.Join"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".activity.Login"
             android:exported="true">
@@ -55,24 +54,16 @@
         </activity>
         <activity
             android:name=".activity.Movie_Player"
-            android:exported="false">
-
-
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".activity.TagPlayList"
-            android:exported="false">
-
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".activity.LikeList"
-            android:exported="false">
-
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>

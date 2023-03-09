@@ -1,5 +1,7 @@
 package com.example.groove.fragment;
 
+import static com.example.groove.activity.PlayerActivity.song_ids;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -49,7 +51,7 @@ public class Lyrics extends Fragment {
 
    private TextView player_lyrics;
    LinearLayout btn_down2;
-   AppCompatImageButton btn_down3;
+   AppCompatImageButton btn_ly;
    String song_id;
    RequestQueue requestQueue;
    Bundle bundle = new Bundle();
@@ -75,8 +77,9 @@ public class Lyrics extends Fragment {
 
         player_lyrics = rootView.findViewById(R.id.player_lyrics);
         btn_down2 = rootView.findViewById(R.id.btn_down2);
-        btn_down3 = rootView.findViewById(R.id.btn_down3);
-        btn_down2.setOnClickListener(new View.OnClickListener() {
+        btn_ly = rootView.findViewById(R.id.btn_ly);
+
+        btn_ly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -84,7 +87,7 @@ public class Lyrics extends Fragment {
                 fragmentManager.popBackStack();
             }
         });
-        btn_down3.setOnClickListener(new View.OnClickListener() {
+        btn_down2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -98,7 +101,7 @@ public class Lyrics extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.49:3001/Lyrics";
+        String url = "http://172.30.1.31:3001/Lyrics";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -135,7 +138,7 @@ public class Lyrics extends Fragment {
                 // 데이터를 key - value 형태로 만들어서 보내겠습니다
                 Map<String,String> params = new HashMap<String,String>();
                 // params -> key-value 형태로 만들어줌
-                params.put("song_id", song_id);
+                params.put("song_id", song_ids);
                 // key-value 로 만들어진 params 객체를 전송!
                 return params;
             }
