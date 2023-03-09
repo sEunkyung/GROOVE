@@ -92,7 +92,7 @@ public class Relative_Music extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.42:3001/RelativeSongs";
+        String url = "http://172.30.1.49:3001/RelativeSongs";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
