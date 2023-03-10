@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,6 +43,7 @@ public class Search extends AppCompatActivity {
     ArrayList<Main_Item> dataArray;  // 데이터셋
     Search_Adapter adapter; // 어댑터 사용!
     RequestQueue requestQueue;
+    private SparseBooleanArray mSelectedItems = new SparseBooleanArray(0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,7 @@ public class Search extends AppCompatActivity {
         search_bar.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP){
+                if (keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN){
 
                     Log.d("엔터눌렀음","ㅋㅋ");
                     if (requestQueue == null) {
@@ -141,6 +143,18 @@ public class Search extends AppCompatActivity {
                             adapter = new Search_Adapter(getApplicationContext(),R.layout.item_search, dataArray);
 
                             list_search.setAdapter(adapter);
+
+                            list_search.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                                    Log.d("카카",dataArray.get(i).getSongName());
+                                    Intent intent = new Intent(getApplicationContext(), SearchList.class);
+                                    intent.putExtra("search_content", dataArray.get(i).getSongName());
+                                    startActivity(intent);
+
+                                }
+                            });
 
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -29,7 +29,9 @@
         </activity>
         <activity
             android:name=".activity.Search"
-            android:exported="false"></activity>
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".activity.Fav_Artist_Selection"
             android:exported="false" />
