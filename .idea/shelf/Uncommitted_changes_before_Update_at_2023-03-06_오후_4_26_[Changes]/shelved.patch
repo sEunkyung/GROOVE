@@ -1,0 +1,714 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.WAKE_LOCK\" />\r\n\r\n    <queries>\r\n        <intent>\r\n            <action android:name=\"com.google.android.youtube.api.service.START\" />\r\n        </intent>\r\n    </queries>\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.GROOVE\"\r\n        android:usesCleartextTraffic=\"true\"\r\n        tools:targetApi=\"31\">\r\n\r\n        <activity\r\n            android:name=\".activity.Fav_Artist_Selection\"\r\n            android:exported=\"false\">\r\n        </activity>\r\n        <activity\r\n            android:name=\".activity.Motion\"\r\n            android:exported=\"false\">\r\n\r\n        </activity>\r\n        <activity\r\n            android:name=\".activity.PlayerActivity\"\r\n            android:exported=\"false\">\r\n        </activity>\r\n        <activity\r\n            android:name=\".activity.Fav_Songs_Selection\"\r\n            android:exported=\"false\">\r\n        </activity>\r\n        <activity\r\n            android:name=\".activity.Join\"\r\n            android:exported=\"false\">\r\n        </activity>\r\n        <activity\r\n            android:name=\".activity.Login\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity\r\n            android:name=\".activity.Movie_Player\"\r\n            android:exported=\"false\">\r\n\r\n\r\n        </activity>\r\n        <activity\r\n            android:name=\".activity.MainActivity\"\r\n            android:exported=\"false\">\r\n        </activity>\r\n        <activity\r\n            android:name=\".activity.TagPlayList\"\r\n            android:exported=\"false\">\r\n\r\n        </activity>\r\n        <activity\r\n            android:name=\".activity.LikeList\"\r\n            android:exported=\"false\">\r\n\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision fc7182ad03d8afcfaaf7d8ca80bdc2745a1a9f3a)
++++ b/app/src/main/AndroidManifest.xml	(date 1678087268931)
+@@ -22,28 +22,27 @@
+         android:theme="@style/Theme.GROOVE"
+         android:usesCleartextTraffic="true"
+         tools:targetApi="31">
+-
++        <activity
++            android:name=".SearchList"
++            android:exported="false" />
++        <activity
++            android:name=".activity.Search"
++            android:exported="false"></activity>
+         <activity
+             android:name=".activity.Fav_Artist_Selection"
+-            android:exported="false">
+-        </activity>
++            android:exported="false" />
+         <activity
+             android:name=".activity.Motion"
+-            android:exported="false">
+-
+-        </activity>
++            android:exported="false" />
+         <activity
+             android:name=".activity.PlayerActivity"
+-            android:exported="false">
+-        </activity>
++            android:exported="false" />
+         <activity
+             android:name=".activity.Fav_Songs_Selection"
+-            android:exported="false">
+-        </activity>
++            android:exported="false" />
+         <activity
+             android:name=".activity.Join"
+-            android:exported="false">
+-        </activity>
++            android:exported="false" />
+         <activity
+             android:name=".activity.Login"
+             android:exported="true">
+@@ -55,24 +54,16 @@
+         </activity>
+         <activity
+             android:name=".activity.Movie_Player"
+-            android:exported="false">
+-
+-
+-        </activity>
++            android:exported="false" />
+         <activity
+             android:name=".activity.MainActivity"
+-            android:exported="false">
+-        </activity>
++            android:exported="false" />
+         <activity
+             android:name=".activity.TagPlayList"
+-            android:exported="false">
+-
+-        </activity>
++            android:exported="false" />
+         <activity
+             android:name=".activity.LikeList"
+-            android:exported="false">
+-
+-        </activity>
++            android:exported="false" />
+     </application>
+ 
+ </manifest>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_main_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\r\n<androidx.core.widget.NestedScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:fillViewport=\"true\"\r\n    tools:context=\".fragment.Main_Home\">\r\n\r\n<androidx.constraintlayout.widget.ConstraintLayout\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imageView2\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"5dp\"\r\n        android:src=\"@drawable/img_logoname\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/linear\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/imageView\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <androidx.constraintlayout.widget.Guideline\r\n        android:id=\"@+id/guide\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\"\r\n        app:layout_constraintGuide_begin=\"60dp\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imageView\"\r\n        android:layout_width=\"35dp\"\r\n        android:layout_height=\"43dp\"\r\n        android:layout_marginStart=\"15dp\"\r\n        android:src=\"@drawable/img_logo\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/linear\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imageView3\"\r\n        android:layout_width=\"48dp\"\r\n        android:layout_height=\"48dp\"\r\n        android:src=\"@drawable/img_search\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/linear\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/linear\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"1.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/guide\" >\r\n\r\n        <TextView\r\n            android:id=\"@+id/txt_nick\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginStart=\"15dp\"\r\n            android:layout_marginTop=\"12dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:textStyle=\"bold\"\r\n            android:fontFamily=\"@font/nanum_bold\"\r\n            android:text=\"닉네임 님을 위한,\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView6\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"추천곡\"\r\n            android:layout_marginStart=\"15dp\"\r\n            android:layout_marginBottom=\"0dp\"\r\n            android:textColor=\"@color/black\"\r\n            android:fontFamily=\"@font/nanum_bold\"\r\n            android:textStyle=\"bold\"\r\n            android:textSize=\"23dp\" />\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/list_recsong\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\" />\r\n\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/linear2\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/linear\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView4\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginStart=\"15dp\"\r\n            android:layout_marginTop=\"40dp\"\r\n            android:layout_marginBottom=\"0dp\"\r\n            android:text=\"지금 나는\"\r\n            android:fontFamily=\"@font/nanum_bold\"\r\n            android:textColor=\"@color/black\"\r\n            android:textStyle=\"bold\"\r\n            android:textSize=\"23dp\" />\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/list_hashtag\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\" />\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/linear3\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"1.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/linear2\">\r\n\r\n        <TextView\r\n            android:id=\"@+id/textView5\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"추천 MV\"\r\n            android:layout_marginStart=\"15dp\"\r\n            android:layout_marginTop=\"40dp\"\r\n            android:layout_marginBottom=\"0dp\"\r\n            android:fontFamily=\"@font/nanum_bold\"\r\n            android:textColor=\"@color/black\"\r\n            android:textStyle=\"bold\"\r\n            android:textSize=\"23dp\" />\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/list_mv\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\" />\r\n\r\n    </LinearLayout>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n</androidx.core.widget.NestedScrollView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_main_home.xml b/app/src/main/res/layout/fragment_main_home.xml
+--- a/app/src/main/res/layout/fragment_main_home.xml	(revision fc7182ad03d8afcfaaf7d8ca80bdc2745a1a9f3a)
++++ b/app/src/main/res/layout/fragment_main_home.xml	(date 1678067805490)
+@@ -39,11 +39,13 @@
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+-    <ImageView
+-        android:id="@+id/imageView3"
++    <androidx.appcompat.widget.AppCompatImageButton
++        android:id="@+id/btn_search"
+         android:layout_width="48dp"
+         android:layout_height="48dp"
+-        android:src="@drawable/img_search"
++        android:layout_marginEnd="15dp"
++        android:background="#00ff0000"
++        android:src="@drawable/img_searchxml"
+         app:layout_constraintBottom_toTopOf="@+id/linear"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+@@ -79,7 +81,7 @@
+             android:textColor="@color/black"
+             android:fontFamily="@font/nanum_bold"
+             android:textStyle="bold"
+-            android:textSize="23dp" />
++            android:textSize="20dp" />
+ 
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/list_recsong"
+@@ -109,7 +111,7 @@
+             android:fontFamily="@font/nanum_bold"
+             android:textColor="@color/black"
+             android:textStyle="bold"
+-            android:textSize="23dp" />
++            android:textSize="20dp" />
+ 
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/list_hashtag"
+@@ -138,7 +140,7 @@
+             android:fontFamily="@font/nanum_bold"
+             android:textColor="@color/black"
+             android:textStyle="bold"
+-            android:textSize="23dp" />
++            android:textSize="20dp" />
+ 
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/list_mv"
+Index: app/src/main/java/com/example/groove/fragment/Main_Home.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.groove.fragment;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.GridLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.android.volley.AuthFailureError;\r\nimport com.android.volley.Request;\r\nimport com.android.volley.RequestQueue;\r\nimport com.android.volley.Response;\r\nimport com.android.volley.VolleyError;\r\nimport com.android.volley.toolbox.StringRequest;\r\nimport com.android.volley.toolbox.Volley;\r\nimport com.example.groove.R;\r\nimport com.example.groove.activity.Movie_Player;\r\nimport com.example.groove.activity.PlayerActivity;\r\nimport com.example.groove.activity.TagPlayList;\r\nimport com.example.groove.adapter.Main_Home_RecyclerView_Adapter;\r\nimport com.example.groove.data.Main_Item;\r\nimport com.example.groove.data.RecyclerItemClickListener;\r\nimport com.example.groove.data.View_Type_Code;\r\n\r\nimport org.json.JSONArray;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.HashMap;\r\nimport java.util.Map;\r\n\r\npublic class Main_Home extends Fragment {\r\n    private RecyclerView mSongView;\r\n    private RecyclerView mTagView;\r\n    private RecyclerView mMvView;\r\n    private ArrayList<Main_Item> mMainItemList;\r\n    private Main_Home_RecyclerView_Adapter mMainHomeRecyclerViewAdapter;\r\n    GridLayoutManager gridLayoutManager;\r\n    private TextView txt_nick;\r\n\r\n    RequestQueue requestQueue;\r\n\r\n    // 곡 정보(MySQL에서 받아온 데이터)\r\n    String songNameArr[] = new String[9];\r\n    String artistNameArr[] = new String[9];\r\n    int albumImgArr[] = new int[9];\r\n    // 태그 정보(MySQL에서 받아온 데이터)\r\n    String tagNameArr[] = {\"드라이브\", \"노동요\", \"헬스, 런닝\", \"요가, 필라테스\", \"데이트\", \"이별\"};\r\n    int tagImgArr[] = {R.drawable.tag_drive, R.drawable.tag_work, R.drawable.tag_health, R.drawable.tag_yoga, R.drawable.tag_date, R.drawable.tag_sad};\r\n    // 뮤비 정보(MySQL에서 받아온 데이터)\r\n    String mvNameArr[] = new String[9];\r\n    String mvUrlArr[] = new String[9];\r\n    String artArr[] = new String[9];\r\n\r\n    String item_song_id;\r\n\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState){\r\n\r\n        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_main_home, container, false);\r\n        View main  = inflater.inflate(R.layout.activity_navigation_main_menu, container, false);\r\n\r\n\r\n        txt_nick = rootView.findViewById(R.id.txt_nick);\r\n        Bundle bundle = getArguments();\r\n        String text = bundle.getString(\"nick\");\r\n        String favart = bundle.getString(\"favart\");\r\n        String favsong = bundle.getString(\"favsong\");\r\n        // 다음 과제로 해볼것 최근 들은 곡이 있다면 그 분위기에 맞는 곡 추천\r\n        String recsong = \"\";\r\n\r\n        txt_nick.setText(text+\" 님을 위한,\");\r\n\r\n        if (requestQueue == null) {\r\n            requestQueue = Volley.newRequestQueue(getContext());\r\n        }\r\n\r\n        String url = \"http://172.30.1.42:3001/RecommendSong\";\r\n\r\n        StringRequest request = new StringRequest(\r\n                Request.Method.POST,\r\n                url,\r\n                new Response.Listener<String>() {\r\n                    @Override\r\n                    public void onResponse(String response) {\r\n                        Log.d(\"통신\", response);\r\n\r\n                        try {\r\n                            JSONObject json = new JSONObject(response);\r\n                            Log.d(\"키키\", String.valueOf(response));\r\n                            JSONArray song_title = json.getJSONArray(\"song_title\");\r\n                            JSONArray artist_name = json.getJSONArray(\"artist_name\");\r\n                            JSONArray album_img = json.getJSONArray(\"album_img\");\r\n                            JSONArray mv_url = json.getJSONArray(\"video_url\");\r\n                            JSONArray mv_tit = json.getJSONArray(\"video_title\");\r\n                            JSONArray art_id = json.getJSONArray(\"artist_id\");\r\n                            JSONArray song_id = json.getJSONArray(\"song_id\");\r\n\r\n                            for(int i=0; i<9; i++){\r\n                                songNameArr[i] = song_title.getString(i);\r\n                                artistNameArr[i] = artist_name.getString(i);\r\n                                String imgfile = \"album_\" + album_img.getInt(i);\r\n                                albumImgArr[i] =  getResources().getIdentifier(imgfile, \"drawable\", getActivity().getPackageName());\r\n                                String mvurl = mv_url.getString(i);\r\n                                if(mvurl.contains(\"www\")){\r\n                                    mvurl = mvurl.replace(\"https://www.youtube.com/watch?v=\",\"\");\r\n                                } else{\r\n                                    mvurl = mvurl.replace(\"https://youtube.com/watch?v=\",\"\");\r\n                                }\r\n                                Log.d(\"유알엘\", mvurl);\r\n                                mvUrlArr[i] = \"https://img.youtube.com/vi/\"+mvurl+\"/maxresdefault.jpg\";\r\n                                mvNameArr[i] = mv_tit.getString(i);\r\n                                artArr[i] = art_id.getString(i);\r\n                                Log.d(\"유알엘\", mvUrlArr[i]);\r\n                            }\r\n\r\n                            // 추천 곡 리사이클러뷰\r\n                            mMainItemList = new ArrayList<>();\r\n                            for(int i=0;i<songNameArr.length;i++){\r\n                                mMainItemList.add(new Main_Item(songNameArr[i], artistNameArr[i], albumImgArr[i], View_Type_Code.ViewType.FIRST_CONTENT));\r\n                            }\r\n                            mSongView = rootView.findViewById(R.id.list_recsong);\r\n                            mMainHomeRecyclerViewAdapter = new Main_Home_RecyclerView_Adapter(mMainItemList);\r\n                            mSongView.setAdapter(mMainHomeRecyclerViewAdapter);\r\n                            gridLayoutManager = new GridLayoutManager(rootView.getContext(), 3, GridLayoutManager.HORIZONTAL, false);\r\n                            mSongView.setLayoutManager(gridLayoutManager);\t// 가로\r\n\r\n                            mSongView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), mSongView, new RecyclerItemClickListener.OnItemClickListener() {\r\n                                        @Override\r\n                                        public void onItemClick(View view, int position) throws JSONException {\r\n\r\n                                            item_song_id = song_id.getString(position);\r\n\r\n                                            Intent intent = new Intent(getActivity(), PlayerActivity.class);\r\n                                            intent.putExtra(\"song_id\", item_song_id);\r\n                                            startActivity(intent);\r\n\r\n                                        }\r\n\r\n                                        @Override\r\n                                        public void onLongItemClick(View view, int position) {\r\n\r\n                                        }\r\n                                    }));\r\n\r\n                            // 태그 곡 리사이클러뷰\r\n                            mMainItemList = new ArrayList<>();\r\n                            for(int i=0;i<tagNameArr.length;i++){\r\n                                mMainItemList.add(new Main_Item(\"# \" + tagNameArr[i], tagImgArr[i], View_Type_Code.ViewType.SECOND_CONTENT));\r\n                            }\r\n                            mTagView = rootView.findViewById(R.id.list_hashtag);\r\n                            mMainHomeRecyclerViewAdapter = new Main_Home_RecyclerView_Adapter(mMainItemList);\r\n                            mTagView.setAdapter(mMainHomeRecyclerViewAdapter);\r\n                            gridLayoutManager = new GridLayoutManager(rootView.getContext(), 1, GridLayoutManager.HORIZONTAL, false);\r\n                            mTagView.setLayoutManager(gridLayoutManager);\t// 가로\r\n\r\n                            mTagView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), mTagView, new RecyclerItemClickListener.OnItemClickListener() {\r\n                                @Override\r\n                                public void onItemClick(View view, int position) throws JSONException {\r\n\r\n                                    Intent intent = new Intent(getActivity(), TagPlayList.class);\r\n                                    intent.putExtra(\"tagName\", tagNameArr[position]);\r\n                                    Log.d(\"카카카\", String.valueOf(tagImgArr[position]));\r\n                                    Log.d(\"zzz카카\", String.valueOf(R.drawable.tag_drive));\r\n                                    intent.putExtra(\"tagImg\", tagImgArr[position]);\r\n                                    startActivity(intent);\r\n                                }\r\n\r\n                                @Override\r\n                                public void onLongItemClick(View view, int position) {\r\n\r\n                                }\r\n                            }));\r\n\r\n                            // 추천 뮤비 리사이클러뷰\r\n                            mMainItemList = new ArrayList<>();\r\n                            for(int i=0;i<mvNameArr.length;i++){\r\n                                mMainItemList.add(new Main_Item(mvNameArr[i], View_Type_Code.ViewType.THIRD_CONTENT, mvUrlArr[i]));\r\n                            }\r\n                            mMvView = rootView.findViewById(R.id.list_mv);\r\n                            mMainHomeRecyclerViewAdapter = new Main_Home_RecyclerView_Adapter(mMainItemList);\r\n                            mMvView.setAdapter(mMainHomeRecyclerViewAdapter);\r\n                            gridLayoutManager = new GridLayoutManager(rootView.getContext(), 1, GridLayoutManager.HORIZONTAL, false);\r\n                            mMvView.setLayoutManager(gridLayoutManager);\t// 가로\r\n\r\n                            mMvView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), mMvView, new RecyclerItemClickListener.OnItemClickListener() {\r\n                                @Override\r\n                                public void onItemClick(View view, int position) throws JSONException {\r\n                                    Intent intent = new Intent(getActivity(), Movie_Player.class);\r\n                                    intent.putExtra(\"art_id\", art_id.getString(position));\r\n                                    startActivity(intent);\r\n\r\n                                }\r\n\r\n                                @Override\r\n                                public void onLongItemClick(View view, int position) {\r\n\r\n                                }\r\n                            }));\r\n\r\n\r\n                        } catch (JSONException e) {\r\n                            e.printStackTrace();\r\n                            throw new RuntimeException(e);\r\n                        }\r\n                    }\r\n                },\r\n                new Response.ErrorListener() {\r\n                    @Override\r\n                    public void onErrorResponse(VolleyError error) {\r\n                        Log.d(\"통신\", \"실패\");\r\n                    }\r\n                }\r\n        ){\r\n            @Nullable\r\n            @Override\r\n            protected Map<String, String> getParams() throws AuthFailureError {\r\n                // getParams --> post 방식으로 데이터를 보낼 때 사용되는 메소드!\r\n                // 데이터를 key - value 형태로 만들어서 보내겠습니다\r\n                Map<String,String> params = new HashMap<String,String>();\r\n                // params -> key-value 형태로 만들어줌\r\n                params.put(\"favSong\", favsong);\r\n                params.put(\"recSong\", recsong);\r\n                params.put(\"favArt\", favart);\r\n\r\n\r\n\r\n                // key-value 로 만들어진 params 객체를 전송!\r\n                return params;\r\n            }\r\n        };\r\n\r\n        requestQueue.add(request);\r\n\r\n\r\n        return rootView;\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/groove/fragment/Main_Home.java b/app/src/main/java/com/example/groove/fragment/Main_Home.java
+--- a/app/src/main/java/com/example/groove/fragment/Main_Home.java	(revision fc7182ad03d8afcfaaf7d8ca80bdc2745a1a9f3a)
++++ b/app/src/main/java/com/example/groove/fragment/Main_Home.java	(date 1678085495405)
+@@ -6,9 +6,11 @@
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
++import android.widget.ImageButton;
+ import android.widget.TextView;
+ 
+ import androidx.annotation.Nullable;
++import androidx.appcompat.widget.AppCompatImageButton;
+ import androidx.fragment.app.Fragment;
+ import androidx.recyclerview.widget.GridLayoutManager;
+ import androidx.recyclerview.widget.RecyclerView;
+@@ -21,8 +23,10 @@
+ import com.android.volley.toolbox.StringRequest;
+ import com.android.volley.toolbox.Volley;
+ import com.example.groove.R;
++import com.example.groove.activity.Fav_Artist_Selection;
+ import com.example.groove.activity.Movie_Player;
+ import com.example.groove.activity.PlayerActivity;
++import com.example.groove.activity.Search;
+ import com.example.groove.activity.TagPlayList;
+ import com.example.groove.adapter.Main_Home_RecyclerView_Adapter;
+ import com.example.groove.data.Main_Item;
+@@ -46,6 +50,7 @@
+     GridLayoutManager gridLayoutManager;
+     private TextView txt_nick;
+ 
++    AppCompatImageButton btn_search;
+     RequestQueue requestQueue;
+ 
+     // 곡 정보(MySQL에서 받아온 데이터)
+@@ -68,7 +73,6 @@
+         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_main_home, container, false);
+         View main  = inflater.inflate(R.layout.activity_navigation_main_menu, container, false);
+ 
+-
+         txt_nick = rootView.findViewById(R.id.txt_nick);
+         Bundle bundle = getArguments();
+         String text = bundle.getString("nick");
+@@ -77,6 +81,17 @@
+         // 다음 과제로 해볼것 최근 들은 곡이 있다면 그 분위기에 맞는 곡 추천
+         String recsong = "";
+ 
++        btn_search = rootView.findViewById(R.id.btn_search);
++
++        btn_search.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                Intent intent = new Intent(getContext(), Search.class);
++                startActivity(intent);
++
++            }
++        });
++
+         txt_nick.setText(text+" 님을 위한,");
+ 
+         if (requestQueue == null) {
+Index: app/src/main/res/layout/item_search.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/item_search.xml b/app/src/main/res/layout/item_search.xml
+new file mode 100644
+--- /dev/null	(date 1678086954049)
++++ b/app/src/main/res/layout/item_search.xml	(date 1678086954049)
+@@ -0,0 +1,33 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content">
++
++    <ImageView
++        android:id="@+id/imageView3"
++        android:layout_width="15dp"
++        android:layout_height="15dp"
++        android:layout_marginStart="15dp"
++        android:layout_marginTop="10dp"
++        android:layout_marginBottom="10dp"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:srcCompat="@drawable/img_time" />
++
++    <TextView
++        android:id="@+id/tv_search"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="8dp"
++        android:fontFamily="@font/nanum_basic"
++        android:text="TextView"
++        android:textColor="#6A6767"
++        android:textSize="13dp"
++        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
++        app:layout_constraintStart_toEndOf="@+id/imageView3"
++        app:layout_constraintTop_toTopOf="@+id/imageView3" />
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_search_list.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_search_list.xml b/app/src/main/res/layout/activity_search_list.xml
+new file mode 100644
+--- /dev/null	(date 1678087268940)
++++ b/app/src/main/res/layout/activity_search_list.xml	(date 1678087268940)
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".activity.SearchList">
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/groove/activity/SearchList.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/groove/activity/SearchList.java b/app/src/main/java/com/example/groove/activity/SearchList.java
+new file mode 100644
+--- /dev/null	(date 1678087370509)
++++ b/app/src/main/java/com/example/groove/activity/SearchList.java	(date 1678087370509)
+@@ -0,0 +1,16 @@
++package com.example.groove.activity;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++import android.os.Bundle;
++
++import com.example.groove.R;
++
++public class SearchList extends AppCompatActivity {
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_search_list);
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/drawable/search_box.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/search_box.xml b/app/src/main/res/drawable/search_box.xml
+new file mode 100644
+--- /dev/null	(date 1678070334029)
++++ b/app/src/main/res/drawable/search_box.xml	(date 1678070334029)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="utf-8"?>
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++    android:shape="rectangle" android:thickness="0dp">
++    <solid android:color="#4D000000"/>
++    <corners android:radius="30dp" />
++</shape>
+\ No newline at end of file
+Index: app/src/main/res/drawable/img_searchxml.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/img_searchxml.xml b/app/src/main/res/drawable/img_searchxml.xml
+new file mode 100644
+--- /dev/null	(date 1678062959392)
++++ b/app/src/main/res/drawable/img_searchxml.xml	(date 1678062959392)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
++    <item
++        android:drawable="@drawable/img_search"
++        android:width="45dp"
++        android:height="45dp" />
++</layer-list>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_mymusic.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".fragment.MyMusic\">\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/linearLayout5\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center|center_horizontal\"\r\n            android:orientation=\"horizontal\">\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"40dp\"\r\n                android:layout_marginTop=\"12dp\"\r\n                android:layout_marginStart=\"15dp\"\r\n                android:gravity=\"center\"\r\n                android:text=\"내 음악\"\r\n                android:textColor=\"@color/black\"\r\n                android:fontFamily=\"@font/nanum_bold\"\r\n                android:textSize=\"20dp\"\r\n                app:layout_constraintStart_toEndOf=\"@+id/btn_pre2\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n        </LinearLayout>\r\n\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/linearLayout6\"\r\n        android:layout_width=\"0dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/linearLayout5\">\r\n\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginStart=\"15dp\"\r\n            android:layout_marginTop=\"20dp\"\r\n            android:layout_marginBottom=\"0dp\"\r\n            android:text=\"최근 감상한 노래\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"21dp\"\r\n            android:fontFamily=\"@font/nanum_bold\"\r\n            android:textStyle=\"bold\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/list_recent\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\" />\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/linearLayout7\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/linearLayout6\"\r\n        tools:layout_editor_absoluteX=\"0dp\">\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/btn_likelist\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_gravity=\"center_horizontal|center\"\r\n            android:orientation=\"horizontal\">\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"15dp\"\r\n                android:layout_marginTop=\"40dp\"\r\n                android:layout_marginBottom=\"0dp\"\r\n                android:fontFamily=\"@font/nanum_bold\"\r\n                android:text=\"좋아요한 노래\"\r\n                android:textColor=\"@color/black\"\r\n                android:textSize=\"21dp\"\r\n                android:textStyle=\"bold\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <ImageView\r\n                android:layout_width=\"17dp\"\r\n                android:layout_height=\"17dp\"\r\n                android:layout_marginStart=\"5dp\"\r\n                android:layout_marginTop=\"42dp\"\r\n                android:src=\"@drawable/img_nextxml\" />\r\n\r\n        </LinearLayout>\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/list_likesong\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\" />\r\n    </LinearLayout>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"vertical\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/linearLayout7\">\r\n\r\n        <LinearLayout\r\n            android:id=\"@+id/btn_likeartist\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"horizontal\">\r\n\r\n            <TextView\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"15dp\"\r\n                android:layout_marginTop=\"40dp\"\r\n                android:layout_marginBottom=\"0dp\"\r\n                android:text=\"선호 아티스트\"\r\n                android:textColor=\"@color/black\"\r\n                android:textSize=\"21dp\"\r\n                android:fontFamily=\"@font/nanum_bold\"\r\n                android:textStyle=\"bold\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <ImageView\r\n                android:layout_width=\"17dp\"\r\n                android:layout_height=\"17dp\"\r\n                android:layout_marginStart=\"5dp\"\r\n                android:layout_marginTop=\"42dp\"\r\n                android:src=\"@drawable/img_nextxml\" />\r\n        </LinearLayout>\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/list_favartist\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\" />\r\n    </LinearLayout>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_mymusic.xml b/app/src/main/res/layout/fragment_mymusic.xml
+--- a/app/src/main/res/layout/fragment_mymusic.xml	(revision fc7182ad03d8afcfaaf7d8ca80bdc2745a1a9f3a)
++++ b/app/src/main/res/layout/fragment_mymusic.xml	(date 1678067805485)
+@@ -55,7 +55,7 @@
+             android:layout_marginBottom="0dp"
+             android:text="최근 감상한 노래"
+             android:textColor="@color/black"
+-            android:textSize="21dp"
++            android:textSize="20dp"
+             android:fontFamily="@font/nanum_bold"
+             android:textStyle="bold"
+             app:layout_constraintStart_toStartOf="parent"
+@@ -91,7 +91,7 @@
+                 android:fontFamily="@font/nanum_bold"
+                 android:text="좋아요한 노래"
+                 android:textColor="@color/black"
+-                android:textSize="21dp"
++                android:textSize="20dp"
+                 android:textStyle="bold"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toTopOf="parent" />
+@@ -133,7 +133,7 @@
+                 android:layout_marginBottom="0dp"
+                 android:text="선호 아티스트"
+                 android:textColor="@color/black"
+-                android:textSize="21dp"
++                android:textSize="20dp"
+                 android:fontFamily="@font/nanum_bold"
+                 android:textStyle="bold"
+                 app:layout_constraintStart_toStartOf="parent"
+Index: app/src/main/java/com/example/groove/adapter/Search_Adapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/groove/adapter/Search_Adapter.java b/app/src/main/java/com/example/groove/adapter/Search_Adapter.java
+new file mode 100644
+--- /dev/null	(date 1678073847285)
++++ b/app/src/main/java/com/example/groove/adapter/Search_Adapter.java	(date 1678073847285)
+@@ -0,0 +1,62 @@
++package com.example.groove.adapter;
++
++import android.content.Context;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.BaseAdapter;
++import android.widget.ImageView;
++import android.widget.TextView;
++
++import com.example.groove.R;
++import com.example.groove.data.Main_Item;
++
++import java.util.ArrayList;
++
++public class Search_Adapter extends BaseAdapter {
++
++    private Context context; // 현재 액티비티의 정보
++    private int layout; // 리스트뷰에 보여질 항목의 레이아웃에 대한 정보
++    private ArrayList<Main_Item> dataArray; // 데이터셋
++    private LayoutInflater inflater; // xml -> View 객체로 변환
++
++    public Search_Adapter(Context context, int layout, ArrayList<Main_Item> dataArray){
++        this.context = context;
++        this.layout = layout;
++        this.dataArray = dataArray;
++        // xml --> view 객체로 만들 수 있는 기능을 받아옴!
++        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
++    }
++
++    @Override
++    public int getCount() {
++        return dataArray.size();
++    }
++
++    @Override
++    public Object getItem(int i) {
++        return dataArray.get(i);
++    }
++
++    @Override
++    public long getItemId(int i) {
++        return i;
++    }
++
++    @Override
++    public View getView(int i, View view, ViewGroup viewGroup) {
++
++        // my_item.xml 을 가져와 데이터를 담아준 다음에 ListView로 출력시켜야함!
++
++        // layout 에 저장되어있는 my_item.xml 을 java에서 사용할 수 있도록 view 객체로 변환한다는 의미
++        view = inflater.inflate(layout, null);
++
++        TextView tv_search = view.findViewById(R.id.tv_search);
++        ImageView imageView3 = view.findViewById(R.id.imageView3);
++
++        tv_search.setText(dataArray.get(i).getSongName());
++        imageView3.setImageResource(R.drawable.img_time);
++        return view;
++    }
++
++}
+Index: app/src/main/java/com/example/groove/data/Main_Item.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.groove.data;\r\n\r\npublic class Main_Item {\r\n    private String songName;\r\n    private String artistName;\r\n    private int albumImg;\r\n    private int viewType;\r\n    private String mvimg;\r\n\r\n    public Main_Item(String songName, int viewType, String mvimg) {\r\n        this.songName = songName;\r\n        this.viewType = viewType;\r\n        this.mvimg = mvimg;\r\n    }\r\n\r\n    public Main_Item(String songName, String artistName, int albumImg) {\r\n        this.songName = songName;\r\n        this.artistName = artistName;\r\n        this.albumImg = albumImg;\r\n    }\r\n\r\n    public Main_Item(String songName, String artistName, int albumImg, int viewType) {\r\n        this.songName = songName;\r\n        this.artistName = artistName;\r\n        this.albumImg = albumImg;\r\n        this.viewType = viewType;\r\n    }\r\n\r\n    public Main_Item(String songName, int albumImg, int viewType) {\r\n        this.songName = songName;\r\n        this.albumImg = albumImg;\r\n        this.viewType = viewType;\r\n    }\r\n\r\n    public String getMvimg() {\r\n        return mvimg;\r\n    }\r\n\r\n    public void setMvimg(String mvimg) {\r\n        this.mvimg = mvimg;\r\n    }\r\n\r\n    public String getSongName() {\r\n        return songName;\r\n    }\r\n\r\n    public void setSongName(String songName) {\r\n        this.songName = songName;\r\n    }\r\n\r\n    public String getArtistName() {\r\n        return artistName;\r\n    }\r\n\r\n    public void setArtistName(String artistName) {\r\n        this.artistName = artistName;\r\n    }\r\n\r\n    public int getAlbumImg() {\r\n        return albumImg;\r\n    }\r\n\r\n    public void setAlbumImg(int albumImg) {\r\n        this.albumImg = albumImg;\r\n    }\r\n\r\n    public int getViewType() {\r\n        return viewType;\r\n    }\r\n\r\n    public void setViewType(int viewType) {\r\n        this.viewType = viewType;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/groove/data/Main_Item.java b/app/src/main/java/com/example/groove/data/Main_Item.java
+--- a/app/src/main/java/com/example/groove/data/Main_Item.java	(revision fc7182ad03d8afcfaaf7d8ca80bdc2745a1a9f3a)
++++ b/app/src/main/java/com/example/groove/data/Main_Item.java	(date 1678073940646)
+@@ -32,6 +32,10 @@
+         this.viewType = viewType;
+     }
+ 
++    public Main_Item(String songName) {
++        this.songName = songName;
++    }
++
+     public String getMvimg() {
+         return mvimg;
+     }
+Index: app/src/main/java/com/example/groove/activity/Search.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/groove/activity/Search.java b/app/src/main/java/com/example/groove/activity/Search.java
+new file mode 100644
+--- /dev/null	(date 1678086975306)
++++ b/app/src/main/java/com/example/groove/activity/Search.java	(date 1678086975306)
+@@ -0,0 +1,172 @@
++package com.example.groove.activity;
++
++import static com.example.groove.activity.MainActivity.user_seq;
++
++import androidx.annotation.Nullable;
++import androidx.appcompat.app.AppCompatActivity;
++
++import android.content.Intent;
++import android.os.Bundle;
++import android.util.Log;
++import android.view.KeyEvent;
++import android.view.View;
++import android.widget.AdapterView;
++import android.widget.EditText;
++import android.widget.ListView;
++import android.widget.TextView;
++
++import com.android.volley.AuthFailureError;
++import com.android.volley.Request;
++import com.android.volley.RequestQueue;
++import com.android.volley.Response;
++import com.android.volley.VolleyError;
++import com.android.volley.toolbox.StringRequest;
++import com.android.volley.toolbox.Volley;
++import com.example.groove.R;
++import com.example.groove.adapter.PlayList_Adapter;
++import com.example.groove.adapter.Search_Adapter;
++import com.example.groove.data.Main_Item;
++
++import org.json.JSONArray;
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import java.util.ArrayList;
++import java.util.HashMap;
++import java.util.Map;
++
++public class Search extends AppCompatActivity {
++
++    EditText search_bar;
++    ListView list_search;
++    ArrayList<Main_Item> dataArray;  // 데이터셋
++    Search_Adapter adapter; // 어댑터 사용!
++    RequestQueue requestQueue;
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_search);
++
++        search_bar = findViewById(R.id.search_bar);
++        list_search = findViewById(R.id.list_search);
++
++        search_bar.setOnKeyListener(new View.OnKeyListener() {
++            @Override
++            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
++                switch (keyCode){
++                    case KeyEvent.KEYCODE_ENTER:
++                        Log.d("엔터눌렀음","ㅋㅋ");
++
++                        if (requestQueue == null) {
++                            requestQueue = Volley.newRequestQueue(getApplicationContext());
++                        }
++
++                        String url = "http://172.30.1.42:3001/";
++
++                        StringRequest request = new StringRequest(
++                                Request.Method.POST,
++                                url,
++                                new Response.Listener<String>() {
++                                    @Override
++                                    public void onResponse(String response) {
++                                        Log.d("통신", response);
++
++                                        try {
++                                            JSONObject json = new JSONObject(response);
++                                            JSONArray song_id = json.getJSONArray("song_id");
++                                            JSONArray search_content = json.getJSONArray("search_content");
++
++
++
++                                        } catch (JSONException e) {
++                                            e.printStackTrace();
++                                            throw new RuntimeException(e);
++                                        }
++                                    }
++                                },
++                                new Response.ErrorListener() {
++                                    @Override
++                                    public void onErrorResponse(VolleyError error) {
++                                        Log.d("통신", "실패");
++                                    }
++                                }
++                        ){
++                            @Nullable
++                            @Override
++                            protected Map<String, String> getParams() throws AuthFailureError {
++                                // getParams --> post 방식으로 데이터를 보낼 때 사용되는 메소드!
++                                // 데이터를 key - value 형태로 만들어서 보내겠습니다
++                                Map<String,String> params = new HashMap<String,String>();
++                                // params -> key-value 형태로 만들어줌
++                                params.put("user_seq", user_seq);
++
++                                // key-value 로 만들어진 params 객체를 전송!
++                                return params;
++                            }
++                        };
++                        requestQueue.add(request);
++
++                        return true;
++                }
++                return false;
++            }
++        });
++
++        if (requestQueue == null) {
++            requestQueue = Volley.newRequestQueue(getApplicationContext());
++        }
++
++        String url = "http://172.30.1.42:3001/Research";
++
++        StringRequest request = new StringRequest(
++                Request.Method.POST,
++                url,
++                new Response.Listener<String>() {
++                    @Override
++                    public void onResponse(String response) {
++                        Log.d("통신", response);
++
++                        try {
++                            JSONObject json = new JSONObject(response);
++                            JSONArray song_id = json.getJSONArray("song_id");
++                            JSONArray search_content = json.getJSONArray("search_content");
++
++                            // 리스트뷰 띄우기
++                            dataArray = new ArrayList<Main_Item>();
++                            for (int i = 0; i < search_content.length(); i++) {
++                                dataArray.add(new Main_Item(search_content.getString(i)));
++                            }
++                            adapter = new Search_Adapter(getApplicationContext(),R.layout.item_search, dataArray);
++
++                            list_search.setAdapter(adapter);
++
++                        } catch (JSONException e) {
++                            e.printStackTrace();
++                            throw new RuntimeException(e);
++                        }
++                    }
++                },
++                new Response.ErrorListener() {
++                    @Override
++                    public void onErrorResponse(VolleyError error) {
++                        Log.d("통신", "실패");
++                    }
++                }
++        ){
++            @Nullable
++            @Override
++            protected Map<String, String> getParams() throws AuthFailureError {
++                // getParams --> post 방식으로 데이터를 보낼 때 사용되는 메소드!
++                // 데이터를 key - value 형태로 만들어서 보내겠습니다
++                Map<String,String> params = new HashMap<String,String>();
++                // params -> key-value 형태로 만들어줌
++                params.put("user_seq", user_seq);
++
++                // key-value 로 만들어진 params 객체를 전송!
++                return params;
++            }
++        };
++        requestQueue.add(request);
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_search.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_search.xml b/app/src/main/res/layout/activity_search.xml
+new file mode 100644
+--- /dev/null	(date 1678086954059)
++++ b/app/src/main/res/layout/activity_search.xml	(date 1678086954059)
+@@ -0,0 +1,63 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".activity.Search">
++
++    <androidx.constraintlayout.widget.ConstraintLayout
++        android:layout_width="match_parent"
++        android:layout_height="match_parent">
++
++        <EditText
++            android:id="@+id/search_bar"
++            android:layout_width="300dp"
++            android:layout_height="50dp"
++            android:layout_marginTop="10dp"
++            android:layout_marginBottom="10dp"
++            android:background="@drawable/search_box"
++            android:ems="10"
++            android:gravity="center|start"
++            android:hint="검색어를 입력하세요."
++            android:inputType="text"
++            android:paddingLeft="16dp"
++            android:textColorHint="#FFFFFF"
++            android:textColor="#FFFFFF"
++            app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.495"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
++
++        <LinearLayout
++            android:id="@+id/linearLayout3"
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"
++            android:layout_marginTop="10dp"
++            android:orientation="vertical"
++            app:layout_constraintBottom_toBottomOf="parent"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/search_bar">
++
++            <TextView
++                android:id="@+id/tv_recent"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:layout_marginBottom="5dp"
++                android:layout_marginStart="15dp"
++                android:text="최근 검색어"
++                android:fontFamily="@font/nanum_bold"
++                android:textColor="@color/black"
++                android:textStyle="bold"
++                android:textSize="18dp"/>
++
++            <ListView
++                android:id="@+id/list_search"
++                android:layout_width="match_parent"
++                android:layout_height="629dp"
++                android:divider="@android:drawable/divider_horizontal_dark" />
++        </LinearLayout>
++    </androidx.constraintlayout.widget.ConstraintLayout>
++</androidx.core.widget.NestedScrollView>
+\ No newline at end of file

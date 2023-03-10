@@ -37,7 +37,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Search extends AppCompatActivity {
-
     EditText search_bar;
     ListView list_search;
     ArrayList<Main_Item> dataArray;  // 데이터셋
@@ -55,60 +54,62 @@ public class Search extends AppCompatActivity {
         search_bar.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                switch (keyCode){
-                    case KeyEvent.KEYCODE_ENTER:
-                        Log.d("엔터눌렀음","ㅋㅋ");
+                if (keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP){
 
-                        if (requestQueue == null) {
-                            requestQueue = Volley.newRequestQueue(getApplicationContext());
-                        }
+                    Log.d("엔터눌렀음","ㅋㅋ");
+                    if (requestQueue == null) {
+                        requestQueue = Volley.newRequestQueue(getApplicationContext());
+                    }
 
-                        String url = "http://"+my_url+":3001:3001/";
+                    String url = "http://"+my_url+":3001/Search";
 
-                        StringRequest request = new StringRequest(
-                                Request.Method.POST,
-                                url,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        Log.d("통신", response);
+                    StringRequest request = new StringRequest(
+                            Request.Method.POST,
+                            url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d("통신", response);
 
-                                        try {
-                                            JSONObject json = new JSONObject(response);
-                                            JSONArray song_id = json.getJSONArray("song_id");
-                                            JSONArray search_content = json.getJSONArray("search_content");
+                                    try {
+                                        JSONObject json = new JSONObject(response);
+
+                                        Intent intent = new Intent(getApplicationContext(), SearchList.class);
+                                        intent.putExtra("search_content", search_bar.getText().toString());
+                                        startActivity(intent);
+                                        finish();
 
 
-
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                            throw new RuntimeException(e);
-                                        }
-                                    }
-                                },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Log.d("통신", "실패");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        throw new RuntimeException(e);
                                     }
                                 }
-                        ){
-                            @Nullable
-                            @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                // getParams --> post 방식으로 데이터를 보낼 때 사용되는 메소드!
-                                // 데이터를 key - value 형태로 만들어서 보내겠습니다
-                                Map<String,String> params = new HashMap<String,String>();
-                                // params -> key-value 형태로 만들어줌
-                                params.put("user_seq", user_seq);
-
-                                // key-value 로 만들어진 params 객체를 전송!
-                                return params;
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("통신", "실패");
+                                }
                             }
-                        };
-                        requestQueue.add(request);
+                    ){
+                        @Nullable
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            // getParams --> post 방식으로 데이터를 보낼 때 사용되는 메소드!
+                            // 데이터를 key - value 형태로 만들어서 보내겠습니다
+                            Map<String,String> params = new HashMap<String,String>();
+                            // params -> key-value 형태로 만들어줌
+                            params.put("user_seq", user_seq);
+                            params.put("search_content", search_bar.getText().toString());
 
-                        return true;
+                            // key-value 로 만들어진 params 객체를 전송!
+                            return params;
+                        }
+                    };
+                    requestQueue.add(request);
+
+
                 }
                 return false;
             }
@@ -118,7 +119,7 @@ public class Search extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://172.30.1.42:3001/Research";
+        String url = "http://"+my_url+":3001/Research";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -130,7 +131,6 @@ public class Search extends AppCompatActivity {
 
                         try {
                             JSONObject json = new JSONObject(response);
-                            JSONArray song_id = json.getJSONArray("song_id");
                             JSONArray search_content = json.getJSONArray("search_content");
 
                             // 리스트뷰 띄우기
