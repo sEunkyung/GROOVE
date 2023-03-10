@@ -1,5 +1,7 @@
 package com.example.groove.activity;
 
+import static com.example.groove.activity.Login.my_url;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -80,7 +82,7 @@ public class TagPlayList extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://172.30.1.31:3001/TagList";
+        String url = "http://"+my_url+":3001/TagList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

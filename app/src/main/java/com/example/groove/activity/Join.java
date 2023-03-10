@@ -1,5 +1,7 @@
 package com.example.groove.activity;
 
+import static com.example.groove.activity.Login.my_url;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -87,7 +89,7 @@ public class Join extends AppCompatActivity {
                 String joinEmail = edit_joinEmail.getText().toString();
                 String joinBirth = edit_joinBirth.getText().toString();
 
-                String url = "http://172.30.1.31:3001/Join";    // 서버주소
+                String url = "http://"+my_url+":3001/Join";    // 서버주소
                 StringRequest request = new StringRequest(
                         Request.Method.POST,
                         url,

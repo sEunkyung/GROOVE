@@ -5,5 +5,6 @@ public class View_Type_Code {
         public static final int FIRST_CONTENT = 0;
         public static final int SECOND_CONTENT = 1;
         public static final int THIRD_CONTENT = 2;
+        public static final int FOURTH_CONTENT = 3;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.groove.fragment;
 
+import static com.example.groove.activity.Login.my_url;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +47,7 @@ public class Main_Home extends Fragment {
     private RecyclerView mSongView;
     private RecyclerView mTagView;
     private RecyclerView mMvView;
+    private RecyclerView mPickView;
     private ArrayList<Main_Item> mMainItemList;
     private Main_Home_RecyclerView_Adapter mMainHomeRecyclerViewAdapter;
     GridLayoutManager gridLayoutManager;
@@ -59,11 +62,14 @@ public class Main_Home extends Fragment {
     int albumImgArr[] = new int[9];
     // 태그 정보(MySQL에서 받아온 데이터)
     String tagNameArr[] = {"드라이브", "노동요", "헬스, 런닝", "요가, 필라테스", "데이트", "이별"};
-    int tagImgArr[] = {R.drawable.tag_drive, R.drawable.tag_work, R.drawable.tag_health, R.drawable.tag_yoga, R.drawable.tag_date, R.drawable.tag_sad};
+    int tagImgArr[] = {R.drawable.tag_driveicon, R.drawable.tag_workicon, R.drawable.tag_healthicon, R.drawable.tag_yogaicon, R.drawable.tag_dateicon, R.drawable.tag_sadicon};
     // 뮤비 정보(MySQL에서 받아온 데이터)
     String mvNameArr[] = new String[9];
     String mvUrlArr[] = new String[9];
     String artArr[] = new String[9];
+    int editorImgArr[] = {R.drawable.editor1, R.drawable.editor2, R.drawable.editor3, R.drawable.editor4};
+    String editorNameArr[] = {"멜로디가 기억에 남는 랩", "그루브 가득한 힙합", "여름에 듣는 시원한 힙합", "트렌디한 힙합"};
+
 
     String item_song_id;
 
@@ -98,7 +104,7 @@ public class Main_Home extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.31:3001/RecommendSong";
+        String url = "http://"+my_url+":3001/RecommendSong";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -214,12 +220,42 @@ public class Main_Home extends Fragment {
                                     startActivity(intent);
 
                                 }
-
                                 @Override
                                 public void onLongItemClick(View view, int position) {
 
                                 }
                             }));
+
+                            // 에디터픽 리사이클러뷰
+                            mMainItemList = new ArrayList<>();
+                            for(int i=0;i<editorNameArr.length;i++){
+                                mMainItemList.add(new Main_Item(editorNameArr[i], editorImgArr[i], View_Type_Code.ViewType.FOURTH_CONTENT));
+                            }
+
+                            mPickView = rootView.findViewById(R.id.list_pick);
+                            mMainHomeRecyclerViewAdapter = new Main_Home_RecyclerView_Adapter(mMainItemList);
+                            mPickView.setAdapter(mMainHomeRecyclerViewAdapter);
+                            gridLayoutManager = new GridLayoutManager(rootView.getContext(), 1, GridLayoutManager.HORIZONTAL, false);
+                            mPickView.setLayoutManager(gridLayoutManager);	// 가로
+
+//                            mTagView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), mTagView, new RecyclerItemClickListener.OnItemClickListener() {
+//                                @Override
+//                                public void onItemClick(View view, int position) throws JSONException {
+//
+//                                    Intent intent = new Intent(getActivity(), TagPlayList.class);
+//                                    intent.putExtra("tagName", tagNameArr[position]);
+//                                    Log.d("카카카", String.valueOf(tagImgArr[position]));
+//                                    Log.d("zzz카카", String.valueOf(R.drawable.tag_drive));
+//                                    intent.putExtra("tagImg", tagImgArr[position]);
+//                                    startActivity(intent);
+//                                }
+//
+//                                @Override
+//                                public void onLongItemClick(View view, int position) {
+//
+//                                }
+//                            }));
+
 
 
                         } catch (JSONException e) {

@@ -1,5 +1,6 @@
 package com.example.groove.fragment;
 
+import static com.example.groove.activity.Login.my_url;
 import static com.example.groove.activity.MainActivity.user_seq;
 import static com.example.groove.activity.PlayerActivity.index;
 
@@ -48,8 +49,11 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Music_Player extends Fragment {
 
@@ -195,8 +199,13 @@ public class Music_Player extends Fragment {
                     }else if(index >= song_list.size()-1 && btn_repeat.getTag().equals("안반복재생")){
                         player.stop();
                     } else {
+                    if (btn_shuffle.getTag().equals("셔플재생")){
+                        Random rnd = new Random();
+                        index = rnd.nextInt(song_list.size());
+                    } else {
                         index++;
                     }
+                }
                     play_title.setText(stitle_list.get(index));
                     play_artist.setText(aname_list.get(index));
                     String imgfile = "album_" + salbum_list.get(index);
@@ -226,6 +235,7 @@ public class Music_Player extends Fragment {
                     } else{
                         index--;
                     }
+                    Log.d("songlist어디??????", String.valueOf(index));
                     play_title.setText(stitle_list.get(index));
                     play_artist.setText(aname_list.get(index));
                     String imgfile = "album_" + salbum_list.get(index);
@@ -279,7 +289,7 @@ public class Music_Player extends Fragment {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getActivity());
         }
-        String url = "http://172.30.1.31:3001/InsertList";
+        String url = "http://"+my_url+":3001/InsertList";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
@@ -351,7 +361,7 @@ public class Music_Player extends Fragment {
                                     if (requestQueue == null) {
                                         requestQueue = Volley.newRequestQueue(getActivity());
                                     }
-                                    String url = "http://172.30.1.31:3001/LikesAdd";
+                                    String url = "http://"+my_url+":3001/LikesAdd";
 
                                     StringRequest request = new StringRequest(
                                             Request.Method.POST,

@@ -1,5 +1,7 @@
 package com.example.groove.activity;
 
+import static com.example.groove.activity.Login.my_url;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -72,7 +74,7 @@ public class LikeList extends AppCompatActivity {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
-        String url = "http://172.30.1.31:3001/LikesSongs";
+        String url = "http://"+my_url+":3001/LikesSongs";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

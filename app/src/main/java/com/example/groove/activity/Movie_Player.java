@@ -1,5 +1,7 @@
 package com.example.groove.activity;
 
+import static com.example.groove.activity.Login.my_url;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,8 +45,6 @@ public class Movie_Player extends YouTubeBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_player);
 
-
-
         // Main_Home에서 받아온 데이터
         Intent intent = getIntent();
         String art_id = intent.getStringExtra("art_id");
@@ -67,7 +67,7 @@ public class Movie_Player extends YouTubeBaseActivity {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-        String url = "http://172.30.1.31:3001/MVplayer";
+        String url = "http://"+my_url+":3001/MVplayer";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,

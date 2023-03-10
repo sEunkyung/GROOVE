@@ -1,5 +1,6 @@
 package com.example.groove.fragment;
 
+import static com.example.groove.activity.Login.my_url;
 import static com.example.groove.activity.PlayerActivity.song_ids;
 
 import android.content.Intent;
@@ -101,7 +102,7 @@ public class Lyrics extends Fragment {
             requestQueue = Volley.newRequestQueue(getContext());
         }
 
-        String url = "http://172.30.1.31:3001/Lyrics";
+        String url = "http://"+my_url+":3001/Lyrics";
 
         StringRequest request = new StringRequest(
                 Request.Method.POST,
