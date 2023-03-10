@@ -107,11 +107,11 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="0dp"
-            android:text="지금 나는"
             android:fontFamily="@font/nanum_bold"
+            android:text="지금 나는"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_hashtag"
@@ -147,6 +147,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/linear3">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="0dp"
+            android:fontFamily="@font/nanum_bold"
+            android:text="에디터 Pick"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_pick"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

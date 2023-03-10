@@ -43,9 +43,12 @@ public class Main_Home_RecyclerView_Adapter extends RecyclerView.Adapter<Recycle
         } else if(viewType == View_Type_Code.ViewType.SECOND_CONTENT){
             view = inflater.inflate(R.layout.item_main_tag, parent, false);
             return new MainTagViewHolder(view);
-        } else {
+        } else if(viewType == View_Type_Code.ViewType.THIRD_CONTENT){
             view = inflater.inflate(R.layout.item_main_mv, parent, false);
             return new MainMvViewHolder(view);
+        } else {
+            view = inflater.inflate(R.layout.item_main_pick, parent, false);
+            return new MainEditViewHolder(view);
         }
     }
 
@@ -63,11 +66,15 @@ public class Main_Home_RecyclerView_Adapter extends RecyclerView.Adapter<Recycle
             Main_Item item = mMainItemList.get(position);
             ((MainTagViewHolder) holder).tagName.setText(item.getSongName());
             ((MainTagViewHolder) holder).tagImg.setImageResource(item.getAlbumImg());
-        } else{
+        } else if(holder instanceof MainMvViewHolder){
             Main_Item item = mMainItemList.get(position);
             ((MainMvViewHolder) holder).mvName.setText(item.getSongName());
-//            ((MainMvViewHolder) holder).mvImg.setImageResource(item.getAlbumImg());
             Glide.with(holder.itemView).load(item.getMvimg()).into(((MainMvViewHolder) holder).mvImg);
+        } else{
+            Main_Item item = mMainItemList.get(position);
+            ((MainEditViewHolder) holder).editName.setText(item.getSongName());
+            ((MainEditViewHolder) holder).editImg.setImageResource(item.getAlbumImg());
+
         }
 
     }
@@ -116,6 +123,19 @@ public class Main_Home_RecyclerView_Adapter extends RecyclerView.Adapter<Recycle
             super(itemView);
             mvName = itemView.findViewById(R.id.mvName);
             mvImg = itemView.findViewById(R.id.mvImg);
+
+        }
+    }
+
+    public class MainEditViewHolder extends RecyclerView.ViewHolder{
+
+        TextView editName;
+        ImageView editImg;
+
+        public MainEditViewHolder(@NonNull View itemView) {
+            super(itemView);
+            editName = itemView.findViewById(R.id.pickName);
+            editImg = itemView.findViewById(R.id.pickImg);
 
         }
     }

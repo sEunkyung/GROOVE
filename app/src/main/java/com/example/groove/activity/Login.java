@@ -35,7 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Login extends AppCompatActivity {
     public static String user_seq;
-    public static String my_url = "172.30.1.42";
+    public static String my_url = "172.30.1.49";
     EditText login_id, login_pw;
     AppCompatButton btn_joinform, btn_login;
     RequestQueue requestQueue;
