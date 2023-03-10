@@ -35,7 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Login extends AppCompatActivity {
     public static String user_seq;
-    public static String my_url = "172.30.1.49";
+    public static String my_url = "172.30.1.33";
     EditText login_id, login_pw;
     AppCompatButton btn_joinform, btn_login;
     RequestQueue requestQueue;
@@ -104,7 +104,7 @@ public class Login extends AppCompatActivity {
                                     // 로그인 성공했을 때 선호 아티스트가 null이면 선호 아티스트로 창으로 아니면 메인 창으로
                                     if(result.equals("로그인 성공")){
                                         Intent intent;
-                                        if(favart.equals("null") || favsong.equals("null")){
+                                        if(favart.equals("null") || favsong.equals("null") || favart.equals("") || favsong.equals("")){
                                             Log.d("여기드감?",favart);
                                             intent = new Intent(getApplicationContext(), Fav_Artist_Selection.class);
                                             intent.putExtra("user_seq", user_seq);

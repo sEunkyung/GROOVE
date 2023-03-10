@@ -5,6 +5,7 @@ import static com.example.groove.activity.MainActivity.user_seq;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -42,6 +44,8 @@ import java.util.Map;
 public class SearchList extends AppCompatActivity {
 
     private ListView mSearchList;
+    TextView tv_pl_title;
+    AppCompatImageButton btn_pre;
     private ArrayList<Main_Item> mMainItemList;
     private Fav_Songs_Selection_Adapter mSearchListAdapter;
     GridLayoutManager gridLayoutManager;
@@ -52,10 +56,23 @@ public class SearchList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_list);
+        setContentView(R.layout.activity_likelist);
+
+        tv_pl_title = findViewById(R.id.tv_pl_title);
+        mSearchList = findViewById(R.id.like_menuList);
+        btn_pre = findViewById(R.id.btn_pre1);
+        tv_pl_title.setText("검색 결과");
+
+        btn_pre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         intent = getIntent();
         String search_content = intent.getStringExtra("search_content");
+        Log.d("콘텐츠",search_content);
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -74,26 +91,32 @@ public class SearchList extends AppCompatActivity {
                         try {
                             JSONObject json = new JSONObject(response);
                             JSONArray song_id = json.getJSONArray("song_id");
+                            JSONArray song_title = json.getJSONArray("song_title");
                             JSONArray artist_id = json.getJSONArray("artist_id");
                             JSONArray album_id = json.getJSONArray("album_id");
 
                             // 추천 곡 리사이클러뷰
                             mMainItemList = new ArrayList<>();
                             for(int i=0;i<song_id.length();i++){
-                                mMainItemList.add(new Main_Item(song_id.getString(i), artist_id.getString(i), getResources().getIdentifier("album_"+ album_id.getInt(i), "drawable", getApplicationContext().getPackageName())));
+                                mMainItemList.add(new Main_Item(song_title.getString(i), artist_id.getString(i), getResources().getIdentifier("album_"+ album_id.getInt(i), "drawable", getApplicationContext().getPackageName())));
                             }
+                            Log.d("이건무엇이냐", String.valueOf(mMainItemList.get(0).getArtistName()));
                             mSearchListAdapter = new Fav_Songs_Selection_Adapter(getApplicationContext().getApplicationContext(), R.layout.item_favsong, mMainItemList);
                             mSearchList.setAdapter(mSearchListAdapter);
-//                            mSearchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                                @Override
-//                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                                    Log.d("카카카카", String.valueOf(adapterView.getAdapter().getItem(i)));
-//                                    Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
-//                                    intent.putExtra("song_id",song_list.get(i));
-//                                    startActivity(intent);
-//
-//                                }
-//                            });
+                            mSearchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    Log.d("카카카카", String.valueOf(adapterView.getAdapter().getItem(i)));
+                                    Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
+                                    try {
+                                        intent.putExtra("song_id",song_id.getString(i));
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    startActivity(intent);
+
+                                }
+                            });
 
 
 
